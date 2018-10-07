@@ -3,23 +3,42 @@ ext {
 
     ]
     libs = [
-            lombok: [
+            spring : [
+                    web     : [
+                            'org.springframework.boot:spring-boot-starter-web'
+                    ],
+                    security: [],
+                    social  : [],
+                    devtool : [
+                            'org.springframework.boot:spring-boot-devtools'
+                    ],
+                    test    : [
+                            'org.springframework.boot:spring-boot-starter-test'
+                    ]
+            ],
+            lombok : [
                     'org.projectlombok:lombok',
             ],
-            jdk   : [
+            jdk    : [
                     'javax.xml.bind:jaxb-api'
             ],
             commons: [
                     'commons-lang:commons-lang',
                     'commons-beanutils:commons-beanutils',
             ],
-            guava : [
+            guava  : [
                     'com.google.guava:guava',
             ],
-            mysql : [
+            mysql  : [
 
             ],
-            test  : [
+            flyway : [
+
+            ],
+            mybatis: [
+
+            ],
+            test   : [
 
             ]
     ]

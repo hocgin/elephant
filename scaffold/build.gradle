@@ -1,7 +1,6 @@
 dependencies {
     compile project(":util")
-
-    compile('org.springframework.boot:spring-boot-starter-web')
-    runtimeOnly('org.springframework.boot:spring-boot-devtools')
-    testImplementation('org.springframework.boot:spring-boot-starter-test')
+    compile libs.spring.web
+    runtimeOnly libs.spring.devtool
+    testImplementation libs.spring.test
 }
