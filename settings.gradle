@@ -1,0 +1,5 @@
+rootProject.name = 'root'
+include 'util'
+include 'scaffold'
+include 'entity'
+include 'api'
