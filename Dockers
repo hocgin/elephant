@@ -1,0 +1,5 @@
+docker run -d -p 6379:6379 redis
+
+docker run -d -p 3306:3306 -e MYSQL_ROOT_PASSWORD=hocgin mariadb
+
+# docker run -d -p 8081:8081 --name nexus -v nexus-data:/Users/hocgin/Docker/Nexus sonatype/nexus3
