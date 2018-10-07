@@ -3,8 +3,18 @@ ext {
 
     ]
     libs = [
-            common: [
-
+            lombok: [
+                    'org.projectlombok:lombok',
+            ],
+            jdk   : [
+                    'javax.xml.bind:jaxb-api'
+            ],
+            commons: [
+                    'commons-lang:commons-lang',
+                    'commons-beanutils:commons-beanutils',
+            ],
+            guava : [
+                    'com.google.guava:guava',
             ],
             mysql : [
 

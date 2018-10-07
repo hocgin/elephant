@@ -53,15 +53,11 @@ subprojects {
     // 通用依赖
     dependencies {
 
-        compileOnly(
-                'org.projectlombok:lombok',
-        )
+        compileOnly libs.'lombok'
 
-        compile(
-                'commons-lang:commons-lang',
-                'commons-beanutils:commons-beanutils',
-                'com.google.guava:guava'
-        )
+        compile libs.jdk
+        compile libs.commons
+        compile libs.guava
     }
 
     dependencyManagement {
