@@ -3,3 +3,5 @@ include 'util'
 include 'scaffold'
 include 'entity'
 include 'api'
+include 'manager'
+
