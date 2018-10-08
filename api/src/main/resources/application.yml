@@ -1,2 +1,12 @@
+spring:
+  datasource:
+    driver-class-name: org.mariadb.jdbc.Driver
+    druid:
+      validation-query: select '1'
+  profiles:
+    active: dev
+  session:
+    store-type: none
+
 server:
   port: 8080

@@ -1,9 +1,11 @@
 ext {
     versions = [
-
+            mybatisPlus: '3.0.3',
+            druid      : '1.1.10',
+            springBoot : '2.0.5.RELEASE'
     ]
     libs = [
-            spring : [
+            spring     : [
                     web     : [
                             'org.springframework.boot:spring-boot-starter-web'
                     ],
@@ -12,33 +14,37 @@ ext {
                     devtool : [
                             'org.springframework.boot:spring-boot-devtools'
                     ],
+                    aop     : [
+                            'org.springframework.boot:spring-boot-starter-aop'
+                    ],
                     test    : [
                             'org.springframework.boot:spring-boot-starter-test'
                     ]
             ],
-            lombok : [
+            lombok     : [
                     'org.projectlombok:lombok',
             ],
-            jdk    : [
+            jdk        : [
                     'javax.xml.bind:jaxb-api'
             ],
-            commons: [
+            commons    : [
                     'commons-lang:commons-lang',
                     'commons-beanutils:commons-beanutils',
             ],
-            guava  : [
+            guava      : [
                     'com.google.guava:guava',
             ],
-            mysql  : [
-
+            db         : [
+                    "com.alibaba:druid-spring-boot-starter:${versions.druid}",
+                    'org.mariadb.jdbc:mariadb-java-client'
             ],
-            flyway : [
-
+            flyway     : [
+                    'org.flywaydb:flyway-core'
             ],
-            mybatis: [
-
+            mybatisPlus: [
+                    "com.baomidou:mybatis-plus-boot-starter:${versions.mybatisPlus}",
             ],
-            test   : [
+            test       : [
 
             ]
     ]

@@ -1,6 +1,9 @@
 dependencies {
     compile project(":util")
     compile libs.spring.web
+    compile libs.spring.aop
+    compile libs.mybatisPlus
+    compile libs.db
     runtimeOnly libs.spring.devtool
     testImplementation libs.spring.test
 }
