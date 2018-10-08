@@ -1,6 +1,2 @@
 dependencies {
-    compileOnly libs.lombok
-    compile libs.jdk
-    compile libs.commons
-    compile libs.guava
 }

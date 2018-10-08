@@ -49,10 +49,15 @@ subprojects {
 
     // 通用依赖
     dependencies {
+        compileOnly libs.lombok
+        compile libs.jdk
+        compile libs.commons
+        compile libs.guava
     }
 
     dependencyManagement {
         imports {
+            mavenBom 'io.spring.platform:platform-bom:Cairo-SR4'
             mavenBom SpringBootPlugin.BOM_COORDINATES
         }
     }
