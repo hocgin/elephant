@@ -5,8 +5,8 @@ import org.springframework.context.annotation.Profile;
 /**
  * @author hocgin
  * @date 18-9-25
- * 生产环境
+ * 开发环境
  **/
-@Profile({"prod", "test"})
-public @interface Prod {
+@Profile({"dev","test"})
+public @interface DevAndTest {
 }

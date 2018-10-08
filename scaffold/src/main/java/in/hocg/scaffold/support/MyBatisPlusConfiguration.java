@@ -2,7 +2,7 @@ package in.hocg.scaffold.support;
 
 import com.baomidou.mybatisplus.extension.plugins.PaginationInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.PerformanceInterceptor;
-import in.hocg.scaffold.annotation.Dev;
+import in.hocg.scaffold.annotation.DevAndTest;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -13,11 +13,12 @@ import org.springframework.context.annotation.Configuration;
  **/
 @Configuration
 @MapperScan("in.hocg.*.mapper*")
-public class MyBatisPlusConfig {
+public class MyBatisPlusConfiguration {
     
     /**
      * 分页插件，自动识别数据库类型
      * 多租户，请参考官网【插件扩展】
+     *
      * @return
      */
     @Bean
@@ -26,11 +27,13 @@ public class MyBatisPlusConfig {
     }
     
     /**
+     * SQL执行效率插件
      * 设置 dev test 环境开启
+     *
      * @return
      */
     @Bean
-    @Dev
+    @DevAndTest
     public PerformanceInterceptor performanceInterceptor() {
         return new PerformanceInterceptor();
     }
