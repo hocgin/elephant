@@ -88,6 +88,7 @@ public class Application {
                 .setNaming(NamingStrategy.underline_to_camel)
                 .setInclude(tableNames);//修改替换成你需要的表名，多个表名传数组
         config.setActiveRecord(false)
+                .setOpen(false)
                 .setAuthor(System.getProperty("user.name"))
                 .setOutputDir(OUTPUT_DIR)
                 .setFileOverride(true)
