@@ -1,4 +1,4 @@
-package in.hocg.scaffold.support.basis;
+package in.hocg.entity.basic;
 
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableLogic;
@@ -19,13 +19,26 @@ import java.time.LocalDateTime;
 @Accessors(chain = true)
 @EqualsAndHashCode(callSuper = true)
 public class DeletedModel<T extends Model> extends DefaultModel<T> {
-  @TableField(value = "deleted_at")
-  private LocalDateTime deletedAt;
   /**
-   * 0 为正常状态
-   * 1 为伪删除状态
+   * 删除时间
    */
-  @TableField(value = "deleted")
+  @TableField(value = DELETED_AT)
+  private LocalDateTime deletedAt;
+  
+  /**
+   * 删除者
+   */
+  @TableField(value = DELETER)
+  private Integer deleter;
+  
+  /**
+   * 0:为正常状态;1:为被删除状态
+   */
+  @TableField(value = DELETED)
   @TableLogic
   private int deleted;
+  
+  public static final String DELETED = "deleted";
+  public static final String DELETED_AT = "deleted_at";
+  public static final String DELETER = "deleter";
 }

@@ -5,5 +5,4 @@ dependencies {
     compile libs.mybatisPlus
     compile libs.db
     runtimeOnly libs.spring.devtool
-    testImplementation libs.spring.test
 }

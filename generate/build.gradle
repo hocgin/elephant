@@ -1,2 +1,6 @@
 dependencies {
+    implementation project(':scaffold')
+    implementation project(':entity')
+    implementation libs.spring.test
+    implementation 'org.apache.velocity:velocity:1.7'
 }

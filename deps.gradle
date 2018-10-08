@@ -43,9 +43,6 @@ ext {
             ],
             mybatisPlus: [
                     "com.baomidou:mybatis-plus-boot-starter:${versions.mybatisPlus}",
-            ],
-            test       : [
-
             ]
     ]
 }

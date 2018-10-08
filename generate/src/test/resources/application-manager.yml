@@ -1,0 +1,5 @@
+spring:
+  datasource:
+    url: jdbc:mariadb://mysql.localhost:3306/db_test?useSSL=false&useUnicode=true&characterEncoding=UTF-8
+    username: manager
+    password: hocgin

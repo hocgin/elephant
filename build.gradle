@@ -1,6 +1,6 @@
 import org.springframework.boot.gradle.plugin.SpringBootPlugin
 
-apply from: "deps.gradle"
+apply from: 'deps.gradle'
 
 /**
  * Gradle 依賴配置

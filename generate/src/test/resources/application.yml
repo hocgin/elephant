@@ -6,7 +6,4 @@ spring:
   session:
     store-type: none
   profiles:
-    active: dev
-
-server:
-  port: 8080
+    active: api

@@ -1,4 +1,4 @@
-package in.hocg.scaffold.support.basis;
+package in.hocg.entity.basic;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
@@ -23,4 +23,6 @@ public abstract class SuperModel<T extends Model> extends Model<T> {
     protected Serializable pkVal() {
         return this.id;
     }
+    
+    public static final String ID = "id";
 }
