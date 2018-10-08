@@ -43,6 +43,9 @@ ext {
             ],
             mybatisPlus: [
                     "com.baomidou:mybatis-plus-boot-starter:${versions.mybatisPlus}",
+            ],
+            velocity   : [
+                    'org.apache.velocity:velocity:1.7'
             ]
     ]
 }
