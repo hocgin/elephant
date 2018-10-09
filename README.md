@@ -5,7 +5,7 @@
 - api
 - manager
 - generate
-- entity
+- mapper
 - scaffold
 - util
 
