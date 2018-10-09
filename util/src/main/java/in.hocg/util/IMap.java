@@ -1,4 +1,4 @@
-package in.hocg.scaffold.util;
+package in.hocg.util;
 
 import java.util.HashMap;
 import java.util.Optional;
