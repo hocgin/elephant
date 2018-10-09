@@ -4,4 +4,4 @@
  *
  * @author hocgin
  */
-package in.hocg.manager.mapper;
+package in.hocg.manager.module.platform.mapper;

@@ -1,4 +1,4 @@
-package in.hocg.entity.basic;
+package in.hocg.basic;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;

@@ -5,4 +5,5 @@ include 'entity'
 include 'api'
 include 'manager'
 include 'generate'
+include 'sdk'
 

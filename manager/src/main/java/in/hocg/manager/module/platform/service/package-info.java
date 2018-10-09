@@ -4,4 +4,4 @@
  *
  * @author hocgin
  */
-package in.hocg.manager.controller;
+package in.hocg.manager.module.platform.service;

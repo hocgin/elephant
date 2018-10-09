@@ -1,4 +1,4 @@
-package in.hocg.scaffold.support.basis;
+package in.hocg.basic;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
