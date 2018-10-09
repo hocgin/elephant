@@ -6,7 +6,7 @@ spring:
     username: root
     password: hocgin
     schema:
-    - classpath:db/schema-ma.sql
+      - classpath:db/schema-ma.sql
     #    data: classpath:db/data-ma.sql
     initialization-mode: always
 mybatis-plus:
