@@ -1,34 +1,21 @@
-package in.hocg.scaffold.support.http;
+package in.hocg.basic.condition;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.google.common.base.CaseFormat;
-import lombok.Data;
+import in.hocg.scaffold.support.basis.condition.PostPageCondition;
 
-import java.io.Serializable;
-import java.util.Map;
 import java.util.Optional;
 
 /**
- * Created by hocgin on 2018/9/4.
+ * Created by hocgin on 2018/10/9.
  * email: hocgin@gmail.com
  *
  * @author hocgin
  */
-@Data
-public abstract class PageCondition implements Serializable {
-    protected int limit = 10;
-    protected int page = 1;
+public class PostPageConditionPlus<T> extends PostPageCondition<T> {
     
-    abstract Map<String, String> getSortMap();
-    
-    
-    /**
-     * ======================================
-     * 结合 Mybatis Plus
-     * ======================================
-     */
     @JsonIgnore
     public <T> Page<T> page() {
         return new Page<>(page, limit);

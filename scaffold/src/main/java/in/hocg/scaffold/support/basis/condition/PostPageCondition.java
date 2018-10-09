@@ -1,4 +1,4 @@
-package in.hocg.scaffold.support.http;
+package in.hocg.scaffold.support.basis.condition;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -19,12 +19,12 @@ import java.util.Map;
 @Data
 public class PostPageCondition<T> extends PageCondition {
     @Valid
-    private T condition;
+    protected T condition;
     protected Map<String, String> sort;
     
     
     @Override
-    Map<String, String> getSortMap() {
+    protected Map<String, String> getSortMap() {
         return sort;
     }
 }

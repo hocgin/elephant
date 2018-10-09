@@ -1,4 +1,4 @@
-package in.hocg.basic;
+package in.hocg.basic.model;
 
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableLogic;

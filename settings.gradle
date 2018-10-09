@@ -1,4 +1,4 @@
-rootProject.name = 'scaffold'
+rootProject.name = 'scaffold-gradle'
 include 'util'
 include 'scaffold'
 include 'mapper'
@@ -6,4 +6,5 @@ include 'api'
 include 'manager'
 include 'generate'
 include 'sdk'
+include 'sample'
 

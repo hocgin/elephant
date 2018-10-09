@@ -1,4 +1,4 @@
-package in.hocg.scaffold.support.http;
+package in.hocg.scaffold.support.basis.condition;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.google.common.collect.HashMultimap;

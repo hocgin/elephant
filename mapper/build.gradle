@@ -1,3 +1,4 @@
 dependencies {
     compile libs.mybatisPlus
+    implementation project(':scaffold')
 }

@@ -15,8 +15,8 @@ public class Result<T> implements Serializable {
         /**
          * 成功
          */
-        Success(200, "ok"),
-        Error(500, "error");
+        SUCCESS(200, "ok"),
+        ERROR(500, "error");
         int code;
         String message;
         
@@ -25,8 +25,6 @@ public class Result<T> implements Serializable {
             this.message = message;
         }
     }
-    
-    private static final int SUCCESS = 200;
     
     private int code;
     private String message;
@@ -68,7 +66,7 @@ public class Result<T> implements Serializable {
     
     
     public static Result success(Object data) {
-        return Result.result(Code.Success.code, Code.Success.message, data);
+        return Result.result(Code.SUCCESS.code, Code.SUCCESS.message, data);
     }
     
     public static Result success() {
@@ -80,11 +78,11 @@ public class Result<T> implements Serializable {
     }
     
     public static Result error(String message) {
-        return Result.result(Code.Error.code, message, null);
+        return Result.result(Code.ERROR.code, message, null);
     }
     
     public static Result error() {
-        return Result.result(Code.Error.code, Code.Error.message, null);
+        return Result.result(Code.ERROR.code, Code.ERROR.message, null);
     }
     
     public static Result result(Integer code, String message, Object data) {

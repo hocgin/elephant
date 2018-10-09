@@ -4,4 +4,4 @@
  *
  * @author hocgin
  */
-package in.hocg.mapper.entity;
+package in.hocg.entity;

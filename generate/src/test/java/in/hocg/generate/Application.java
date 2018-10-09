@@ -5,11 +5,11 @@ import com.baomidou.mybatisplus.annotation.DbType;
 import com.baomidou.mybatisplus.generator.AutoGenerator;
 import com.baomidou.mybatisplus.generator.config.*;
 import com.baomidou.mybatisplus.generator.config.rules.NamingStrategy;
-import in.hocg.basic.DefaultModel;
-import in.hocg.basic.DeletedModel;
-import in.hocg.basic.SuperModel;
+import in.hocg.basic.BaseService;
+import in.hocg.basic.model.DefaultModel;
+import in.hocg.basic.model.DeletedModel;
+import in.hocg.basic.model.SuperModel;
 import in.hocg.scaffold.support.basis.BaseController;
-import in.hocg.scaffold.support.basis.BaseService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,13 +58,14 @@ public class Application {
         
         GlobalConfig config = new GlobalConfig();
         DataSourceConfig dataSourceConfig = new DataSourceConfig();
-        dataSourceConfig.setDbType(DbType.MYSQL)
+        dataSourceConfig.setDbType(DbType.MARIADB)
                 .setUrl(properties.getUrl())
                 .setUsername(properties.getUsername())
                 .setPassword(properties.getPassword())
                 .setDriverName(properties.getDriverClassName());
         StrategyConfig strategyConfig = new StrategyConfig();
         strategyConfig
+                .entityTableFieldAnnotationEnable(true)
                 .setCapitalMode(true)
                 .setEntityColumnConstant(true)
                 .setEntityLombokModel(true)
