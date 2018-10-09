@@ -1,8 +1,6 @@
 spring:
   datasource:
     driver-class-name: org.mariadb.jdbc.Driver
-    #    schema: classpath:db/schema-h2.sql
-    #    data: classpath:db/data-h2.sql
     druid:
       validation-query: select '1'
   session:

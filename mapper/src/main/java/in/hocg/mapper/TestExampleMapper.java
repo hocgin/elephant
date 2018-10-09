@@ -1,7 +1,7 @@
 package in.hocg.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import in.hocg.entity.TExamples;
+import in.hocg.entity.TestExample;
 
 /**
  * <p>
@@ -11,6 +11,6 @@ import in.hocg.entity.TExamples;
  * @author hocgin
  * @since 2018-10-09
  */
-public interface TExamplesMapper extends BaseMapper<TExamples> {
+public interface TestExampleMapper extends BaseMapper<TestExample> {
 
 }

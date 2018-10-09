@@ -5,10 +5,14 @@ spring:
     url: jdbc:mariadb://mysql.localhost:3306/db_test?useSSL=false&useUnicode=true&characterEncoding=UTF-8
     username: root
     password: hocgin
+    schema:
+    - classpath:db/schema-ma.sql
+    #    data: classpath:db/data-ma.sql
+    initialization-mode: always
 mybatis-plus:
   global-config:
     refresh: true
 logging:
   level:
-#    org.springframework: debug
+    #    org.springframework: debug
     in.hocg: debug

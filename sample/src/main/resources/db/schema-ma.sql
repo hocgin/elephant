@@ -1,4 +1,5 @@
-create table t_examples
+DROP TABLE IF EXISTS `test_example`;
+create table `test_example`
 (
   id         int(11) unsigned auto_increment
   comment '自增 ID'
@@ -20,6 +21,7 @@ create table t_examples
   deleter    int(11) unsigned                null
   comment '删除者'
 )
+  ENGINE = InnoDB
   comment '例子表'
   charset = utf8mb4;
 

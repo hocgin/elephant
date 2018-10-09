@@ -1,7 +1,7 @@
 package in.hocg.sample;
 
-import in.hocg.entity.TExamples;
-import in.hocg.mapper.TExamplesMapper;
+import in.hocg.entity.TestExample;
+import in.hocg.mapper.TestExampleMapper;
 import in.hocg.scaffold.support.basis.BaseController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -20,11 +20,11 @@ import java.time.LocalDateTime;
 public class IndexController extends BaseController {
     
     @Autowired
-    TExamplesMapper mapper;
+    TestExampleMapper mapper;
     
     @RequestMapping("/index")
     public ResponseEntity<String> index() {
-        new TExamples()
+        new TestExample()
                 .setName("hocgin")
                 .setCreatedAt(LocalDateTime.now())
                 .insert();

@@ -35,7 +35,7 @@ public class Application {
     
     private static String OUTPUT_DIR;
     private static String PACKAGE_NAME = "in.hocg.generate";
-    private static List TABLES = Arrays.asList("t_examples");
+    private static List TABLES = Arrays.asList("test_example");
     
     @Test
     public void main() {

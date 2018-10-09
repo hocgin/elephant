@@ -17,7 +17,7 @@ import lombok.experimental.Accessors;
 @Data
 @EqualsAndHashCode(callSuper = true)
 @Accessors(chain = true)
-public class TExamples extends DeletedModel<TExamples> {
+public class TestExample extends DeletedModel<TestExample> {
 
     private static final long serialVersionUID = 1L;
 

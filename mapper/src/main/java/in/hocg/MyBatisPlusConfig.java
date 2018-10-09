@@ -13,7 +13,7 @@ import org.springframework.context.annotation.Configuration;
  **/
 @Configuration
 @MapperScan("in.hocg.mapper*")
-public class MyBatisPlusConfiguration {
+public class MyBatisPlusConfig {
     
     /**
      * 分页插件，自动识别数据库类型

@@ -8,9 +8,9 @@ import org.springframework.boot.SpringApplication;
  *
  * @author hocgin
  */
-public class Application extends MainApplication {
+public class SampleApplication extends MainApplication {
     
     public static void main(String[] args) {
-        SpringApplication.run(Application.class);
+        SpringApplication.run(SampleApplication.class);
     }
 }
