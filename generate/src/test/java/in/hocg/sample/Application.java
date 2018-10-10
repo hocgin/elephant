@@ -1,4 +1,4 @@
-package in.hocg.generate;
+package in.hocg.sample;
 
 
 import com.baomidou.mybatisplus.annotation.DbType;

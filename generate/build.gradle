@@ -1,6 +1,6 @@
 dependencies {
     implementation project(':scaffold')
     implementation project(':mybatis+')
-    implementation libs.spring.test
+    testImplementation libs.spring.test
     implementation libs.velocity
 }

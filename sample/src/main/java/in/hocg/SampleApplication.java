@@ -2,6 +2,7 @@ package in.hocg;
 
 import in.hocg.bean.TestBean;
 import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
 /**
@@ -10,7 +11,8 @@ import org.springframework.context.annotation.Bean;
  *
  * @author hocgin
  */
-public class SampleApplication extends MainApplication {
+@SpringBootApplication
+public class SampleApplication {
     
     @Bean(initMethod = "init")
     public TestBean testBean() {

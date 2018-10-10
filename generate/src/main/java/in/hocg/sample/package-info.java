@@ -4,4 +4,4 @@
  *
  * @author hocgin
  */
-package in.hocg.generate;
+package in.hocg.sample;

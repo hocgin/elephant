@@ -16,5 +16,4 @@ mybatis-plus:
     refresh: true
 logging:
   level:
-    #    org.springframework: debug
     in.hocg: debug
