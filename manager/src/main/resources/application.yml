@@ -1,0 +1,25 @@
+spring:
+  datasource:
+    driver-class-name: org.mariadb.jdbc.Driver
+    druid:
+      validation-query: select '1'
+  session:
+    store-type: none
+  profiles:
+    active: dev
+mybatis-plus:
+  mapper-locations: classpath*:/in/hocg/mapper/xml/*Mapper.xml
+  typeAliasesPackage: in.hocg.entity
+  typeEnumsPackage: in.hocg.enums
+  global-config:
+    db-config:
+      db-type: mariadb
+      id-type: id_worker
+      field-strategy: not_empty
+      table-underline: true
+  configuration:
+    map-underscore-to-camel-case: true
+    cache-enabled: false
+    jdbc-type-for-null: 'null'
+server:
+  port: 8080

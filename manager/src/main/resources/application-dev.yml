@@ -1,0 +1,16 @@
+#server:
+#  port: 8081
+spring:
+  datasource:
+    url: jdbc:mariadb://mysql.localhost:3306/db_test?useSSL=false&useUnicode=true&characterEncoding=UTF-8
+    username: root
+    password: hocgin
+    schema:
+    - classpath:db/schema-maria.sql
+    data:
+    - classpath:db/data-maria.sql
+    initialization-mode: always
+logging:
+  level:
+#    org.springframework: debug
+    in.hocg: debug
