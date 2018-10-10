@@ -1,4 +1,4 @@
 dependencies {
     compile project(":scaffold")
-    compile project(":mapper")
+    compile project(":mybatis+")
 }
