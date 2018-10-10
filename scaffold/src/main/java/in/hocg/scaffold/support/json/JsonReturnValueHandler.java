@@ -9,7 +9,6 @@ import org.springframework.core.MethodParameter;
 import org.springframework.http.MediaType;
 import org.springframework.http.server.ServletServerHttpRequest;
 import org.springframework.http.server.ServletServerHttpResponse;
-import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.NativeWebRequest;
 import org.springframework.web.method.support.HandlerMethodReturnValueHandler;
 import org.springframework.web.method.support.ModelAndViewContainer;
@@ -29,7 +28,6 @@ import java.util.List;
  *
  * @author hocgin
  */
-@Component
 public class JsonReturnValueHandler implements HandlerMethodReturnValueHandler,
         BeanPostProcessor {
     

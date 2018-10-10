@@ -10,6 +10,7 @@ spring:
     data:
       - classpath:db/data-maria.sql
     initialization-mode: always
+
 mybatis-plus:
   global-config:
     refresh: true

@@ -5,6 +5,9 @@ spring:
       validation-query: select '1'
   session:
     store-type: none
+  messages:
+    basename: i18n/messages
+    encoding: UTF-8
   profiles:
     active: dev
 mybatis-plus:
