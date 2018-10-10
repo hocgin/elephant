@@ -18,6 +18,6 @@ public class SampleApplication extends MainApplication {
     }
     
     public static void main(String[] args) {
-        SpringApplication.run(SampleApplication.class);
+        SpringApplication.run(SampleApplication.class, args);
     }
 }
