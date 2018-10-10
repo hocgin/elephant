@@ -23,7 +23,7 @@ public class QuartzStarter {
     
     @Bean
     public Trigger myJobTrigger() {
-        log.debug("设定触发时间");
+        log.debug("设定触发时间及次数");
         SimpleScheduleBuilder simpleScheduleBuilder = SimpleScheduleBuilder.simpleSchedule()
                 .withIntervalInSeconds(2)
                 .repeatForever();
