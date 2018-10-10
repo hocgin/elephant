@@ -1,13 +1,14 @@
-#server:
-#  port: 8081
+server:
+  port: 8081
 spring:
   datasource:
-    url: jdbc:mariadb://mysql.localhost:3306/db_test?useSSL=false&useUnicode=true&characterEncoding=UTF-8
+    url: jdbc:mariadb://127.0.0.1:3306/db_test?useSSL=false&useUnicode=true&characterEncoding=UTF-8
     username: root
     password: hocgin
     schema:
-      - classpath:db/schema-ma.sql
-    #    data: classpath:db/data-ma.sql
+      - classpath:db/schema-maria.sql
+    data:
+      - classpath:db/data-maria.sql
     initialization-mode: always
 mybatis-plus:
   global-config:

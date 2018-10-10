@@ -1,14 +1,12 @@
 package in.hocg.scaffold.support.aspect.log;
 
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Component;
 
 /**
  * @author hocgin
  * @date 18-10-8
  **/
 @Slf4j
-@Component
 public class DefaultLogRepository implements LogRepository {
     @Override
     public void handle(String source, String message, long timeMillis) {

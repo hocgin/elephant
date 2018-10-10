@@ -31,8 +31,12 @@ import java.lang.reflect.Method;
 @Slf4j
 public class ILogAspect {
     
+    private final LogRepository repository;
+    
     @Autowired
-    private LogRepository repository;
+    public ILogAspect(LogRepository repository) {
+        this.repository = repository;
+    }
     
     @Pointcut("execution(* in.hocg..*(..)) && @annotation(in.hocg.scaffold.support.aspect.log.ILog)")
     public void logPointcut() {
