@@ -3,11 +3,10 @@ package in.hocg.scaffold.support.json.filter;
 import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.SerializerProvider;
-import com.fasterxml.jackson.databind.ser.BeanPropertyFilter;
-import com.fasterxml.jackson.databind.ser.FilterProvider;
 import com.fasterxml.jackson.databind.ser.PropertyFilter;
 import com.fasterxml.jackson.databind.ser.PropertyWriter;
 import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
+import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 
 import java.util.*;
 
@@ -18,7 +17,7 @@ import java.util.*;
  * @author hocgin
  */
 @JsonFilter("JsonFilter")
-public class JsonFilterProvider extends FilterProvider {
+public class JsonFilterProvider extends SimpleFilterProvider {
     
     private Map<Class<?>, Set<String>> includeMap = new HashMap<>();
     private Map<Class<?>, Set<String>> excludeMap = new HashMap<>();
@@ -35,11 +34,6 @@ public class JsonFilterProvider extends FilterProvider {
         Set<String> fieldSet = map.getOrDefault(type, new HashSet<>());
         fieldSet.addAll(Arrays.asList(fields));
         map.put(type, fieldSet);
-    }
-    
-    @Override
-    public BeanPropertyFilter findFilter(Object filterId) {
-        throw new UnsupportedOperationException("Access to deprecated filters not supported");
     }
     
     @Override
