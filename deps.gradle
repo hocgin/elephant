@@ -46,6 +46,9 @@ ext {
             ],
             velocity   : [
                     'org.apache.velocity:velocity:1.7'
+            ],
+            quartz     : [
+                    'org.springframework.boot:spring-boot-starter-quartz'
             ]
     ]
 }

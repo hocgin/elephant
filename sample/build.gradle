@@ -1,6 +1,6 @@
 dependencies {
     compile project(":scaffold")
     compile project(":mybatis+")
-    compile 'org.springframework.boot:spring-boot-starter-quartz'
+    compile libs.quartz
     testCompile libs.spring.test
 }
