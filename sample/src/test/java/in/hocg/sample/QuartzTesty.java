@@ -5,8 +5,11 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.quartz.*;
 import org.quartz.impl.StdSchedulerFactory;
+import org.quartz.impl.matchers.GroupMatcher;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
+
+import java.util.List;
 
 /**
  * @author hocgin
@@ -39,6 +42,16 @@ public class QuartzTesty {
         Scheduler scheduler = StdSchedulerFactory.getDefaultScheduler();
         scheduler.scheduleJob(detail, trigger);
         scheduler.start();
+    
+    
+        for (JobKey jobKey : scheduler.getJobKeys(GroupMatcher.anyGroup())) {
+            List<? extends Trigger> triggers = scheduler.getTriggersOfJob(jobKey);
+            System.out.println(triggers.size());
+        }
+        
+        
+        
+        
         Thread.sleep(60000);
     }
 }
