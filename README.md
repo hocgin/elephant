@@ -11,6 +11,7 @@
 
 - mock
 - sdk
+- component 构件
 
 ## 版本号
 > https://semver.org/lang/zh-CN/
