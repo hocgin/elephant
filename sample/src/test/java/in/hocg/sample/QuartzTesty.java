@@ -2,6 +2,7 @@ package in.hocg.sample;
 
 import in.hocg.job.TestJob;
 import in.hocg.sample.quartz.listener.TestJobListener;
+import in.hocg.util.DateKit;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.quartz.*;
@@ -10,7 +11,10 @@ import org.quartz.impl.matchers.GroupMatcher;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.List;
 
@@ -77,5 +81,30 @@ public class QuartzTesty {
         
         
         Thread.sleep(60000);
+    }
+    
+    @Test
+    public void testCron() throws SchedulerException, ParseException, InterruptedException {
+        System.out.println("==> Cron ");
+        Scheduler scheduler = StdSchedulerFactory.getDefaultScheduler();
+        CronScheduleBuilder cronSchedule = CronScheduleBuilder.cronSchedule("0/5 * * * * ?");
+        JobDetail detail = JobBuilder.newJob(TestJob.class)
+                .build();
+    
+        LocalDateTime startAt = LocalDateTime.now().plusMinutes(2);
+        LocalDateTime endAt = LocalDateTime.now().plusMinutes(4);
+    
+        System.out.println("开始时间" + startAt.format(DateTimeFormatter.ISO_DATE_TIME));
+        System.out.println("结束时间" + endAt.format(DateTimeFormatter.ISO_DATE_TIME));
+        
+        CronTrigger trigger = TriggerBuilder.newTrigger()
+                .withSchedule(cronSchedule)
+                .startAt(DateKit.as(startAt))
+                .endAt(DateKit.as(endAt))
+                .build();
+        scheduler.scheduleJob(detail, trigger);
+        scheduler.start();
+    
+        Thread.sleep(600_000_000);
     }
 }

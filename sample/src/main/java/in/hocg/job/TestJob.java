@@ -3,6 +3,7 @@ package in.hocg.job;
 import lombok.extern.slf4j.Slf4j;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
+import org.quartz.JobKey;
 import org.springframework.scheduling.quartz.QuartzJobBean;
 
 /**
@@ -13,6 +14,7 @@ import org.springframework.scheduling.quartz.QuartzJobBean;
 public class TestJob extends QuartzJobBean {
     @Override
     protected void executeInternal(JobExecutionContext context) throws JobExecutionException {
-        log.debug("执行任务[任务内容]");
+        JobKey key = context.getJobDetail().getKey();
+        log.debug("执行任务[任务内容] {}:{}", key.getGroup(), key.getName());
     }
 }
