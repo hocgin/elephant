@@ -1,4 +1,4 @@
-package in.hocg.scaffold.support.job.task;
+package in.hocg.scaffold.support.job;
 
 import org.quartz.CronScheduleBuilder;
 import org.quartz.ScheduleBuilder;

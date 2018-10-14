@@ -1,4 +1,4 @@
-package in.hocg.scaffold.support.job.task;
+package in.hocg.scaffold.support.job;
 
 import in.hocg.util.DateKit;
 import org.quartz.*;

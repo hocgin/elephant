@@ -1,7 +1,7 @@
 package in.hocg.sample.quartz;
 
 import in.hocg.job.TestJob;
-import in.hocg.scaffold.support.job.task.CronTask;
+import in.hocg.scaffold.support.job.CronTask;
 import org.quartz.Job;
 
 /**
