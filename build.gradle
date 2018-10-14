@@ -49,7 +49,7 @@ subprojects {
 
     // 通用依赖
     dependencies {
-        compileOnly libs.lombok
+        compile libs.lombok
         compile libs.jdk
         compile libs.commons
         compile libs.guava

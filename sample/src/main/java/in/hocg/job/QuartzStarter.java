@@ -16,7 +16,7 @@ public class QuartzStarter {
 //        log.debug("创建任务详情");
 //        return JobBuilder.newJob(TestJob.class)
 //                .withIdentity("MyJob")
-//                .storeDurably().build();
+//                .storeDurably().submit();
 //    }
 //
 //    @Bean
@@ -28,6 +28,6 @@ public class QuartzStarter {
 //        return TriggerBuilder.newTrigger().forJob(detail())
 //                .withIdentity("MyTrigger")
 //                .withSchedule(simpleScheduleBuilder)
-//                .build();
+//                .submit();
 //    }
 }

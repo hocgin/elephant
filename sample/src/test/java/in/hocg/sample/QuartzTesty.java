@@ -1,8 +1,10 @@
 package in.hocg.sample;
 
 import in.hocg.job.TestJob;
+import in.hocg.sample.quartz.TestCronTask;
 import in.hocg.sample.quartz.listener.TestJobListener;
 import in.hocg.util.DateKit;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.quartz.*;
@@ -22,6 +24,7 @@ import java.util.List;
  * @author hocgin
  * @date 18-10-10
  **/
+@Slf4j
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class QuartzTesty {
@@ -86,14 +89,16 @@ public class QuartzTesty {
     @Test
     public void testCron() throws SchedulerException, ParseException, InterruptedException {
         System.out.println("==> Cron ");
+        
+        
         Scheduler scheduler = StdSchedulerFactory.getDefaultScheduler();
         CronScheduleBuilder cronSchedule = CronScheduleBuilder.cronSchedule("0/5 * * * * ?");
         JobDetail detail = JobBuilder.newJob(TestJob.class)
                 .build();
-    
+        
         LocalDateTime startAt = LocalDateTime.now().plusMinutes(2);
         LocalDateTime endAt = LocalDateTime.now().plusMinutes(4);
-    
+        
         System.out.println("开始时间" + startAt.format(DateTimeFormatter.ISO_DATE_TIME));
         System.out.println("结束时间" + endAt.format(DateTimeFormatter.ISO_DATE_TIME));
         
@@ -104,7 +109,43 @@ public class QuartzTesty {
                 .build();
         scheduler.scheduleJob(detail, trigger);
         scheduler.start();
-    
+        
         Thread.sleep(600_000_000);
     }
+    
+    @Test
+    public void testObj() throws Exception {
+        Scheduler scheduler = StdSchedulerFactory.getDefaultScheduler();
+        scheduler.start();
+        TestCronTask task = new TestCronTask();
+        JobKey key = task.key();
+        task.submit(false);
+        Thread.sleep(4_000);
+        
+        log.debug("暂停 {}", key.hashCode());
+        scheduler.pauseJob(key);
+        Thread.sleep(6_000);
+        log.debug("重启 {}", key.hashCode());
+        
+        scheduler.resumeJob(key);
+    
+        log.debug("触发 {}", key.hashCode());
+        scheduler.triggerJob(key);
+        
+        Thread.sleep(6_000);
+        log.debug("删除 {}", key.hashCode());
+        scheduler.deleteJob(key);
+    
+    
+        log.debug("替换(无)");
+        task.submit(true);
+    
+        Thread.sleep(6_000);
+    
+        log.debug("替换(有)");
+        task.submit(true);
+        
+        Thread.sleep(600_000_000);
+    }
+    
 }
