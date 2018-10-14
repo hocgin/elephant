@@ -38,9 +38,6 @@ ext {
                     "com.alibaba:druid-spring-boot-starter:${versions.druid}",
                     'org.mariadb.jdbc:mariadb-java-client'
             ],
-            flyway     : [
-                    'org.flywaydb:flyway-core'
-            ],
             mybatisPlus: [
                     "com.baomidou:mybatis-plus-boot-starter:${versions.mybatisPlus}",
             ],

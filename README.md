@@ -26,16 +26,6 @@ rc: 即将作为正式版发布
 lts: 长期维护
 ```
 
-## 疑问
-### Spring 生命周期
-- Bean 
-- Session
-
-
-```shell
-
--------------------------
-| sdk | util | generate |
--------------------------
-
-```
+## 目前整合
+- Mybatis + Mybatis Plus
+- Quartz
