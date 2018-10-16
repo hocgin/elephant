@@ -1,5 +1,6 @@
 ## 计划
-- 迁移
+- mail
+- el
 
 ## 目前整合
 - Mybatis + Mybatis Plus
