@@ -46,6 +46,9 @@ ext {
             ],
             quartz     : [
                     'org.springframework.boot:spring-boot-starter-quartz'
+            ],
+            mail       : [
+                    'org.springframework.boot:spring-boot-starter-mail'
             ]
     ]
 }

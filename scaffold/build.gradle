@@ -4,5 +4,6 @@ dependencies {
     compile libs.spring.aop
     compile libs.db
     compile libs.quartz
+    compile libs.mail
     runtimeOnly libs.spring.devtool
 }
