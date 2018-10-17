@@ -1,5 +1,6 @@
 package in.hocg.scaffold.support.aspect.log;
 
+import in.hocg.scaffold.support.spel.SpelParser;
 import in.hocg.scaffold.util.RequestKit;
 import in.hocg.scaffold.util.ResponseKit;
 import lombok.extern.slf4j.Slf4j;
@@ -9,10 +10,6 @@ import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.expression.Expression;
-import org.springframework.expression.ExpressionParser;
-import org.springframework.expression.spel.SpelParserConfiguration;
-import org.springframework.expression.spel.standard.SpelExpressionParser;
 import org.springframework.expression.spel.support.StandardEvaluationContext;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StopWatch;
@@ -68,15 +65,12 @@ public class ILogAspect {
         
         String msg = annotation.message();
         try {
-            SpelParserConfiguration config = new SpelParserConfiguration(true, true);
-            ExpressionParser parser = new SpelExpressionParser(config);
             StandardEvaluationContext context = new StandardEvaluationContext();
             context.setVariable("args", point.getArgs());
             context.setVariable("request", RequestKit.get());
             context.setVariable("response", ResponseKit.get());
             context.setVariable("return", result);
-            Expression expression = parser.parseExpression(msg);
-            msg = expression.getValue(context, String.class);
+            msg = SpelParser.parser(msg, context);
         } catch (Throwable ignored) {
             repository.error(src, ignored.getLocalizedMessage(), watch.getLastTaskTimeMillis());
         }

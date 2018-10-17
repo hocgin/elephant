@@ -14,7 +14,6 @@ import org.springframework.expression.spel.support.StandardEvaluationContext;
  */
 
 @Slf4j
-//@RunWith(SpringRunner.class)
 @SpringBootTest
 public class SpEl {
     
@@ -22,8 +21,9 @@ public class SpEl {
     @Test
     public void testEl() {
         StandardEvaluationContext context = new StandardEvaluationContext();
-        context.setVariable("var", "1024");
-        String text = SpelParser.parser("hi #{#var}", context);
-        log.debug("{}", text);
+        context.setVariable("var", 1024);
+        String text = SpelParser.parser("hi #{#var + 1}", context);
+        String text2 = SpelParser.parser("", context);
+        log.debug("{} {}", text, text2);
     }
 }

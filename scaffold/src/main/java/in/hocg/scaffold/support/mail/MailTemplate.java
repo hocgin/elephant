@@ -1,16 +1,15 @@
 package in.hocg.scaffold.support.mail;
 
+import in.hocg.scaffold.support.spel.SpelParser;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections.MapUtils;
+import org.springframework.expression.EvaluationContext;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeUtility;
-import javax.servlet.ServletContext;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.UnsupportedEncodingException;
 import java.util.Map;
@@ -22,24 +21,18 @@ import java.util.Map;
  * @author hocgin
  */
 @Slf4j
-@Deprecated
-public class MailTemplate {
-    private String from;
-    private String personal = "hocg.in 官方邮件";
+public final class MailTemplate {
+    private String username;
+    private String personal;
     
     private JavaMailSender mailSender;
-    private HttpServletRequest request;
-    private ServletContext servletContext;
-    private HttpServletResponse response;
     
-    public MailTemplate(JavaMailSender mailSender,
-                        HttpServletRequest request,
-                        ServletContext servletContext,
-                        HttpServletResponse response) {
+    public MailTemplate(String username,
+                        String personal,
+                        JavaMailSender mailSender) {
+        this.username = username;
+        this.personal = personal;
         this.mailSender = mailSender;
-        this.servletContext = servletContext;
-        this.request = request;
-        this.response = response;
     }
     
     /**
@@ -60,10 +53,10 @@ public class MailTemplate {
         MimeMessage mimeMessage = mailSender.createMimeMessage();
         MimeMessageHelper messageHelper = new MimeMessageHelper(mimeMessage, true);
         messageHelper.setTo(to);
-        messageHelper.setFrom(from, personal);
+        messageHelper.setFrom(username, personal);
         
         // - 给自己邮箱抄录一份
-        messageHelper.setCc(from);
+        messageHelper.setCc(username);
         messageHelper.setSubject(subject);
         messageHelper.setText(text, true);
         
@@ -106,5 +99,16 @@ public class MailTemplate {
         send(to, subject, text, null, null);
     }
     
+    public void sendUseSpel(String to, String subject, String text, EvaluationContext context,
+                            Map<String, File> inline,
+                            Map<String, File> attachment) throws UnsupportedEncodingException, MessagingException {
+        String content = SpelParser.parser(text, context);
+        send(to, subject, content, inline, attachment);
+    }
+    
+    
+    public void sendUseSpel(String to, String subject, String text, EvaluationContext context) throws UnsupportedEncodingException, MessagingException {
+        sendUseSpel(to, subject, text, context, null, null);
+    }
     
 }
