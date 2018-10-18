@@ -4,6 +4,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
+import java.util.Arrays;
+
 /**
  * @author hocgin
  * @date 18-10-10
@@ -13,6 +15,6 @@ import org.springframework.stereotype.Component;
 public class TestCommandLineRunner implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
-        log.debug("@@TestCommandLineRunner {}", args);
+        log.debug("@@TestCommandLineRunner {}", Arrays.toString(args));
     }
 }

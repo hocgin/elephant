@@ -21,6 +21,11 @@ ext {
                             'org.springframework.boot:spring-boot-starter-test'
                     ]
             ],
+            aliyun     : [
+                    oss: [
+                            "com.aliyun.oss:aliyun-sdk-oss:2.8.3"
+                    ]
+            ],
             lombok     : [
                     'org.projectlombok:lombok',
             ],

@@ -13,7 +13,9 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Lazy;
+import org.springframework.http.client.ClientHttpRequestFactory;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.web.client.RestTemplate;
 
 /**
  * @author hocgin
@@ -46,16 +48,22 @@ public class Starter {
     
     /**
      * 邮件服务
+     *
      * @param username
      * @param javaMailSender
      * @return
      */
     @Bean
     @ConditionalOnMissingBean(JavaMailSender.class)
-    @Autowired
     public MailTemplate mailTemplate(@Value("${spring.mail.username}") String username,
                                      JavaMailSender javaMailSender) {
-        return new MailTemplate( username, "官方邮件", javaMailSender);
+        return new MailTemplate(username, "官方邮件", javaMailSender);
+    }
+    
+    @Bean
+    @ConditionalOnMissingBean
+    public RestTemplate restTemplate(ClientHttpRequestFactory factory) {
+        return new RestTemplate(factory);
     }
     
 }
