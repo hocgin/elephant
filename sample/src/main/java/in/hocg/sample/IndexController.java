@@ -1,7 +1,7 @@
 package in.hocg.sample;
 
-import in.hocg.entity.TestExample;
-import in.hocg.mapper.TestExampleMapper;
+import in.hocg.module.example.entity.TestExample;
+import in.hocg.module.example.mapper.TestExampleMapper;
 import in.hocg.scaffold.support.basis.BaseController;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

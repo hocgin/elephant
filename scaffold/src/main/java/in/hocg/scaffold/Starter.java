@@ -7,13 +7,14 @@ import in.hocg.scaffold.support.interceptor.AntiReplayInterceptor;
 import in.hocg.scaffold.support.json.JsonReturnValueHandler;
 import in.hocg.scaffold.support.mail.MailTemplate;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.http.client.ClientHttpRequestFactory;
+import org.springframework.http.client.SimpleClientHttpRequestFactory;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.web.client.RestTemplate;
 
@@ -40,7 +41,6 @@ public class Starter {
     
     @Bean
     @Lazy
-    @Autowired
     public AntiReplayInterceptor antiReplayInterceptor(CacheService cacheService) {
         // 防重放攻击
         return new AntiReplayInterceptor(cacheService);
@@ -54,16 +54,33 @@ public class Starter {
      * @return
      */
     @Bean
-    @ConditionalOnMissingBean(JavaMailSender.class)
+    @ConditionalOnBean(JavaMailSender.class)
     public MailTemplate mailTemplate(@Value("${spring.mail.username}") String username,
                                      JavaMailSender javaMailSender) {
         return new MailTemplate(username, "官方邮件", javaMailSender);
     }
     
+    /**
+     * Rest 客户端
+     * @param factory
+     * @return
+     */
     @Bean
     @ConditionalOnMissingBean
     public RestTemplate restTemplate(ClientHttpRequestFactory factory) {
         return new RestTemplate(factory);
+    }
+    
+    @Bean
+    public ClientHttpRequestFactory simpleClientHttpRequestFactory() {
+        SimpleClientHttpRequestFactory factory = new SimpleClientHttpRequestFactory();
+        
+        //单位为ms
+        factory.setReadTimeout(10000);
+        
+        //单位为ms
+        factory.setConnectTimeout(10000);
+        return factory;
     }
     
 }

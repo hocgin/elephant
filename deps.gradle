@@ -19,6 +19,9 @@ ext {
                     ],
                     test    : [
                             'org.springframework.boot:spring-boot-starter-test'
+                    ],
+                    security: [
+                            'org.springframework.boot:spring-boot-starter-security'
                     ]
             ],
             aliyun     : [

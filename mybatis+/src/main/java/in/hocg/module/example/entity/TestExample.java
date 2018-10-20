@@ -1,4 +1,4 @@
-package in.hocg.entity;
+package in.hocg.module.example.entity;
 
 import com.baomidou.mybatisplus.annotation.TableField;
 import in.hocg.basic.model.DeletedModel;

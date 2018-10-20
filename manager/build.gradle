@@ -1,4 +1,5 @@
 dependencies {
-    compile project(":scaffold")
-    compile project(":mybatis+")
+    compile project(':scaffold')
+    compile project(':mybatis+')
+    compile libs.spring['security']
 }

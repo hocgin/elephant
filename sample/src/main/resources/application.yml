@@ -28,6 +28,17 @@ spring:
       mail.smtp.starttls.required: true
       mail.debug: true
 
+###########################
+#        AliYun OSS 开发参数
+# https://www.aliyun.com/product/oss?spm=5176.8142029.388261.574.e9396d3eKg8j7h
+###########################
+ali:
+  oss:
+    enabled: true
+    endpoint: http://oss-cn-beijing.aliyuncs.com
+    secret-access: WTNAERBXO7DQOLXILIHjx8NZCzdRmw
+    access-key: LTAIMo7TgRT1ZohX
+
 mybatis-plus:
   mapper-locations: classpath*:/in/hocg/mapper/xml/*Mapper.xml
   typeAliasesPackage: in.hocg.entity

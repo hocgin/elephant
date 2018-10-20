@@ -7,9 +7,26 @@ spring:
     store-type: none
   profiles:
     active: dev
+  #######################
+  #                 _ _
+  # _ __ ___   __ _(_) |
+  #| '_ ` _ \ / _` | | |
+  #| | | | | | (_| | | |
+  #|_| |_| |_|\__,_|_|_|
+  #######################
+  mail:
+    host: smtp.163.com
+    username: 13600747016@163.com
+    # 此处 password 为授权码
+    password: 123456qA
+    properties:
+      mail.smtp.auth: true
+      mail.smtp.starttls.enable: true
+      mail.smtp.starttls.required: true
+      mail.debug: true
 mybatis-plus:
-  mapper-locations: classpath*:/in/hocg/mapper/xml/*Mapper.xml
-  typeAliasesPackage: in.hocg.entity
+  mapper-locations: classpath*:/in/hocg/module/*/mapper/xml/*Mapper.xml
+  typeAliasesPackage: in.hocg.module.*.entity
   typeEnumsPackage: in.hocg.enums
   global-config:
     db-config:

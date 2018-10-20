@@ -1,7 +1,7 @@
-package in.hocg.mapper;
+package in.hocg.module.example.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import in.hocg.entity.TestExample;
+import in.hocg.module.example.entity.TestExample;
 
 /**
  * <p>

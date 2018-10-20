@@ -12,7 +12,7 @@ import org.springframework.context.annotation.Configuration;
  * @date 18-10-8
  **/
 @Configuration
-@MapperScan("in.hocg.mapper*")
+@MapperScan("in.hocg.module.*.mapper")
 public class MyBatisPlusConfig {
     
     /**
