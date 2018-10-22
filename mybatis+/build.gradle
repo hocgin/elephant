@@ -2,3 +2,12 @@ dependencies {
     compile libs.mybatisPlus
     implementation project(':scaffold')
 }
+
+sourceSets {
+    main {
+        resources {
+            srcDirs = ["src/main/java"]
+            includes = ["**/*.xml"]
+        }
+    }
+}

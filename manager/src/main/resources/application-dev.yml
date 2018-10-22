@@ -13,4 +13,5 @@ spring:
 logging:
   level:
 #    org.springframework: debug
-    in.hocg: debug
+#    in.hocg: debug
+    root: debug

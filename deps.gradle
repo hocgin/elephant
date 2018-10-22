@@ -24,6 +24,9 @@ ext {
                             'org.springframework.boot:spring-boot-starter-security'
                     ]
             ],
+            jwt: [
+                    "io.jsonwebtoken:jjwt:0.9.1"
+            ],
             aliyun     : [
                     oss: [
                             "com.aliyun.oss:aliyun-sdk-oss:2.8.3"

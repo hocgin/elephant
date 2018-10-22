@@ -23,3 +23,8 @@ beta: 测试版
 rc: 即将作为正式版发布
 lts: 长期维护
 ```
+
+## TODO
+- 定时任务模块拆分
+- service 接口 / 业务模块实现(Service Imp)/ 模块控制器 拆分
+- Ali 及 相关 sdk 拆分

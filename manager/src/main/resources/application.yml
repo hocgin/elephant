@@ -26,7 +26,7 @@ spring:
       mail.debug: true
 mybatis-plus:
   mapper-locations: classpath*:/in/hocg/module/*/mapper/xml/*Mapper.xml
-  typeAliasesPackage: in.hocg.module.*.entity
+  typeAliasesPackage: in.hocg.*.*.entity
   typeEnumsPackage: in.hocg.enums
   global-config:
     db-config:

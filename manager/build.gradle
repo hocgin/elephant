@@ -1,5 +1,6 @@
 dependencies {
     compile project(':scaffold')
     compile project(':mybatis+')
+    compile libs.jwt
     compile libs.spring['security']
 }

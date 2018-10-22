@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.annotation.TableField;
 import in.hocg.basic.model.DeletedModel;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.ToString;
 import lombok.experimental.Accessors;
 
 /**
@@ -17,6 +18,7 @@ import lombok.experimental.Accessors;
 @Data
 @EqualsAndHashCode(callSuper = true)
 @Accessors(chain = true)
+@ToString
 public class TestExample extends DeletedModel<TestExample> {
 
     private static final long serialVersionUID = 1L;
