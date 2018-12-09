@@ -1,4 +1,4 @@
-package in.hocg.basic.injector;
+package in.hocg.basic.injector.node;
 
 import com.baomidou.mybatisplus.core.injector.AbstractMethod;
 import com.baomidou.mybatisplus.core.injector.DefaultSqlInjector;
@@ -6,8 +6,7 @@ import com.baomidou.mybatisplus.core.parser.SqlParserHelper;
 import com.baomidou.mybatisplus.core.toolkit.Assert;
 import com.baomidou.mybatisplus.core.toolkit.GlobalConfigUtils;
 import in.hocg.basic.NodeMapper;
-import in.hocg.basic.injector.method.AppendChild;
-import in.hocg.basic.injector.method.Example;
+import in.hocg.basic.injector.node.method.*;
 import org.apache.ibatis.builder.MapperBuilderAssistant;
 import org.springframework.stereotype.Component;
 
@@ -49,6 +48,18 @@ public class NodeSqlInjector extends DefaultSqlInjector {
     }
     
     public List<AbstractMethod> getNodeMethod() {
-        return Arrays.asList(new Example(), new AppendChild());
+        return Arrays.asList(
+                new AppendChild(),
+                new AfterChild(),
+                new EmptyNode(),
+                new DeleteNode(),
+                new QueryNodeAndChildren(),
+                new QueryAllChildren(),
+                new QueryTreeNodeForLeaf(),
+                new QueryTreeNodeDepth(),
+                new QueryAllNodeDepth(),
+                new QueryAllLeafNode(),
+                new Analysis()
+        );
     }
 }

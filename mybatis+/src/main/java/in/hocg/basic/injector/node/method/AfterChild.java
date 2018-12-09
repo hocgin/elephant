@@ -1,4 +1,4 @@
-package in.hocg.basic.injector.method;
+package in.hocg.basic.injector.node.method;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.core.injector.AbstractMethod;
@@ -15,17 +15,35 @@ import org.apache.ibatis.mapping.SqlSource;
 /**
  * Created by hocgin on 2018/12/9.
  * email: hocgin@gmail.com
+ * <p>
+ * ```sql
+ * LOCK TABLE nested_category WRITE;
+ * <p>
+ * SELECT @myRight := rgt FROM nested_category
+ * WHERE name = 'TELEVISIONS';
+ * <p>
+ * UPDATE nested_category SET rgt = rgt + 2 WHERE rgt > @myRight;
+ * UPDATE nested_category SET lft = lft + 2 WHERE lft > @myRight;
+ * <p>
+ * INSERT INTO nested_category(name, lft, rgt) VALUES('GAME CONSOLES', @myRight + 1, @myRight + 2);
+ * <p>
+ * UNLOCK TABLES;
+ * ```
  *
  * @author hocgin
  */
 public class AfterChild extends AbstractMethod {
     
     StringBuilder SQL = new StringBuilder("<script>")
-            .append("SELECT @myLeft := lft FROM %s WHERE %s = #{id};")
-            .append("UPDATE %s SET rgt = rgt + 2 WHERE rgt > @myLeft;")
-            .append("UPDATE %s SET lft = lft + 2 WHERE lft > @myLeft;")
-            .append("INSERT INTO %s %s VALUES %s;")
+            .append("SELECT @myRight := rgt FROM :table WHERE :id = #{id};")
+            .append("UPDATE :table SET rgt = rgt + 2 WHERE rgt > @myRight;")
+            .append("UPDATE :table SET lft = lft + 2 WHERE lft > @myRight;")
+            .append("INSERT INTO :table :columnScript VALUES :valuesScript;")
             .append("</script>");
+    
+    private String getMethodName() {
+        return "afterChild";
+    }
     
     /**
      * @param mapperClass
@@ -51,16 +69,15 @@ public class AfterChild extends AbstractMethod {
                 .replaceAll("<if test=\"", "<if test=\"node.")
                 .replaceAll(" != null and ", " != null and node.")
                 // ---
-                .replace("<if test=\"node.lft != null\">#{node.lft},</if>", "@myLeft + 1,")
-                .replace("<if test=\"node.rgt != null\">#{node.rgt},</if>", "@myLeft + 2,");
-        String sql = String.format(SQL.toString(),
-                tableInfo.getTableName(), tableInfo.getKeyColumn(),
-                tableInfo.getTableName(),
-                tableInfo.getTableName(),
-                tableInfo.getTableName(), columnScript, valuesScript
-        );
+                .replace("<if test=\"node.lft != null\">#{node.lft},</if>", "@myRight + 1,")
+                .replace("<if test=\"node.rgt != null\">#{node.rgt},</if>", "@myRight + 2,");
         
-        String method = "appendChild";
+        String sql = SQL.toString().replaceAll(":table", tableInfo.getTableName())
+                .replaceAll(":id", tableInfo.getKeyColumn())
+                .replaceAll(":columns", sqlSelectColumns(tableInfo, true))
+                .replaceAll(":valuesScript", valuesScript)
+                .replaceAll(":columnScript", columnScript);
+        
         KeyGenerator keyGenerator = new NoKeyGenerator();
         String keyProperty = null;
         String keyColumn = null;
@@ -73,13 +90,13 @@ public class AfterChild extends AbstractMethod {
                 keyColumn = tableInfo.getKeyColumn();
             } else {
                 if (null != tableInfo.getKeySequence()) {
-                    keyGenerator = TableInfoHelper.genKeyGenerator(tableInfo, builderAssistant, method, languageDriver);
+                    keyGenerator = TableInfoHelper.genKeyGenerator(tableInfo, builderAssistant, getMethodName(), languageDriver);
                     keyProperty = tableInfo.getKeyProperty();
                     keyColumn = tableInfo.getKeyColumn();
                 }
             }
         }
         SqlSource sqlSource = languageDriver.createSqlSource(configuration, sql, modelClass);
-        return this.addInsertMappedStatement(mapperClass, modelClass, method, sqlSource, keyGenerator, keyProperty, keyColumn);
+        return this.addInsertMappedStatement(mapperClass, modelClass, getMethodName(), sqlSource, keyGenerator, keyProperty, keyColumn);
     }
 }

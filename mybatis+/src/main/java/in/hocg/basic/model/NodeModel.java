@@ -24,6 +24,9 @@ public class NodeModel<T extends Model> extends SuperModel<T> {
     @TableField("rgt")
     private int rgt;
     
+    @TableField(exist = false)
+    private Integer depth;
+    
     public static final String LFT = "lft";
     
     public static final String RGT = "rgt";

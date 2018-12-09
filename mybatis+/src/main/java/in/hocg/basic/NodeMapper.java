@@ -1,9 +1,9 @@
 package in.hocg.basic;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import in.hocg.module.example.entity.Tree;
 import org.apache.ibatis.annotations.Param;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -14,32 +14,86 @@ import java.util.List;
  */
 public interface NodeMapper<M> extends BaseMapper<M> {
     
-    void appendChild(@Param("lft") int lft);
+    /**
+     * 删除节点及其所有子节点
+     *
+     * @return
+     */
+    int emptyNode(@Param("id") Serializable id);
     
-    int emptyNode(@Param("left") int left,
-                  @Param("right") int right,
-                  @Param("width") int width);
+    /**
+     * 删除父节点不删除子节点, 子节点会向上移动
+     *
+     * @param id
+     */
+    void deleteNode(@Param("id") Serializable id);
     
-    void deleteNode(@Param("left") int lft,
-                    @Param("right") int rgt,
-                    @Param("width") int width);
+    /**
+     * 获取当前节点及其一级子节点
+     *
+     * @param id
+     * @return
+     */
+    List<M> queryNodeAndChildren(@Param("id") Serializable id);
     
-    void afterChild(@Param("rgt") int rgt);
+    /**
+     * 获取当前节点及其所有子节点(检索完整的树)
+     *
+     * @param id
+     * @return
+     */
+    List<M> queryAllChildren(@Param("id") Serializable id);
     
-    List<Tree> queryNodeAndChildren(@Param("id") String id);
+    /**
+     * 检索所有叶子节点
+     *
+     * @return
+     */
+    List<M> queryAllLeafNode();
     
-    List<Tree> queryAllChildren(@Param("id") String id);
+    /**
+     * 根据叶子节点回溯路径
+     *
+     * @param id
+     * @return
+     */
+    List<M> queryTreeNodeForLeaf(@Param("id") Serializable id);
     
-    List<Tree> queryAllLeafNode();
+    /**
+     * 检索所有节点的深度
+     *
+     * @return
+     */
+    List<M> queryAllNodeDepth();
     
-    List<Tree> queryTreeNodeForLeaf(@Param("id") String id);
+    /**
+     * 检索子树深度
+     *
+     * @param id
+     * @return
+     */
+    List<M> queryTreeNodeDepth(@Param("id") Serializable id);
     
-    List<Tree> queryAllNodeDepth();
-    
-    List<Tree> queryTreeNodeDepth(@Param("id") String id);
-    
+    /**
+     * 分析节点
+     *
+     * @return
+     */
     List<String> analysis();
     
+    /**
+     * 追加子节点
+     *
+     * @param id
+     * @param node
+     */
+    void appendChild(@Param("id") Serializable id, @Param("node") M node);
     
-    void appendChild2(@Param("id")String id, @Param("node") M node);
+    /**
+     * 添加兄弟节点
+     *
+     * @param id
+     * @param node
+     */
+    void afterChild(@Param("id") Serializable id, @Param("node") M node);
 }

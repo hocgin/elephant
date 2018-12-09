@@ -27,11 +27,9 @@ public class DatabaseTreeTest {
     
     @Autowired
     private TreeService<Tree, TreeMapper> treeService;
-    @Autowired
-    private TreeMapper treeMapper;
     
     @Test
-    public void test() {
+    public void appendChild() {
         Tree newNode = new Tree();
         newNode.setName("OK2");
         newNode.setId(UUID.randomUUID().toString());
@@ -39,7 +37,7 @@ public class DatabaseTreeTest {
     }
     
     @Test
-    public void testDeleteNodeAndChildren() {
+    public void emptyNode() {
         treeService.emptyNode("7");
     }
     
@@ -51,6 +49,7 @@ public class DatabaseTreeTest {
     @Test
     public void afterChild() {
         Tree newNode = new Tree();
+        newNode.setId(UUID.randomUUID().toString());
         newNode.setName("jjjj");
         treeService.afterChild("6", newNode);
     }
@@ -97,20 +96,9 @@ public class DatabaseTreeTest {
     @Test
     public void analysis() {
         List<String> trees = treeService.analysis();
-        System.out.println(trees);
+        System.out.println(trees.get(0));
     }
     
-    @Test
-    public void select() {
-        Tree newNode = new Tree();
-        newNode.setName("OK2");
-        newNode.setId(UUID.randomUUID().toString());
-        treeMapper.appendChild2("5", newNode);
-    }
     
-    @Test
-    public void sql() {
-        System.out.println(treeService.sql());
-    }
     
 }
