@@ -24,12 +24,12 @@ public class RbacRoleResource extends SuperModel<RbacRoleResource> {
     /**
      * 角色 ID
      */
-    @TableField("role_id")
+    @TableField(ROLE_ID)
     private String roleId;
     /**
      * 员工 ID
      */
-    @TableField("staff_id")
+    @TableField(STAFF_ID)
     private String staffId;
 
 

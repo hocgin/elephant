@@ -1,6 +1,6 @@
 ext {
     versions = [
-            mybatisPlus: '3.0.3',
+            mybatisPlus: '3.0.6',
             druid      : '1.1.10',
             springBoot : '2.0.5.RELEASE'
     ]
@@ -9,7 +9,6 @@ ext {
                     web     : [
                             'org.springframework.boot:spring-boot-starter-web'
                     ],
-                    security: [],
                     social  : [],
                     devtool : [
                             'org.springframework.boot:spring-boot-devtools'

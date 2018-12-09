@@ -17,12 +17,12 @@ import java.util.Optional;
 public class PostPageConditionPlus<T> extends PostPageCondition<T> {
     
     @JsonIgnore
-    public <T> Page<T> page() {
+    public Page<T> page() {
         return new Page<>(page, limit);
     }
     
     @JsonIgnore
-    public <T> QueryWrapper<T> wrapper() {
+    public QueryWrapper<T> wrapper() {
         QueryWrapper<T> wrapper = new QueryWrapper<>();
         getSortMap().keySet().forEach(key -> {
             Optional.ofNullable(getSortMap().get(key))

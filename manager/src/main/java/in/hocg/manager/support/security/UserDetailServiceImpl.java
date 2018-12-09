@@ -1,7 +1,7 @@
 package in.hocg.manager.support.security;
 
-import in.hocg.manager.service.RbacRoleStaffService;
-import in.hocg.manager.service.UserStaffService;
+import in.hocg.manager.service.RoleStaffService;
+import in.hocg.manager.service.StaffService;
 import in.hocg.module.system.entity.RbacRole;
 import in.hocg.module.system.entity.UserStaff;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,12 +24,12 @@ import java.util.Optional;
 @Component
 public class UserDetailServiceImpl implements UserDetailsService {
     
-    private final UserStaffService staffService;
-    private final RbacRoleStaffService roleStaffService;
+    private final StaffService staffService;
+    private final RoleStaffService roleStaffService;
     
     @Autowired
-    public UserDetailServiceImpl(UserStaffService staffService,
-                                 RbacRoleStaffService roleStaffService) {
+    public UserDetailServiceImpl(StaffService staffService,
+                                 RoleStaffService roleStaffService) {
         this.staffService = staffService;
         this.roleStaffService = roleStaffService;
     }

@@ -7,7 +7,7 @@ apply from: 'deps.gradle'
  */
 buildscript {
     ext {
-        springBootVersion = '2.0.4.RELEASE'
+        springBootVersion = '2.1.1.RELEASE'
     }
     repositories {
         jcenter()
@@ -17,18 +17,6 @@ buildscript {
         classpath "org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}"
     }
 
-}
-/**
- * 公用的配置
- */
-allprojects {
-    group = 'in.hocg'
-    version = '0.1.1-SNAPSHOT'
-
-    repositories {
-        jcenter()
-        mavenCentral()
-    }
 }
 
 /**
@@ -41,17 +29,16 @@ subprojects {
     apply plugin: 'org.springframework.boot'
     apply plugin: 'io.spring.dependency-management'
 
-    sourceCompatibility = 1.8
-    targetCompatibility = 1.8
+    sourceCompatibility = JavaVersion.VERSION_1_8
+    targetCompatibility = JavaVersion.VERSION_1_8
 
     [compileJava, compileTestJava, javadoc]*.options*.encoding = 'UTF-8'
 
     // 通用依赖
     dependencies {
-        compile libs.lombok
-        compile libs.jdk
-        compile libs.commons
-        compile libs.guava
+        api('org.projectlombok:lombok')
+        api('javax.xml.bind:jaxb-api')
+        api('com.google.guava:guava')
     }
 
     dependencyManagement {
@@ -59,5 +46,18 @@ subprojects {
             mavenBom 'io.spring.platform:platform-bom:Cairo-SR4'
             mavenBom SpringBootPlugin.BOM_COORDINATES
         }
+    }
+}
+
+/**
+ * 公用的配置
+ */
+allprojects {
+    group = 'in.hocg'
+    version = '0.1.1-SNAPSHOT'
+
+    repositories {
+        jcenter()
+        mavenCentral()
     }
 }

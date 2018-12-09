@@ -18,23 +18,23 @@ import lombok.experimental.Accessors;
 @EqualsAndHashCode(callSuper = true)
 @Accessors(chain = true)
 public class RbacRoleStaff extends SuperModel<RbacRoleStaff> {
-
+    
     private static final long serialVersionUID = 1L;
-
+    
     /**
      * 角色 ID
      */
-    @TableField("role_id")
+    @TableField(ROLE_ID)
     private String roleId;
     /**
      * 员工 ID
      */
-    @TableField("staff_id")
+    @TableField(STAFF_ID)
     private String staffId;
-
-
+    
+    
     public static final String ROLE_ID = "role_id";
-
+    
     public static final String STAFF_ID = "staff_id";
-
+    
 }

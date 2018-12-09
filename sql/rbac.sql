@@ -3,8 +3,8 @@
 *           资源表
 * ============================
 */
-DROP TABLE IF EXISTS `rbac_resource`;
-CREATE TABLE `rbac_resource` (
+DROP TABLE IF EXISTS `resource`;
+CREATE TABLE `resource` (
   `id`          CHAR(32)
   COMMENT 'UUID',
   --
@@ -45,8 +45,8 @@ CREATE TABLE `rbac_resource` (
 *           角色表
 * ============================
 */
-DROP TABLE IF EXISTS `rbac_role`;
-CREATE TABLE `rbac_role` (
+DROP TABLE IF EXISTS `role`;
+CREATE TABLE `role` (
   `id`             CHAR(32)
   COMMENT 'UUID',
   --
@@ -77,8 +77,8 @@ CREATE TABLE `rbac_role` (
 *     角色-资源 关联表(多对多)
 * ============================
 */
-DROP TABLE IF EXISTS `rbac_role_resource`;
-CREATE TABLE `rbac_role_resource` (
+DROP TABLE IF EXISTS `role_resource`;
+CREATE TABLE `role_resource` (
   `id`          CHAR(32)
   COMMENT 'UUID',
   --
@@ -98,8 +98,8 @@ CREATE TABLE `rbac_role_resource` (
 *     员工表
 * ============================
 */
-DROP TABLE IF EXISTS `user_staff`;
-CREATE TABLE `user_staff` (
+DROP TABLE IF EXISTS `staff`;
+CREATE TABLE `staff` (
   `id`            CHAR(32)
   COMMENT 'UUID',
   --
@@ -145,12 +145,12 @@ CREATE TABLE `user_staff` (
 *     角色-员工 关联表(多对多)
 * ============================
 */
-DROP TABLE IF EXISTS `rbac_role_staff`;
-CREATE TABLE `rbac_role_staff` (
-  `id`          CHAR(32)
+DROP TABLE IF EXISTS `role_staff`;
+CREATE TABLE `role_staff` (
+  `id`       CHAR(32)
   COMMENT 'UUID',
   --
-  `role_id`     CHAR(32)
+  `role_id`  CHAR(32)
   COMMENT '角色 ID',
   `staff_id` CHAR(32)
   COMMENT '员工 ID',

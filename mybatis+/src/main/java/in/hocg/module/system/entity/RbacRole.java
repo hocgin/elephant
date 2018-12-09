@@ -24,37 +24,37 @@ public class RbacRole extends SuperModel<RbacRole> {
     /**
      * 角色标识
      */
-    @TableField("identification")
+    @TableField(IDENTIFICATION)
     private String identification;
     /**
      * 树级路径
      */
-    @TableField("tree_path")
+    @TableField(TREE_PATH)
     private String treePath;
     /**
      * 父级ID
      */
-    @TableField("parent_id")
+    @TableField(PARENT_ID)
     private String parentId;
     /**
      * 角色名称
      */
-    @TableField("name")
+    @TableField(NAME)
     private String name;
     /**
      * 角色别称
      */
-    @TableField("alias")
+    @TableField(ALIAS)
     private String alias;
     /**
      * 角色描述
      */
-    @TableField("description")
+    @TableField(DESCRIPTION)
     private String description;
     /**
      * 排序
      */
-    @TableField("sort")
+    @TableField(SORT)
     private Integer sort;
 
 
