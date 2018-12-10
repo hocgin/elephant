@@ -1,10 +1,10 @@
 package in.hocg.manager.service.impl;
 
-import in.hocg.basic.BaseService;
+import in.hocg.mybatis.basic.BaseService;
 import in.hocg.manager.service.RoleStaffService;
-import in.hocg.module.system.entity.RbacRole;
-import in.hocg.module.system.entity.RbacRoleStaff;
-import in.hocg.module.system.mapper.RoleStaffMapper;
+import in.hocg.mybatis.entity.RbacRole;
+import in.hocg.mybatis.entity.RbacRoleStaff;
+import in.hocg.mybatis.module.system.mapper.RoleStaffMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;

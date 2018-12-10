@@ -1,8 +1,8 @@
 package in.hocg.sample.database;
 
-import in.hocg.basic.model.NodeModel;
-import in.hocg.module.example.entity.Tree;
-import in.hocg.module.example.mapper.TreeMapper;
+import in.hocg.mybatis.basic.model.NodeModel;
+import in.hocg.mybatis.module.example.entity.Tree;
+import in.hocg.mybatis.module.example.mapper.TreeMapper;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
@@ -11,7 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import java.util.*;
+import java.util.List;
+import java.util.UUID;
 
 /**
  * Created by hocgin on 2018/12/9.
@@ -22,7 +23,6 @@ import java.util.*;
 @Slf4j
 @RunWith(SpringRunner.class)
 @SpringBootTest
-@NoArgsConstructor
 public class DatabaseTreeTest {
     
     @Autowired

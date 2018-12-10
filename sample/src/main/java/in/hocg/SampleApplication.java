@@ -1,6 +1,6 @@
 package in.hocg;
 
-import in.hocg.bean.TestBean;
+import in.hocg.sample.bean.TestBean;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;

@@ -1,9 +1,9 @@
 package in.hocg.manager.service.impl;
 
-import in.hocg.basic.BaseService;
+import in.hocg.mybatis.basic.BaseService;
 import in.hocg.manager.service.RoleResourceService;
-import in.hocg.module.system.entity.RbacRoleResource;
-import in.hocg.module.system.mapper.RoleResourceMapper;
+import in.hocg.mybatis.entity.RbacRoleResource;
+import in.hocg.mybatis.module.system.mapper.RoleResourceMapper;
 import org.springframework.stereotype.Service;
 
 /**

@@ -1,7 +1,7 @@
 package in.hocg.sample.database;
 
-import in.hocg.basic.NodeMapper;
-import in.hocg.basic.model.NodeModel;
+import in.hocg.mybatis.basic.NodeMapper;
+import in.hocg.mybatis.basic.model.NodeModel;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

@@ -25,9 +25,9 @@ spring:
       mail.smtp.starttls.required: true
       mail.debug: true
 mybatis-plus:
-  mapper-locations: classpath*:/in/hocg/module/*/mapper/xml/*Mapper.xml
+  mapper-locations: classpath*:/in/hocg/mybatis/module/*/mapper/xml/*Mapper.xml
   typeAliasesPackage: in.hocg.*.*.entity
-  typeEnumsPackage: in.hocg.enums
+  typeEnumsPackage: in.hocg.*.*
   global-config:
     db-config:
       db-type: mariadb

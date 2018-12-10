@@ -2,9 +2,9 @@ package in.hocg.manager.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import in.hocg.manager.service.StaffService;
-import in.hocg.module.system.entity.UserStaff;
-import in.hocg.module.system.mapper.StaffMapper;
-import in.hocg.basic.BaseService;
+import in.hocg.mybatis.entity.UserStaff;
+import in.hocg.mybatis.module.system.mapper.StaffMapper;
+import in.hocg.mybatis.basic.BaseService;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;

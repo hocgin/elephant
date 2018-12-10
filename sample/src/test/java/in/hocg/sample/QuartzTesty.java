@@ -1,6 +1,6 @@
 package in.hocg.sample;
 
-import in.hocg.job.TestJob;
+import in.hocg.sample.job.TestJob;
 import in.hocg.sample.quartz.TestCronTask;
 import in.hocg.sample.quartz.listener.TestJobListener;
 import in.hocg.util.DateKit;
