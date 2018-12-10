@@ -24,4 +24,5 @@ import lombok.experimental.Accessors;
 public class Tree extends NodeModel<Tree> {
     @TableField("name")
     private String name;
+    
 }

@@ -1,5 +1,6 @@
 package in.hocg.sample.database;
 
+import in.hocg.basic.model.NodeModel;
 import in.hocg.module.example.entity.Tree;
 import in.hocg.module.example.mapper.TreeMapper;
 import lombok.NoArgsConstructor;
@@ -10,8 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 /**
  * Created by hocgin on 2018/12/9.
@@ -83,9 +83,13 @@ public class DatabaseTreeTest {
     
     @Test
     public void queryAllNodeDepth() {
-        List<Tree> trees = treeService.queryAllNodeDepth();
-        System.out.println(trees);
+        List<Tree> nodes = treeService.queryAllNodeDepth();
+        System.out.println(nodes);
+        
+        Tree root = NodeModel.buildTree(nodes.get(0), nodes);
+        System.out.println(root);
     }
+    
     
     @Test
     public void queryTreeNodeDepth() {
@@ -98,7 +102,6 @@ public class DatabaseTreeTest {
         List<String> trees = treeService.analysis();
         System.out.println(trees.get(0));
     }
-    
     
     
 }

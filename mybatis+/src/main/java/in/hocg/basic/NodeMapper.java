@@ -1,6 +1,7 @@
 package in.hocg.basic;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import in.hocg.basic.model.NodeModel;
 import org.apache.ibatis.annotations.Param;
 
 import java.io.Serializable;
@@ -12,7 +13,7 @@ import java.util.List;
  *
  * @author hocgin
  */
-public interface NodeMapper<M> extends BaseMapper<M> {
+public interface NodeMapper<M extends NodeModel> extends BaseMapper<M> {
     
     /**
      * 删除节点及其所有子节点
@@ -96,4 +97,5 @@ public interface NodeMapper<M> extends BaseMapper<M> {
      * @param node
      */
     void afterChild(@Param("id") Serializable id, @Param("node") M node);
+    
 }

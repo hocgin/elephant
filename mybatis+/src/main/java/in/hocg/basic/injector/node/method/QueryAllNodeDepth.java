@@ -10,6 +10,7 @@ import org.apache.ibatis.mapping.SqlSource;
  * email: hocgin@gmail.com
  *
  * @author hocgin
+ * 查询所有节点及其深度
  */
 public class QueryAllNodeDepth extends AbstractMethod {
     StringBuilder SQL = new StringBuilder("<script>")

@@ -10,6 +10,8 @@ import org.apache.ibatis.mapping.SqlSource;
  * email: hocgin@gmail.com
  *
  * @author hocgin
+ *
+ *
  */
 public class QueryAllChildren extends AbstractMethod {
     StringBuilder SQL = new StringBuilder("<script>")
