@@ -1,6 +1,4 @@
 ## 计划
-- mail
-- el
 
 ## 目前整合
 - Mybatis + Mybatis Plus
@@ -8,3 +6,6 @@
 - Mail
 - IP Util
 - Ali OSS
+- mail
+- el
+- Modified Preorder Tree Traversal
