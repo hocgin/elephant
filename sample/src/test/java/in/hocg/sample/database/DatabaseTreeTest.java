@@ -1,9 +1,8 @@
 package in.hocg.sample.database;
 
 import in.hocg.mybatis.basic.model.NodeModel;
-import in.hocg.mybatis.module.example.entity.Tree;
-import in.hocg.mybatis.module.example.mapper.TreeMapper;
-import lombok.NoArgsConstructor;
+import in.hocg.sample.mybatis.example.entity.Tree;
+import in.hocg.sample.mybatis.example.mapper.TreeMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 import org.junit.runner.RunWith;

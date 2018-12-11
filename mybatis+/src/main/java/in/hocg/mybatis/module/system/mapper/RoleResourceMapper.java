@@ -1,7 +1,9 @@
 package in.hocg.mybatis.module.system.mapper;
 
-import in.hocg.mybatis.module.system.entity.RbacRoleResource;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import in.hocg.mybatis.module.system.entity.RbacRoleResource;
+import org.apache.ibatis.annotations.Mapper;
+import org.springframework.stereotype.Component;
 
 /**
  * <p>
@@ -11,6 +13,8 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  * @author hocgin
  * @since 2018-10-21
  */
+@Mapper
+@Component
 public interface RoleResourceMapper extends BaseMapper<RbacRoleResource> {
 
 }

@@ -2,9 +2,6 @@ package in.hocg.sample.database;
 
 import in.hocg.mybatis.basic.NodeMapper;
 import in.hocg.mybatis.basic.model.NodeModel;
-import lombok.AllArgsConstructor;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -14,9 +11,9 @@ import java.util.List;
  *
  * @author hocgin
  */
-@Service
-@AllArgsConstructor
-@Transactional
+//@Service
+//@AllArgsConstructor
+//@Transactional
 public class TreeService<M extends NodeModel, T extends NodeMapper<M>> {
     private T mapper;
     

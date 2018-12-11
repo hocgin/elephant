@@ -40,9 +40,9 @@ ali:
     access-key: LTAIMo7TgRT1ZohX
 
 mybatis-plus:
-  mapper-locations: classpath*:/in/hocg/mybatis/module/*/mapper/xml/*Mapper.xml
-  typeAliasesPackage: in.hocg.entity
-  typeEnumsPackage: in.hocg.*.*
+  mapper-locations: classpath*:/in/hocg/mybatis/*/mapper/xml/*Mapper.xml,/in/hocg/sample/mybatis/*/mapper/xml/*Mapper.xml
+  typeAliasesPackage: in.hocg.mybatis.*.entity.*,in.hocg.sample.mybatis.*.entity.*
+  typeEnumsPackage: in.hocg.mybatis.*.enums.*,in.hocg.sample.mybatis.*.enums.*
   global-config:
     db-config:
       db-type: mariadb

@@ -1,8 +1,9 @@
-package in.hocg.mybatis.module.example.mapper;
+package in.hocg.sample.mybatis.example.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import in.hocg.mybatis.module.example.entity.TestExample;
+import in.hocg.sample.mybatis.example.entity.TestExample;
 import org.apache.ibatis.annotations.Mapper;
+import org.springframework.stereotype.Component;
 
 /**
  * <p>
@@ -14,5 +15,4 @@ import org.apache.ibatis.annotations.Mapper;
  */
 @Mapper
 public interface TestExampleMapper extends BaseMapper<TestExample> {
-
 }

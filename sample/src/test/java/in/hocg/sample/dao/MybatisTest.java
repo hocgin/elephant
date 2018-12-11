@@ -1,8 +1,8 @@
 package in.hocg.sample.dao;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import in.hocg.mybatis.module.example.entity.TestExample;
-import in.hocg.mybatis.module.example.mapper.TestExampleMapper;
+import in.hocg.sample.mybatis.example.entity.TestExample;
+import in.hocg.sample.mybatis.example.mapper.TestExampleMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 import org.junit.runner.RunWith;

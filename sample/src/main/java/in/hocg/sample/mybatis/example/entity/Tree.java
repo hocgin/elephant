@@ -1,4 +1,4 @@
-package in.hocg.mybatis.module.example.entity;
+package in.hocg.sample.mybatis.example.entity;
 
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;

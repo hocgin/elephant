@@ -1,4 +1,4 @@
-package in.hocg.mybatis;
+package in.hocg;
 
 import com.baomidou.mybatisplus.extension.plugins.PaginationInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.PerformanceInterceptor;
@@ -12,7 +12,7 @@ import org.springframework.context.annotation.Configuration;
  * @date 18-10-8
  **/
 @Configuration
-@MapperScan("in.hocg.mybatis.module.*.mapper")
+@MapperScan(basePackageClasses = MyBatisPlusConfig.class)
 public class MyBatisPlusConfig {
     
     /**

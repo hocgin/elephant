@@ -15,18 +15,12 @@ public class DateKit {
     
     /**
      * LocalDateTime => Date
+     *
      * @param localDateTime
      * @return
      */
     public static Date as(LocalDateTime localDateTime) {
         ZonedDateTime zonedDateTime = localDateTime.atZone(ZoneId.systemDefault());
         return Date.from(localDateTime.toInstant(zonedDateTime.getOffset()));
-    }
-    
-    @Deprecated
-    public static void main(String[] args) {
-        LocalDateTime now = LocalDateTime.now();
-        Date date = as(now);
-        System.out.println(date);
     }
 }
