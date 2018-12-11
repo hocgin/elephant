@@ -2,7 +2,6 @@ package in.hocg.scaffold.sdk.ip;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.apache.commons.lang.StringUtils;
 
 import java.util.List;
 
@@ -27,6 +26,6 @@ public class IpToAddress {
     private List<String> data;
     
     public String getAddressString() {
-        return StringUtils.join(data.iterator(), ",");
+        return String.join(",", data);
     }
 }

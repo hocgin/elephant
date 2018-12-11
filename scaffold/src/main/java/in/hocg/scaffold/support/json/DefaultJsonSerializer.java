@@ -5,7 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import in.hocg.scaffold.support.json.annotation.JSON;
 import in.hocg.scaffold.support.json.filter.JsonFilterProvider;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang.StringUtils;
+import org.apache.logging.log4j.util.Strings;
 import org.springframework.http.ResponseEntity;
 
 /**
@@ -29,12 +29,12 @@ public class DefaultJsonSerializer implements JsonSerializer {
             return;
         }
         // 需要导入字段
-        if (StringUtils.isNotBlank(include)) {
+        if (Strings.isNotBlank(include)) {
             jacksonFilter.include(clazz, include.split(","));
         }
         
         // 不需要导入字段
-        if (StringUtils.isNotBlank(filter)) {
+        if (Strings.isNotBlank(filter)) {
             jacksonFilter.exclude(clazz, filter.split(","));
         }
         mapper.addMixIn(clazz, jacksonFilter.getClass());

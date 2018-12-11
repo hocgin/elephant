@@ -2,7 +2,6 @@ package in.hocg.scaffold.support.mail;
 
 import in.hocg.scaffold.support.spel.SpelParser;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.collections.MapUtils;
 import org.springframework.expression.EvaluationContext;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
@@ -13,6 +12,7 @@ import javax.mail.internet.MimeUtility;
 import java.io.File;
 import java.io.UnsupportedEncodingException;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * Created by hocgin on 2018/10/17.
@@ -61,7 +61,7 @@ public final class MailTemplate {
         messageHelper.setText(text, true);
         
         // 图片
-        if (!MapUtils.isEmpty(inline)) {
+        if (Objects.nonNull(inline)) {
             inline.forEach((k, v) -> {
                 try {
                     messageHelper.addInline(k, v);
@@ -72,7 +72,7 @@ public final class MailTemplate {
         }
         
         // 附件
-        if (!MapUtils.isEmpty(attachment)) {
+        if (Objects.nonNull(attachment)) {
             attachment.forEach((k, v) -> {
                 try {
                     String filename = MimeUtility.encodeWord(k)
