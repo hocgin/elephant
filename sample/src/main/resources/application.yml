@@ -32,7 +32,7 @@ spring:
 #        AliYun OSS 开发参数
 # https://www.aliyun.com/product/oss?spm=5176.8142029.388261.574.e9396d3eKg8j7h
 ###########################
-ali:
+ali-yun:
   oss:
     enabled: true
     endpoint: http://oss-cn-beijing.aliyuncs.com
@@ -40,9 +40,12 @@ ali:
     access-key: LTAIMo7TgRT1ZohX
 
 mybatis-plus:
+  # 开包含多个路径, 用,分隔(*任意一个, **任意多个)
   mapper-locations: classpath*:/mapper/**/*Mapper.xml
-  typeAliasesPackage: in.hocg.*.*
-  typeEnumsPackage: in.hocg.mybatis.enums.*.*
+  # 开包含多个路径, 用,分隔(*任意一个, **任意多个)
+  typeAliasesPackage: in.hocg.mybatis.**.entity**
+  # 开包含多个路径, 用,分隔(*任意一个, **任意多个)
+  typeEnumsPackage: in.hocg.mybatis.enums**
   global-config:
     db-config:
       db-type: mariadb
