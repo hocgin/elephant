@@ -1,4 +1,4 @@
-rootProject.name = 'scaffold-gradle'
+rootProject.name = 'iScaffold'
 include 'util'
 include 'scaffold'
 include 'mybatis+'
