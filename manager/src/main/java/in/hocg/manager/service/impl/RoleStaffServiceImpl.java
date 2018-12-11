@@ -2,8 +2,8 @@ package in.hocg.manager.service.impl;
 
 import in.hocg.manager.service.RoleStaffService;
 import in.hocg.mybatis.basic.BaseService;
-import in.hocg.mybatis.module.system.entity.RbacRole;
-import in.hocg.mybatis.module.system.entity.RbacRoleStaff;
+import in.hocg.mybatis.module.system.entity.Role;
+import in.hocg.mybatis.module.system.entity.RoleStaff;
 import in.hocg.mybatis.module.system.mapper.RoleStaffMapper;
 import org.springframework.stereotype.Service;
 
@@ -18,11 +18,11 @@ import java.util.Collection;
  * @since 2018-10-21
  */
 @Service
-public class RoleStaffServiceImpl extends BaseService<RoleStaffMapper, RbacRoleStaff>
+public class RoleStaffServiceImpl extends BaseService<RoleStaffMapper, RoleStaff>
         implements RoleStaffService {
     
     @Override
-    public Collection<RbacRole> findByAllRoleUseStaffId(String id) {
+    public Collection<Role> findByAllRoleUseStaffId(String id) {
         return baseMapper.findByAllRoleUseStaffId(id);
     }
 }

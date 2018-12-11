@@ -1,9 +1,6 @@
 package in.hocg.sample.controller;
 
-import in.hocg.mybatis.module.system.mapper.ResourceMapper;
 import in.hocg.sample.controller.body.User;
-import in.hocg.sample.mybatis.example.mapper.TestExampleMapper;
-import in.hocg.scaffold.support.aspect.log.LogRepository;
 import in.hocg.scaffold.support.basis.BaseController;
 import in.hocg.scaffold.support.json.annotation.JSON;
 import lombok.AllArgsConstructor;

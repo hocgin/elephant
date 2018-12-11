@@ -16,4 +16,5 @@ mybatis-plus:
     refresh: true
 logging:
   level:
-    in.hocg: debug
+#    in.hocg: debug
+    com.baomidou.mybatisplus: debug

@@ -17,7 +17,7 @@ import lombok.experimental.Accessors;
 @Data
 @EqualsAndHashCode(callSuper = true)
 @Accessors(chain = true)
-public class RbacRole extends SuperModel<RbacRole> {
+public class Role extends SuperModel<Role> {
 
     private static final long serialVersionUID = 1L;
 

@@ -4,3 +4,11 @@ dependencies {
     compile libs.quartz
     testCompile libs.spring.test
 }
+//sourceSets {
+//    main {
+//        resources {
+//            srcDirs = ["src/main/java"]
+//            includes = ["**/*.xml"]
+//        }
+//    }
+//}

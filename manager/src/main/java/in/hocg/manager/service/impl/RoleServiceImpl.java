@@ -2,7 +2,7 @@ package in.hocg.manager.service.impl;
 
 import in.hocg.manager.service.RoleService;
 import in.hocg.mybatis.basic.BaseService;
-import in.hocg.mybatis.module.system.entity.RbacRole;
+import in.hocg.mybatis.module.system.entity.Role;
 import in.hocg.mybatis.module.system.mapper.RoleMapper;
 import org.springframework.stereotype.Service;
 
@@ -15,7 +15,7 @@ import org.springframework.stereotype.Service;
  * @since 2018-10-21
  */
 @Service
-public class RoleServiceImpl extends BaseService<RoleMapper, RbacRole>
+public class RoleServiceImpl extends BaseService<RoleMapper, Role>
         implements RoleService {
     
 }

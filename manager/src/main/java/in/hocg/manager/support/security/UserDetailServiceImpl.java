@@ -2,8 +2,8 @@ package in.hocg.manager.support.security;
 
 import in.hocg.manager.service.RoleStaffService;
 import in.hocg.manager.service.StaffService;
-import in.hocg.mybatis.module.system.entity.RbacRole;
-import in.hocg.mybatis.module.system.entity.UserStaff;
+import in.hocg.mybatis.module.system.entity.Role;
+import in.hocg.mybatis.module.system.entity.Staff;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.User;
@@ -36,16 +36,16 @@ public class UserDetailServiceImpl implements UserDetailsService {
     
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Optional<UserStaff> staffOptional = staffService.findByUsername(username);
+        Optional<Staff> staffOptional = staffService.findByUsername(username);
         
         staffOptional.orElseThrow(() ->
                 new UsernameNotFoundException("用户名或密码错误")
         );
         
-        UserStaff staff = staffOptional.get();
-        Collection<RbacRole> roles = roleStaffService.findByAllRoleUseStaffId(staff.getId());
+        Staff staff = staffOptional.get();
+        Collection<Role> roles = roleStaffService.findByAllRoleUseStaffId(staff.getId());
         String[] roleMark = roles.stream()
-                .map(RbacRole::getIdentification)
+                .map(Role::getIdentification)
                 .distinct().toArray(String[]::new);
         
         return new User(staff.getUsername(),

@@ -2,7 +2,7 @@ package in.hocg.manager.service.impl;
 
 import in.hocg.manager.service.ResourceService;
 import in.hocg.mybatis.basic.BaseService;
-import in.hocg.mybatis.module.system.entity.RbacResource;
+import in.hocg.mybatis.module.system.entity.Resource;
 import in.hocg.mybatis.module.system.mapper.ResourceMapper;
 import org.springframework.stereotype.Service;
 
@@ -15,7 +15,7 @@ import org.springframework.stereotype.Service;
  * @since 2018-10-21
  */
 @Service
-public class ResourceServiceImpl extends BaseService<ResourceMapper, RbacResource>
+public class ResourceServiceImpl extends BaseService<ResourceMapper, Resource>
         implements ResourceService {
 
 }

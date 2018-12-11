@@ -3,7 +3,7 @@ package in.hocg.manager.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import in.hocg.manager.service.StaffService;
 import in.hocg.mybatis.basic.BaseService;
-import in.hocg.mybatis.module.system.entity.UserStaff;
+import in.hocg.mybatis.module.system.entity.Staff;
 import in.hocg.mybatis.module.system.mapper.StaffMapper;
 import org.springframework.stereotype.Service;
 
@@ -18,13 +18,13 @@ import java.util.Optional;
  * @since 2018-10-19
  */
 @Service
-public class StaffServiceImpl extends BaseService<StaffMapper, UserStaff>
+public class StaffServiceImpl extends BaseService<StaffMapper, Staff>
         implements StaffService {
     
     @Override
-    public Optional<UserStaff> findByUsername(String username) {
-        QueryWrapper<UserStaff> where = queryWrapper().eq(UserStaff.USERNAME, username);
-        UserStaff userStaff = baseMapper.selectOne(where);
+    public Optional<Staff> findByUsername(String username) {
+        QueryWrapper<Staff> where = queryWrapper().eq(Staff.USERNAME, username);
+        Staff userStaff = baseMapper.selectOne(where);
         return Optional.ofNullable(userStaff);
     }
 }

@@ -1,7 +1,7 @@
 package in.hocg.manager.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import in.hocg.mybatis.module.system.entity.UserStaff;
+import in.hocg.mybatis.module.system.entity.Staff;
 
 import java.util.Optional;
 
@@ -13,7 +13,7 @@ import java.util.Optional;
  * @author hocgin
  * @since 2018-10-19
  */
-public interface StaffService extends IService<UserStaff> {
+public interface StaffService extends IService<Staff> {
     
-    Optional<UserStaff> findByUsername(String username);
+    Optional<Staff> findByUsername(String username);
 }

@@ -1,8 +1,8 @@
 package in.hocg.manager.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import in.hocg.mybatis.module.system.entity.RbacRole;
-import in.hocg.mybatis.module.system.entity.RbacRoleStaff;
+import in.hocg.mybatis.module.system.entity.Role;
+import in.hocg.mybatis.module.system.entity.RoleStaff;
 
 import java.util.Collection;
 
@@ -14,12 +14,12 @@ import java.util.Collection;
  * @author hocgin
  * @since 2018-10-21
  */
-public interface RoleStaffService extends IService<RbacRoleStaff> {
+public interface RoleStaffService extends IService<RoleStaff> {
     
     /**
      * 查找 该员工 分配到的所有角色
      * @param id
      * @return
      */
-    Collection<RbacRole> findByAllRoleUseStaffId(String id);
+    Collection<Role> findByAllRoleUseStaffId(String id);
 }

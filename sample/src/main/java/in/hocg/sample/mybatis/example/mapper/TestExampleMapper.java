@@ -5,6 +5,8 @@ import in.hocg.sample.mybatis.example.entity.TestExample;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Component;
 
+import java.util.Optional;
+
 /**
  * <p>
  * 例子表 Mapper 接口
@@ -14,5 +16,14 @@ import org.springframework.stereotype.Component;
  * @since 2018-10-09
  */
 @Mapper
+@Component
 public interface TestExampleMapper extends BaseMapper<TestExample> {
+    /**
+     * 测试查找对象为null能不能使用Optional
+     * 不能返回 Optional
+     * @return
+     */
+    Optional<TestExample> findNull();
+    TestExample findNull2();
+    
 }

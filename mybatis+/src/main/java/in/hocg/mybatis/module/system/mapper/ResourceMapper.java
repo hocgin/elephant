@@ -1,7 +1,7 @@
 package in.hocg.mybatis.module.system.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import in.hocg.mybatis.module.system.entity.RbacResource;
+import in.hocg.mybatis.module.system.entity.Resource;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Component;
 
@@ -15,6 +15,6 @@ import org.springframework.stereotype.Component;
  */
 @Mapper
 @Component
-public interface ResourceMapper extends BaseMapper<RbacResource> {
+public interface ResourceMapper extends BaseMapper<Resource> {
 
 }

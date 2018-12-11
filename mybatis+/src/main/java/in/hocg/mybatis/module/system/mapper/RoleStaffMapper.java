@@ -1,8 +1,8 @@
 package in.hocg.mybatis.module.system.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import in.hocg.mybatis.module.system.entity.RbacRole;
-import in.hocg.mybatis.module.system.entity.RbacRoleStaff;
+import in.hocg.mybatis.module.system.entity.Role;
+import in.hocg.mybatis.module.system.entity.RoleStaff;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Component;
@@ -19,6 +19,6 @@ import java.util.Collection;
  */
 @Mapper
 @Component
-public interface RoleStaffMapper extends BaseMapper<RbacRoleStaff> {
-    Collection<RbacRole> findByAllRoleUseStaffId(@Param("id") String id);
+public interface RoleStaffMapper extends BaseMapper<RoleStaff> {
+    Collection<Role> findByAllRoleUseStaffId(@Param("id") String id);
 }
