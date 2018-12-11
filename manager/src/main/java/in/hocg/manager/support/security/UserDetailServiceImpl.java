@@ -2,8 +2,8 @@ package in.hocg.manager.support.security;
 
 import in.hocg.manager.service.RoleStaffService;
 import in.hocg.manager.service.StaffService;
-import in.hocg.mybatis.entity.RbacRole;
-import in.hocg.mybatis.entity.UserStaff;
+import in.hocg.mybatis.module.system.entity.RbacRole;
+import in.hocg.mybatis.module.system.entity.UserStaff;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.User;

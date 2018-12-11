@@ -1,8 +1,8 @@
 package in.hocg.manager.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import in.hocg.mybatis.entity.RbacRole;
-import in.hocg.mybatis.entity.RbacRoleStaff;
+import in.hocg.mybatis.module.system.entity.RbacRole;
+import in.hocg.mybatis.module.system.entity.RbacRoleStaff;
 
 import java.util.Collection;
 

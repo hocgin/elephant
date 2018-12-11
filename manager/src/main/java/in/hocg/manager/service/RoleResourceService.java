@@ -1,7 +1,7 @@
 package in.hocg.manager.service;
 
-import in.hocg.mybatis.entity.RbacRoleResource;
 import com.baomidou.mybatisplus.extension.service.IService;
+import in.hocg.mybatis.module.system.entity.RbacRoleResource;
 
 /**
  * <p>

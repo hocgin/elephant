@@ -3,13 +3,13 @@ package in.hocg.scaffold.support.aspect.log;
 import in.hocg.scaffold.support.spel.SpelParser;
 import in.hocg.scaffold.util.RequestKit;
 import in.hocg.scaffold.util.ResponseKit;
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.expression.spel.support.StandardEvaluationContext;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StopWatch;
@@ -23,17 +23,13 @@ import java.lang.reflect.Method;
  * <p>
  * 使用 @ILog 记录系统日志
  */
+@Slf4j
 @Aspect
 @Component
-@Slf4j
+@AllArgsConstructor
 public class ILogAspect {
     
     private final LogRepository repository;
-    
-    @Autowired
-    public ILogAspect(LogRepository repository) {
-        this.repository = repository;
-    }
     
     @Pointcut("execution(* in.hocg..*(..)) && @annotation(in.hocg.scaffold.support.aspect.log.ILog)")
     public void logPointcut() {

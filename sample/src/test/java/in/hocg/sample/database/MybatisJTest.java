@@ -26,6 +26,9 @@ public class MybatisJTest {
     @Autowired
     private TreeMapper treeMapper;
     
+    /**
+     * @Transactional 会在执行结束后回滚
+     */
     @Test
     @Transactional
     public void findByStateTest() {

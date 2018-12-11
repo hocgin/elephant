@@ -5,8 +5,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import in.hocg.scaffold.support.json.annotation.JSON;
 import in.hocg.scaffold.support.json.filter.JsonFilterProvider;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.logging.log4j.util.Strings;
 import org.springframework.http.ResponseEntity;
+
+import java.util.Objects;
 
 /**
  * Created by hocgin on 2018/9/2.
@@ -20,22 +21,22 @@ public class DefaultJsonSerializer implements JsonSerializer {
     JsonFilterProvider jacksonFilter = new JsonFilterProvider();
     
     /**
-     * @param clazz   target type
+     * @param clazz   target className
      * @param include include fields
-     * @param filter  filter fields
+     * @param exclude  filter fields
      */
-    public void filter(Class<?> clazz, String include, String filter) {
+    public void filter(Class<?> clazz, String[] include, String[] exclude) {
         if (clazz == null) {
             return;
         }
         // 需要导入字段
-        if (Strings.isNotBlank(include)) {
-            jacksonFilter.include(clazz, include.split(","));
+        if (Objects.nonNull(include)) {
+            jacksonFilter.include(clazz, include);
         }
         
         // 不需要导入字段
-        if (Strings.isNotBlank(filter)) {
-            jacksonFilter.exclude(clazz, filter.split(","));
+        if (Objects.nonNull(exclude)) {
+            jacksonFilter.exclude(clazz, exclude);
         }
         mapper.addMixIn(clazz, jacksonFilter.getClass());
     }
@@ -56,6 +57,6 @@ public class DefaultJsonSerializer implements JsonSerializer {
     
     @Override
     public void filter(JSON json) {
-        this.filter(json.type(), json.include(), json.exclude());
+        this.filter(json.className(), json.include(), json.exclude());
     }
 }

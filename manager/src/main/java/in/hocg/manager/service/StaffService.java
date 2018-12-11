@@ -1,7 +1,7 @@
 package in.hocg.manager.service;
 
-import in.hocg.mybatis.entity.UserStaff;
 import com.baomidou.mybatisplus.extension.service.IService;
+import in.hocg.mybatis.module.system.entity.UserStaff;
 
 import java.util.Optional;
 

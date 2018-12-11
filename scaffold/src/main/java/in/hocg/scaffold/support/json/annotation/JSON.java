@@ -17,17 +17,17 @@ public @interface JSON {
      * 需要排除的类
      * @return
      */
-    Class<?> type();
+    Class<?> className();
     
     /**
      * 仅包含属性
      * @return
      */
-    String include() default "";
+    String[] include() default "";
     
     /**
      * 排除属性
      * @return
      */
-    String exclude() default "";
+    String[] exclude() default "";
 }
