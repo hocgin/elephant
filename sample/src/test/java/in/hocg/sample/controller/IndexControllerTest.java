@@ -29,6 +29,6 @@ public class IndexControllerTest {
     public void jfilter() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.get("user"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.content().json(""));
+                .andExpect(MockMvcResultMatchers.content().json("{\"name\":\"hocgin\"}"));
     }
 }

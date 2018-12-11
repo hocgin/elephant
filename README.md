@@ -9,3 +9,4 @@
 - mail
 - el
 - Modified Preorder Tree Traversal
+- json-ignore.. ~~[JFilter](https://github.com/rkonovalov/jfilter)~~
