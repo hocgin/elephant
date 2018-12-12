@@ -1,12 +1,16 @@
 package in.hocg.sample.sdk.oss;
 
 import com.aliyun.oss.OSSClient;
+import com.aliyun.oss.model.UploadUdfImageRequest;
 import lombok.extern.slf4j.Slf4j;
+import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
+
+import java.io.File;
 
 /**
  * Created by hocgin on 2018/10/18.
@@ -23,6 +27,12 @@ public class AliTest {
     
     @Test
     public void test() {
-        log.debug("{}", ossClient != null);
+        Assert.assertNotNull(ossClient);
+    }
+    
+    @Test
+    public void testUpload() {
+        File file = new File("");
+        ossClient.putObject("test", "on", file);
     }
 }
