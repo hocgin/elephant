@@ -56,7 +56,7 @@ public class TestExampleMapperTest {
         testExampleMapper.deleteById(id);
     }
     @Test
-    public void testEnum() {
+    public void testEnum() throws InterruptedException {
         TestExample entity = new TestExample();
         entity.setName("Ld");
         entity.setEnable(Enable.OFF);
@@ -64,5 +64,10 @@ public class TestExampleMapperTest {
     
         TestExample testExample = testExampleMapper.selectById(entity.getId());
         log.debug(testExample.getEnable().name());
+    
+    
+        Thread.sleep(1000);
+        testExample.setName("GG");
+        testExampleMapper.updateById(testExample);
     }
 }
