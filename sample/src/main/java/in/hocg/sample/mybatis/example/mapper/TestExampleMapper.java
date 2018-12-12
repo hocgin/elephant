@@ -24,6 +24,8 @@ public interface TestExampleMapper extends BaseMapper<TestExample> {
      * @return
      */
     Optional<TestExample> findNull();
+    
+    
     TestExample findNull2();
     
 }

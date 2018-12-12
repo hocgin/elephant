@@ -11,21 +11,6 @@ import java.io.Serializable;
  * 响应结果对象
  */
 public class Result<T> implements Serializable {
-    enum Code {
-        /**
-         * 成功
-         */
-        SUCCESS(200, "ok"),
-        ERROR(500, "error");
-        int code;
-        String message;
-        
-        Code(int code, String message) {
-            this.code = code;
-            this.message = message;
-        }
-    }
-    
     private int code;
     private String message;
     private T data;

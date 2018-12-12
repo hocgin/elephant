@@ -1,5 +1,6 @@
 package in.hocg.sample.mybatis.example.mapper;
 
+import in.hocg.mybatis.enums.Enable;
 import in.hocg.mybatis.module.system.mapper.RoleStaffMapper;
 import in.hocg.sample.mybatis.example.entity.TestExample;
 import lombok.extern.slf4j.Slf4j;
@@ -27,6 +28,11 @@ public class TestExampleMapperTest {
     @Autowired
     RoleStaffMapper roleStaffMapper;
     
+    
+    /**
+     * 测试 Mybatis Plus 是否可以返回 Optional 类型
+     * 结果: 不行, 当对象为 null 时, 返回的为 null
+     */
     @Test
     public void findNull() {
         Optional<TestExample> aNull = testExampleMapper.findNull();
@@ -37,5 +43,26 @@ public class TestExampleMapperTest {
     public void findNull2() {
         TestExample null2 = testExampleMapper.findNull2();
         System.out.println(null2);
+    }
+    
+    @Test
+    public void testDeleted() {
+        TestExample entity = new TestExample();
+        entity.setName("Ld");
+        testExampleMapper.insert(entity);
+        
+        String id = entity.getId();
+        log.debug("ID: {}", id);
+        testExampleMapper.deleteById(id);
+    }
+    @Test
+    public void testEnum() {
+        TestExample entity = new TestExample();
+        entity.setName("Ld");
+        entity.setEnable(Enable.OFF);
+        testExampleMapper.insert(entity);
+    
+        TestExample testExample = testExampleMapper.selectById(entity.getId());
+        log.debug(testExample.getEnable().name());
     }
 }

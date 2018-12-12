@@ -21,13 +21,13 @@ public class DefaultModel<T extends Model> extends SuperModel<T> {
    * 创建时间
    */
   @TableField(value = CREATED_AT)
-  private LocalDateTime createdAt;
+  private LocalDateTime createdAt = LocalDateTime.now();
   
   /**
    * 创建者
    */
   @TableField(value = CREATOR)
-  private LocalDateTime creator;
+  private String creator;
   
   /**
    * 更新时间
@@ -39,7 +39,7 @@ public class DefaultModel<T extends Model> extends SuperModel<T> {
    * 更新者
    */
   @TableField(value = UPDATER)
-  private LocalDateTime updater;
+  private String updater;
   
   
   public static final String UPDATER = "updater";

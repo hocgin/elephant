@@ -46,28 +46,18 @@ public class Starter {
         return new AntiReplayInterceptor(cacheService);
     }
     
-    /**
-     * 邮件服务
-     *
-     * @param username
-     * @param javaMailSender
-     * @return
-     */
     @Bean
     @ConditionalOnBean(JavaMailSender.class)
     public MailTemplate mailTemplate(@Value("${spring.mail.username}") String username,
                                      JavaMailSender javaMailSender) {
+        // 邮件服务
         return new MailTemplate(username, "官方邮件", javaMailSender);
     }
     
-    /**
-     * Rest 客户端
-     * @param factory
-     * @return
-     */
     @Bean
     @ConditionalOnMissingBean
     public RestTemplate restTemplate(ClientHttpRequestFactory factory) {
+        // Rest 客户端
         return new RestTemplate(factory);
     }
     

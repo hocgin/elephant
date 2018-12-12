@@ -1,6 +1,7 @@
 package in.hocg.sample.controller;
 
 import in.hocg.sample.controller.body.User;
+import in.hocg.sample.mybatis.example.entity.TestExample;
 import in.hocg.scaffold.support.basis.BaseController;
 import in.hocg.scaffold.support.json.annotation.JSON;
 import lombok.AllArgsConstructor;
@@ -34,6 +35,12 @@ public class IndexController extends BaseController {
     public ResponseEntity<User> jfilter() {
         User user = new User("123", "hocgin");
         return ResponseEntity.ok(user);
+    }
+    
+    @GetMapping("enums")
+    @ResponseBody
+    public ResponseEntity<TestExample> enums() {
+        return ResponseEntity.ok(new TestExample());
     }
     
 }

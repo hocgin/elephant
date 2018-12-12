@@ -49,9 +49,10 @@ mybatis-plus:
   global-config:
     db-config:
       db-type: mariadb
-      id-type: id_worker
+      id-type: uuid
       field-strategy: not_empty
       table-underline: true
+    banner: false
   configuration:
     map-underscore-to-camel-case: true
     cache-enabled: false
