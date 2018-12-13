@@ -1,5 +1,6 @@
 package in.hocg.sample.mybatis.example.mapper;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import in.hocg.mybatis.enums.Enable;
 import in.hocg.mybatis.module.system.mapper.RoleStaffMapper;
 import in.hocg.sample.mybatis.example.entity.TestExample;
@@ -9,7 +10,9 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.util.Assert;
 
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -43,6 +46,12 @@ public class TestExampleMapperTest {
     public void findNull2() {
         TestExample null2 = testExampleMapper.findNull2();
         System.out.println(null2);
+    }
+    
+    @Test
+    public void findAll() {
+        List<TestExample> all = testExampleMapper.selectList(new QueryWrapper<>());
+        Assert.isTrue(all.size() == 0, "null");
     }
     
     @Test
