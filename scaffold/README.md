@@ -39,3 +39,20 @@ curl -X "POST" "http://127.0.0.1:8081/post-page?condition.id=admin&password=admi
 
 ```
 ### GetCondition
+>  URL编码：example/page?limit=10&page=1&condition=is%3Apr+is%3Aopen&sort=created%3Aasc 
+>
+>  URL解码：example/page?limit=10&page=1&condition=is:pr is:open&sort=created:asc
+>  - limit: 请求数量，默认为10。
+>  - page: 请求页码，默认为1。
+>  - condition: 自定义条件, 条件字段和值以:分割, 多条件以" "分割, 最后需经过 URLEncoder。
+>  - sort: 排序方式, 排序字段和值以:分割，多排序以" "分割, 最后需经过 URLEncoder。
+>  <p>
+>  注意点:
+>  - 请求方式为 GET。
+>  - 排序可以直接通过前端设置。
+>  - " "/"+" 分隔都是允许的
+
+```cURL
+curl "http://127.0.0.1:8081/get-page?limit=10&page=1&condition=is:pr%20is:open&sort=created2:asc%20created:desc" \
+     -H 'Cookie: JSESSIONID=0D75C918151440D703E767488E37C0D2'
+```

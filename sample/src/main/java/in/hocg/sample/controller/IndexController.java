@@ -1,5 +1,6 @@
 package in.hocg.sample.controller;
 
+import in.hocg.mybatis.basic.condition.GetCondition;
 import in.hocg.mybatis.basic.condition.PostCondition;
 import in.hocg.sample.controller.body.User;
 import in.hocg.sample.mybatis.example.entity.TestExample;
@@ -9,7 +10,10 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
  * Created by hocgin on 2018/10/9.
@@ -44,7 +48,13 @@ public class IndexController extends BaseController {
     
     @RequestMapping("post-page")
     @ResponseBody
-    public ResponseEntity<PostCondition> get(@RequestBody PostCondition<User> condition) {
+    public ResponseEntity<PostCondition> post(@RequestBody PostCondition<User> condition) {
         return ResponseEntity.ok(condition);
+    }
+    
+    @RequestMapping("get-page")
+    @ResponseBody
+    public ResponseEntity<Object> get(GetCondition condition) {
+        return ResponseEntity.ok(condition.getConditionMap().get("is"));
     }
 }

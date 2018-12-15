@@ -5,9 +5,11 @@ import com.google.common.collect.HashMultimap;
 import in.hocg.scaffold.constant.Charset;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.SneakyThrows;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
+import java.net.URLEncoder;
 import java.util.*;
 import java.util.stream.Stream;
 
@@ -125,5 +127,10 @@ public class GetPageCondition extends PageCondition {
         }
         return Arrays.stream(decode.split(" "))
                 .map(String::trim);
+    }
+    
+    @SneakyThrows
+    public static void main(String[] args) {
+        System.out.println(URLEncoder.encode("+", Charset.UTF_8));
     }
 }
