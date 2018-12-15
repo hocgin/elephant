@@ -4,7 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.google.common.base.CaseFormat;
-import in.hocg.scaffold.support.basis.condition.PostPageCondition;
+import in.hocg.scaffold.support.basis.condition.GetPageCondition;
 
 import java.util.Optional;
 
@@ -14,15 +14,15 @@ import java.util.Optional;
  *
  * @author hocgin
  */
-public class PostPageConditionPlus<T> extends PostPageCondition<T> {
+public class GetCondition extends GetPageCondition {
     
     @JsonIgnore
-    public Page<T> page() {
+    public <T> Page<T> page() {
         return new Page<>(page, limit);
     }
     
     @JsonIgnore
-    public QueryWrapper<T> wrapper() {
+    public <T> QueryWrapper<T> wrapper() {
         QueryWrapper<T> wrapper = new QueryWrapper<>();
         getSortMap().keySet().forEach(key -> {
             Optional.ofNullable(getSortMap().get(key))
