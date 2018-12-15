@@ -1,6 +1,7 @@
 package in.hocg.mybatis.module.system.entity;
 
 import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableName;
 import in.hocg.mybatis.basic.model.SuperModel;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -17,6 +18,7 @@ import lombok.experimental.Accessors;
 @Data
 @EqualsAndHashCode(callSuper = true)
 @Accessors(chain = true)
+@TableName("role")
 public class Role extends SuperModel<Role> {
 
     private static final long serialVersionUID = 1L;

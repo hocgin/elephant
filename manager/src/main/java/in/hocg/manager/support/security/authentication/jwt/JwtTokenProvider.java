@@ -15,16 +15,16 @@ import java.time.temporal.ChronoUnit;
  *
  * @author hocgin
  */
-@Component
 @Slf4j
+@Component
 public class JwtTokenProvider {
     
     // 24h
-    private int expiration = 1000 * 60 * 60 * 24;
+    private int expiration = 24;
     private String secret = "hocgin";
     
     public String generate(Authentication authentication) {
-        LocalDateTime dateTime = LocalDateTime.now().plus(expiration, ChronoUnit.MILLENNIA);
+        LocalDateTime dateTime = LocalDateTime.now().plus(expiration, ChronoUnit.HOURS);
         return Jwts.builder().setSubject(authentication.getName())
                 .setExpiration(DateKit.as(dateTime))
                 .signWith(SignatureAlgorithm.HS512, secret)

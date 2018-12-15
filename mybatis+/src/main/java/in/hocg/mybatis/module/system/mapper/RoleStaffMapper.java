@@ -5,7 +5,6 @@ import in.hocg.mybatis.module.system.entity.Role;
 import in.hocg.mybatis.module.system.entity.RoleStaff;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
-import org.springframework.stereotype.Component;
 
 import java.util.Collection;
 
@@ -18,7 +17,6 @@ import java.util.Collection;
  * @since 2018-10-21
  */
 @Mapper
-@Component
 public interface RoleStaffMapper extends BaseMapper<RoleStaff> {
     Collection<Role> findByAllRoleUseStaffId(@Param("id") String id);
 }

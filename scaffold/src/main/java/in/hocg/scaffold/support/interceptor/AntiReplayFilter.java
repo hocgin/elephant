@@ -3,19 +3,19 @@ package in.hocg.scaffold.support.interceptor;
 
 import in.hocg.scaffold.lang.exception.AntiReplayException;
 import in.hocg.scaffold.support.cache.CacheService;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.logging.log4j.util.Strings;
 import org.apache.tomcat.util.security.MD5Encoder;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Lazy;
+import org.springframework.core.Ordered;
+import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpMethod;
+import org.springframework.util.AntPathMatcher;
 import org.springframework.web.context.request.ServletWebRequest;
 
-import javax.servlet.http.HttpServletResponse;
-import java.util.Arrays;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Optional;
+import javax.servlet.annotation.WebFilter;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -24,22 +24,28 @@ import java.util.concurrent.TimeUnit;
  * 防重放攻击
  **/
 @Slf4j
-public class AntiReplayInterceptor extends SimpleHandlerInterceptor {
+@Order(Ordered.HIGHEST_PRECEDENCE)
+@RequiredArgsConstructor
+@WebFilter(filterName = "AntiReplayFilter", urlPatterns = {"/*"})
+public class AntiReplayFilter extends SimpleHandlerFilter {
     
+    @NonNull
     private final CacheService cacheService;
+    @NonNull
+    private final List<String> ignoreUrls;
     
-    @Autowired
-    @Lazy
-    public AntiReplayInterceptor(CacheService cacheService) {
-        this.cacheService = cacheService;
-    }
+    private final AntPathMatcher antPathMatcher = new AntPathMatcher();
     
     @Override
-    public boolean preHandle(ServletWebRequest servletWebRequest,
-                             HttpServletResponse response,
-                             Object handler) throws Exception {
-        // GET 请求不处理
-        if (servletWebRequest.getHttpMethod() == HttpMethod.GET) {
+    public boolean preHandle(ServletWebRequest servletWebRequest) throws Exception {
+        String requestURI = servletWebRequest.getRequest().getRequestURI();
+        
+        /*
+        - GET 请求不处理
+        - 满足匹配条件不处理
+         */
+        if (servletWebRequest.getHttpMethod() == HttpMethod.GET
+                || ignoreUrls.parallelStream().anyMatch((url) -> antPathMatcher.match(url, requestURI))) {
             return true;
         }
         

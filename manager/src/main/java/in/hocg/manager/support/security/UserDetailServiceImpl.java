@@ -4,7 +4,7 @@ import in.hocg.manager.service.RoleStaffService;
 import in.hocg.manager.service.StaffService;
 import in.hocg.mybatis.module.system.entity.Role;
 import in.hocg.mybatis.module.system.entity.Staff;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -22,17 +22,11 @@ import java.util.Optional;
  * @author hocgin
  */
 @Component
+@AllArgsConstructor
 public class UserDetailServiceImpl implements UserDetailsService {
     
     private final StaffService staffService;
     private final RoleStaffService roleStaffService;
-    
-    @Autowired
-    public UserDetailServiceImpl(StaffService staffService,
-                                 RoleStaffService roleStaffService) {
-        this.staffService = staffService;
-        this.roleStaffService = roleStaffService;
-    }
     
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {

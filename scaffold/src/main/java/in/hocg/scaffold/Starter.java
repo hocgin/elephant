@@ -2,8 +2,6 @@ package in.hocg.scaffold;
 
 import in.hocg.scaffold.support.aspect.log.DefaultLogRepository;
 import in.hocg.scaffold.support.aspect.log.LogRepository;
-import in.hocg.scaffold.support.cache.CacheService;
-import in.hocg.scaffold.support.interceptor.AntiReplayInterceptor;
 import in.hocg.scaffold.support.json.JsonReturnValueHandler;
 import in.hocg.scaffold.support.mail.MailTemplate;
 import lombok.extern.slf4j.Slf4j;
@@ -12,7 +10,6 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Lazy;
 import org.springframework.http.client.ClientHttpRequestFactory;
 import org.springframework.http.client.SimpleClientHttpRequestFactory;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -37,13 +34,6 @@ public class Starter {
     public LogRepository logRepository() {
         // @ILog 存储器
         return new DefaultLogRepository();
-    }
-    
-    @Bean
-    @Lazy
-    public AntiReplayInterceptor antiReplayInterceptor(CacheService cacheService) {
-        // 防重放攻击
-        return new AntiReplayInterceptor(cacheService);
     }
     
     @Bean

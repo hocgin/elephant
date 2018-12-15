@@ -1,9 +1,8 @@
 package in.hocg.manager.support.security;
 
-import in.hocg.manager.support.security.authentication.jwt.JwtAuthenticationConfig;
-import org.springframework.beans.factory.annotation.Autowired;
+import in.hocg.manager.support.security.authentication.jwt.JwtAuthenticationConfigurer;
+import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -22,15 +21,10 @@ import org.springframework.security.crypto.password.PasswordEncoder;
  * @author hocgin
  */
 @EnableWebSecurity
+@AllArgsConstructor
 @EnableGlobalMethodSecurity(prePostEnabled = true)
-public class SecurityConfig extends WebSecurityConfigurerAdapter {
-    private final JwtAuthenticationConfig jwtAuthenticationConfig;
-//    private final AuthenticationEntryPoint unauthorizedHandler;
-    
-    @Autowired
-    public SecurityConfig(JwtAuthenticationConfig jwtAuthenticationConfig) {
-        this.jwtAuthenticationConfig = jwtAuthenticationConfig;
-    }
+public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
+    private final JwtAuthenticationConfigurer jwtAuthenticationConfig;
     
     @Bean
     @Override
@@ -58,43 +52,42 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         
         
-        // format: off
+        // @formatter:off
         http
-                /**
-                 * 定制化验证方式
+                /*
+                  URL 授权管理
                  */
-//                .apply(weChatMinaAuthenticationConfig)
-//                .and()
-                .apply(jwtAuthenticationConfig)
-                .and()
-                
-                /**
-                 * 默认配置开关
+                .authorizeRequests()
+                    .anyRequest().authenticated()
+                    .and()
+                /*
+                  Session 管理
                  */
-                .csrf().disable()
-                .httpBasic().disable()
-                
-                 // - Session 管理
                 .sessionManagement()
-                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                .and()
-        
-                // - 异常处理
+                    .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                    .and()
+                
+                /*
+                  异常处理
+                 */
 //                .exceptionHandling()
 //                .authenticationEntryPoint(unauthorizedHandler)
 //                .and()
                 
-                /**
-                 * URL 授权管理
+                /*
+                  定制化验证方式
                  */
-                .authorizeRequests()
-                .antMatchers(HttpMethod.POST,"/login").permitAll()
-                .anyRequest().authenticated()
+                .apply(jwtAuthenticationConfig)
                 .and()
+                /*
+                  默认配置开关
+                 */
+                .csrf().disable()
+                .httpBasic().disable()
+                .headers().cacheControl()
         ;
-    
-        // format: on
-        http.headers().cacheControl();
+        
+        // @formatter:on
     }
     
     

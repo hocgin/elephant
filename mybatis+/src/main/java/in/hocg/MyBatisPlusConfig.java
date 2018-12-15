@@ -3,6 +3,7 @@ package in.hocg;
 import com.baomidou.mybatisplus.extension.plugins.PaginationInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.PerformanceInterceptor;
 import in.hocg.scaffold.annotation.DevAndTest;
+import org.apache.ibatis.annotations.Mapper;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -12,7 +13,7 @@ import org.springframework.context.annotation.Configuration;
  * @date 18-10-8
  **/
 @Configuration
-@MapperScan(basePackageClasses = MyBatisPlusConfig.class)
+@MapperScan(basePackageClasses = MyBatisPlusConfig.class, annotationClass= Mapper.class)
 public class MyBatisPlusConfig {
     
     /**

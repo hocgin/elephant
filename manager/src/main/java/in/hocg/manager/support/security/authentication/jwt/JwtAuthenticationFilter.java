@@ -18,6 +18,10 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
     
+    JwtAuthenticationFilter() {
+        super();
+    }
+    
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
         

@@ -1,5 +1,7 @@
 package in.hocg.scaffold.support.http;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.http.ResponseEntity;
 
 import java.io.Serializable;
@@ -79,5 +81,14 @@ public class Result<T> implements Serializable {
     
     public ResponseEntity<Result> asResponseEntity() {
         return ResponseEntity.ok(this);
+    }
+    
+    public String json() {
+        try {
+            return new ObjectMapper().writeValueAsString(this);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+        return "{}";
     }
 }

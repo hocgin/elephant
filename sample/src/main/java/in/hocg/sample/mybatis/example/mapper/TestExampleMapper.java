@@ -3,7 +3,6 @@ package in.hocg.sample.mybatis.example.mapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import in.hocg.sample.mybatis.example.entity.TestExample;
 import org.apache.ibatis.annotations.Mapper;
-import org.springframework.stereotype.Component;
 
 import java.util.Optional;
 
@@ -16,7 +15,6 @@ import java.util.Optional;
  * @since 2018-10-09
  */
 @Mapper
-@Component
 public interface TestExampleMapper extends BaseMapper<TestExample> {
     /**
      * 测试查找对象为null能不能使用Optional

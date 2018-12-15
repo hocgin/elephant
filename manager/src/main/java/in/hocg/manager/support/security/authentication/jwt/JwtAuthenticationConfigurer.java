@@ -1,6 +1,6 @@
 package in.hocg.manager.support.security.authentication.jwt;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.SecurityConfigurerAdapter;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -16,22 +16,12 @@ import org.springframework.stereotype.Component;
  * @author hocgin
  */
 @Component
-public class JwtAuthenticationConfig extends SecurityConfigurerAdapter<DefaultSecurityFilterChain, HttpSecurity> {
+@AllArgsConstructor
+public class JwtAuthenticationConfigurer extends SecurityConfigurerAdapter<DefaultSecurityFilterChain, HttpSecurity> {
     private final UserDetailsService userDetailsService;
     private final DefaultSuccessHandler successHandler;
     private final DefaultFailureHandler failureHandler;
     private final JwtTokenProvider tokenProvider;
-    
-    @Autowired
-    public JwtAuthenticationConfig(UserDetailsService userDetailsService,
-                                   DefaultSuccessHandler successHandler,
-                                   DefaultFailureHandler failureHandler,
-                                   JwtTokenProvider tokenProvider) {
-        this.userDetailsService = userDetailsService;
-        this.successHandler = successHandler;
-        this.failureHandler = failureHandler;
-        this.tokenProvider = tokenProvider;
-    }
     
     @Override
     public void configure(HttpSecurity builder) throws Exception {
@@ -45,7 +35,7 @@ public class JwtAuthenticationConfig extends SecurityConfigurerAdapter<DefaultSe
         JwtAuthenticationProvider authenticationProvider = new JwtAuthenticationProvider(userDetailsService);
     
         builder.authenticationProvider(authenticationProvider)
-                .addFilterAfter(authenticationFilter, UsernamePasswordAuthenticationFilter.class)
+                .addFilterBefore(authenticationFilter, UsernamePasswordAuthenticationFilter.class)
                 .addFilter(new UnauthorizedFilter(authenticationManager, tokenProvider));
     }
 }

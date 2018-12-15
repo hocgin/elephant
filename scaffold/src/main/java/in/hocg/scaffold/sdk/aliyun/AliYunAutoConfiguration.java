@@ -1,7 +1,6 @@
-package in.hocg.scaffold.sdk.aliyun.oss;
+package in.hocg.scaffold.sdk.aliyun;
 
 import com.aliyun.oss.OSSClient;
-import in.hocg.scaffold.sdk.aliyun.AliYunProperties;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
@@ -29,9 +28,9 @@ public class AliYunAutoConfiguration {
     @ConditionalOnMissingBean
     public OSSClient ossClient() {
         log.debug("开启[AliYun OSS]");
-        AliYunProperties.Oss ossProperties = properties.getOss();
-        return new OSSClient(ossProperties.getEndpoint(),
-                ossProperties.getAccessKey(),
-                ossProperties.getSecretAccess());
+        AliYunProperties.Oss oss = properties.getOss();
+        return new OSSClient(oss.getEndpoint(),
+                oss.getAccessKey(),
+                oss.getSecretAccess());
     }
 }

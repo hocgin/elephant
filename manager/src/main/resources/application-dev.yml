@@ -12,6 +12,13 @@ spring:
     initialization-mode: always
 logging:
   level:
-#    org.springframework: debug
-#    in.hocg: debug
-    root: debug
+    #    org.springframework: debug
+    in.hocg: debug
+#    root: debug
+
+
+scaffold:
+  anti-replay:
+    ignore-url:
+    - /login
+    enabled: false

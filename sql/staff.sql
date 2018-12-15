@@ -3,8 +3,8 @@
 *     员工表
 * ============================
 */
-DROP TABLE IF EXISTS `user_staff`;
-CREATE TABLE `user_staff` (
+DROP TABLE IF EXISTS `staff`;
+CREATE TABLE `staff` (
   `id`            CHAR(32)
   COMMENT 'UUID',
   --

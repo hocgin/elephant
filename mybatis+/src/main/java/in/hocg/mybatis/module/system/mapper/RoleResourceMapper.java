@@ -3,7 +3,6 @@ package in.hocg.mybatis.module.system.mapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import in.hocg.mybatis.module.system.entity.RoleResource;
 import org.apache.ibatis.annotations.Mapper;
-import org.springframework.stereotype.Component;
 
 /**
  * <p>
@@ -14,7 +13,6 @@ import org.springframework.stereotype.Component;
  * @since 2018-10-21
  */
 @Mapper
-@Component
 public interface RoleResourceMapper extends BaseMapper<RoleResource> {
 
 }

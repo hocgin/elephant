@@ -15,7 +15,7 @@ public class AliYunProperties {
     private Oss oss;
     
     @Data
-    public static class Oss {
+    static class Oss {
         private boolean enabled = false;
         private String accessKey;
         private String secretAccess;
