@@ -22,3 +22,4 @@ scaffold:
     ignore-url:
     - /login
     enabled: false
+security.token.filter.secret: YourSecretNeedsToBeAtLeast256BitsLong

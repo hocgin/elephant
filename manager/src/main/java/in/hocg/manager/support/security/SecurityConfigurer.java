@@ -1,9 +1,10 @@
 package in.hocg.manager.support.security;
 
-import in.hocg.manager.support.security.authentication.jwt.JwtAuthenticationConfigurer;
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.BeanIds;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -13,6 +14,8 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
+import org.visola.spring.security.tokenfilter.TokenAuthenticationFilter;
 
 /**
  * Created by hocgin on 2018/10/19.
@@ -24,13 +27,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @AllArgsConstructor
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
-    private final JwtAuthenticationConfigurer jwtAuthenticationConfig;
-    
-    @Bean
-    @Override
-    protected AuthenticationManager authenticationManager() throws Exception {
-        return super.authenticationManager();
-    }
+    private TokenAuthenticationFilter tokenAuthenticationFilter;
     
     @Bean
     PasswordEncoder passwordEncoder() {
@@ -51,44 +48,37 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         
-        
-        // @formatter:off
-        http
-                /*
-                  URL 授权管理
-                 */
-                .authorizeRequests()
-                    .anyRequest().authenticated()
-                    .and()
-                /*
-                  Session 管理
-                 */
-                .sessionManagement()
-                    .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                    .and()
-                
-                /*
-                  异常处理
-                 */
-//                .exceptionHandling()
-//                .authenticationEntryPoint(unauthorizedHandler)
-//                .and()
-                
-                /*
-                  定制化验证方式
-                 */
-                .apply(jwtAuthenticationConfig)
-                .and()
-                /*
-                  默认配置开关
-                 */
-                .csrf().disable()
+        /*
+         全局配置
+        */
+        http.csrf().disable()
                 .httpBasic().disable()
-                .headers().cacheControl()
-        ;
+                .sessionManagement()
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and()
+                .headers().cacheControl();
+        /*
+         配置拦截器
+        */
+        http.addFilterBefore(tokenAuthenticationFilter, BasicAuthenticationFilter.class);
         
-        // @formatter:on
+        /*
+         URL 授权管理
+        */
+        http.authorizeRequests()
+                .antMatchers(HttpMethod.POST, "/staff/token").anonymous()
+                .anyRequest().authenticated();
+          /*
+           异常处理
+          */
+//        http.exceptionHandling()
+//                .authenticationEntryPoint(unauthorizedHandler);
     }
     
+    @Bean(name = BeanIds.AUTHENTICATION_MANAGER)
+    @Override
+    public AuthenticationManager authenticationManagerBean() throws Exception {
+        return super.authenticationManagerBean();
+    }
     
 }

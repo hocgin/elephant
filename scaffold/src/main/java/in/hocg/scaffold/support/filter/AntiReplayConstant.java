@@ -1,4 +1,4 @@
-package in.hocg.scaffold.support.interceptor;
+package in.hocg.scaffold.support.filter;
 
 /**
  * @author hocgin

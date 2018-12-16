@@ -1,4 +1,4 @@
-package in.hocg.scaffold.support.interceptor;
+package in.hocg.scaffold.support.filter;
 
 import in.hocg.scaffold.constant.Charset;
 import in.hocg.scaffold.support.http.Result;

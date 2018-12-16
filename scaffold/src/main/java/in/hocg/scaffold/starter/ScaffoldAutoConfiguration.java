@@ -1,7 +1,7 @@
 package in.hocg.scaffold.starter;
 
 import in.hocg.scaffold.support.cache.CacheService;
-import in.hocg.scaffold.support.interceptor.AntiReplayFilter;
+import in.hocg.scaffold.support.filter.AntiReplayFilter;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
@@ -9,7 +9,6 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Lazy;
 
 import java.util.Arrays;
 import java.util.List;

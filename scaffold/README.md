@@ -56,3 +56,23 @@ curl -X "POST" "http://127.0.0.1:8081/post-page?condition.id=admin&password=admi
 curl "http://127.0.0.1:8081/get-page?limit=10&page=1&condition=is:pr%20is:open&sort=created2:asc%20created:desc" \
      -H 'Cookie: JSESSIONID=0D75C918151440D703E767488E37C0D2'
 ```
+
+### SpEL 使用
+
+```java
+@Slf4j
+@SpringBootTest
+public class SpEl {
+    
+    
+    @Test
+    public void testEl() {
+        StandardEvaluationContext context = new StandardEvaluationContext();
+        context.setVariable("var", 1024);
+        String text = SpelParser.parser("hi #{#var + 1}", context);
+        String text2 = SpelParser.parser("", context);
+        log.debug("{} {}", text, text2);
+    }
+}
+```
+

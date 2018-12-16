@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @author hocgin
  */
 @RestController
-public class IndexController extends BaseController {
+public class MainController extends BaseController {
     
     
     @GetMapping("/user/resources")
@@ -22,7 +22,4 @@ public class IndexController extends BaseController {
         return ResponseEntity.ok("");
     }
     
-    public static void main(String[] args) {
-        System.out.println(System.currentTimeMillis());
-    }
 }
