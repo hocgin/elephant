@@ -4,8 +4,8 @@
 
     <select id="findByAllRoleUseStaffId" resultType="in.hocg.mybatis.module.system.entity.Role">
         SELECT r.*
-        FROM rbac_role_staff rs
-        LEFT JOIN rbac_role r ON rs.role_id = r.id
+        FROM role_staff rs
+        LEFT JOIN role r ON rs.role_id = r.id
         <where>
             rs.staff_id = #{id}
         </where>

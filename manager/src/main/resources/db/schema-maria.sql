@@ -18,7 +18,7 @@ CREATE TABLE `resource` (
   COMMENT '菜单别称',
   `description` VARCHAR(10) NOT NULL
   COMMENT '菜单描述',
-  `type`        TINYINT(1)  NOT NULL
+  `type`        INT(1)      NOT NULL
   COMMENT '菜单类型(0:菜单;1:按钮)',
   `method`      VARCHAR(6)  NOT NULL
   COMMENT '请求类型(GET,POST,DELETE,PUT)',
@@ -104,14 +104,14 @@ CREATE TABLE `staff` (
   COMMENT '密码',
   `avatar_uri`    VARCHAR(129)
   COMMENT '头像地址',
-  `gender`        TINYINT(1) UNSIGNED DEFAULT 1
+  `gender`        INT(1)              DEFAULT '1'
   COMMENT '性别(0:女, 1:男)',
-  `expired`       TINYINT(1) UNSIGNED DEFAULT 1
+  `non_expired`   TINYINT(1) UNSIGNED DEFAULT '1'
   COMMENT '过期状态(0:为过期状态;1:为正常状态)',
-  `locked`        TINYINT(1) UNSIGNED DEFAULT 1
+  `non_locked`    TINYINT(1) UNSIGNED DEFAULT '1'
   COMMENT '锁定状态(0:为过期状态;1:为正常状态)',
-  `enabled`       TINYINT(1) UNSIGNED DEFAULT 1
-  COMMENT '启用状态(0:为过期状态;1:为正常状态)',
+  `enabled`       TINYINT(1) UNSIGNED DEFAULT '1'
+  COMMENT '启用状态(0:为禁用状态;1:为正常状态)',
   `sign_up_ip`    VARCHAR(15)
   COMMENT '注册时使用的IP',
   `last_login_ip` VARCHAR(15)

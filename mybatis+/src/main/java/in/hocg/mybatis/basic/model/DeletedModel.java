@@ -2,7 +2,6 @@ package in.hocg.mybatis.basic.model;
 
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
-import in.hocg.mybatis.enums.Deleted;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
@@ -37,7 +36,7 @@ public class DeletedModel<T extends Model> extends DefaultModel<T> {
      * 1:为被删除状态
      */
     @TableField(value = DELETED)
-    private Deleted deleted = Deleted.NO;
+    private boolean deleted;
     
     public static final String DELETED = "deleted";
     public static final String DELETED_AT = "deleted_at";

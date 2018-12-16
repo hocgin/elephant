@@ -1,7 +1,7 @@
 package in.hocg.sample.mybatis.example.mapper;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import in.hocg.mybatis.enums.Enabled;
+import in.hocg.mybatis.enums.Gender;
 import in.hocg.mybatis.module.system.mapper.RoleStaffMapper;
 import in.hocg.sample.mybatis.example.entity.TestExample;
 import lombok.extern.slf4j.Slf4j;
@@ -13,6 +13,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.util.Assert;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 /**
@@ -68,13 +69,13 @@ public class TestExampleMapperTest {
     public void testEnum() throws InterruptedException {
         TestExample entity = new TestExample();
         entity.setName("Ld");
-        entity.setEnabled(Enabled.OFF);
+        entity.setGender(Gender.Boy);
         testExampleMapper.insert(entity);
-    
+        
         TestExample testExample = testExampleMapper.selectById(entity.getId());
-        log.debug(testExample.getEnabled().name());
-    
-    
+        log.debug(testExample.getGender().name());
+        List<Map<String, Object>> list = testExampleMapper.selectMaps(new QueryWrapper<>());
+        
         Thread.sleep(1000);
         testExample.setName("GG");
         testExampleMapper.updateById(testExample);

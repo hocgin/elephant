@@ -7,10 +7,13 @@ package in.hocg.manager.controller;
  * @author hocgin
  */
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import in.hocg.manager.service.ResourceService;
 import in.hocg.manager.service.StaffService;
 import in.hocg.manager.support.security.body.JwtToken;
+import in.hocg.mybatis.basic.condition.GetCondition;
 import in.hocg.mybatis.module.system.entity.Resource;
+import in.hocg.mybatis.module.system.entity.Staff;
 import in.hocg.scaffold.support.basis.BaseController;
 import in.hocg.scaffold.support.http.Result;
 import lombok.AllArgsConstructor;
@@ -32,10 +35,16 @@ public class StaffController extends BaseController {
     private final StaffService staffService;
     private final ResourceService resourceService;
     
+    /**
+     * POST /staff/token
+     *
+     * @param username
+     * @param password
+     * @return
+     */
     @RequestMapping(value = "/token", method = RequestMethod.POST)
-    @ResponseBody
-    public ResponseEntity<Result> login(@RequestParam("username") String username,
-                                        @RequestParam("password") String password) {
+    public ResponseEntity<Result> postToken(@RequestParam("username") String username,
+                                            @RequestParam("password") String password) {
         UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
                 username,
                 password
@@ -47,6 +56,8 @@ public class StaffController extends BaseController {
     }
     
     /**
+     * GET /staff/menu
+     *
      * @return
      */
     @GetMapping("/menu")
@@ -54,5 +65,17 @@ public class StaffController extends BaseController {
         String username = principal.getName();
         Resource tree = resourceService.findAllByUsername(username);
         return ResponseEntity.ok(Result.success(tree));
+    }
+    
+    /**
+     * GET /staff
+     *
+     * @param condition
+     * @return
+     */
+    @GetMapping
+    public ResponseEntity<Object> get(GetCondition condition) {
+        IPage<Staff> all = staffService.findAll(condition);
+        return ResponseEntity.ok(Result.success(all));
     }
 }

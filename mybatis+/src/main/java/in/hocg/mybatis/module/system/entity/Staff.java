@@ -3,10 +3,7 @@ package in.hocg.mybatis.module.system.entity;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import in.hocg.mybatis.basic.model.DefaultModel;
-import in.hocg.mybatis.enums.Enabled;
-import in.hocg.mybatis.enums.Expired;
 import in.hocg.mybatis.enums.Gender;
-import in.hocg.mybatis.enums.Locked;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
@@ -55,18 +52,18 @@ public class Staff extends DefaultModel<Staff> {
     /**
      * 过期状态(0:为过期状态;1:为正常状态)
      */
-    @TableField(EXPIRED)
-    private Expired expired;
+    @TableField(NON_EXPIRED)
+    private boolean nonExpired;
     /**
      * 锁定状态(0:为过期状态;1:为正常状态)
      */
-    @TableField(LOCKED)
-    private Locked locked;
+    @TableField(NON_LOCKED)
+    private boolean nonLocked;
     /**
-     * 启用状态(0:为过期状态;1:为正常状态)
+     * 启用状态(0:为禁用状态;1:为正常状态)
      */
     @TableField(ENABLED)
-    private Enabled enabled;
+    private boolean enabled;
     /**
      * 注册时使用的IP
      */
@@ -89,9 +86,9 @@ public class Staff extends DefaultModel<Staff> {
     
     public static final String GENDER = "gender";
     
-    public static final String EXPIRED = "expired";
+    public static final String NON_EXPIRED = "non_expired";
     
-    public static final String LOCKED = "locked";
+    public static final String NON_LOCKED = "non_locked";
     
     public static final String ENABLED = "enabled";
     

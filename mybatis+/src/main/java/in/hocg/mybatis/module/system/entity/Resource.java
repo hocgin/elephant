@@ -3,7 +3,6 @@ package in.hocg.mybatis.module.system.entity;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import in.hocg.mybatis.basic.model.NodeModel;
-import in.hocg.mybatis.enums.Enabled;
 import in.hocg.mybatis.enums.ResourceType;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -63,7 +62,7 @@ public class Resource extends NodeModel<Resource> {
      * 是否开启显示(0:未启用; 1:启用)
      */
     @TableField(ENABLE)
-    private Enabled enabled;
+    private boolean enabled = true;
     
     public static final String NAME = "name";
     

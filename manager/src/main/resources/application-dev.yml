@@ -12,9 +12,10 @@ spring:
     initialization-mode: always
 logging:
   level:
-    #    org.springframework: debug
-    in.hocg: debug
 #    root: debug
+#    org.springframework: debug
+    com.baomidou.mybatisplus: debug
+    in.hocg: debug
 
 
 scaffold:

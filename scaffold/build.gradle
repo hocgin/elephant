@@ -8,7 +8,7 @@ dependencies {
     compile libs.quartz
     compile libs.mail
     compileOnly "org.springframework.boot:spring-boot-configuration-processor"
-    runtimeOnly libs.spring.devtool
+//    runtimeOnly libs.spring.devtool
 }
 
 compileJava.dependsOn(processResources)

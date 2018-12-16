@@ -12,5 +12,5 @@ package in.hocg.mybatis.enums;
  */
 public enum Gender {
     Girl,
-    Boy,
+    Boy;
 }
