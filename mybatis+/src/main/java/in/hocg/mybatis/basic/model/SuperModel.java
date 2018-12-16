@@ -16,7 +16,7 @@ import java.io.Serializable;
 @Accessors(chain = true)
 @EqualsAndHashCode(callSuper = true)
 public abstract class SuperModel<T extends Model> extends Model<T> {
-    @TableId(value = "id", type = IdType.UUID)
+    @TableId(value = ID, type = IdType.UUID)
     private String id;
     
     @Override

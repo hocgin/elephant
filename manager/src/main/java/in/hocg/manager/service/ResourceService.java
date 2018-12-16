@@ -12,5 +12,11 @@ import in.hocg.mybatis.module.system.entity.Resource;
  * @since 2018-10-21
  */
 public interface ResourceService extends IService<Resource> {
-
+    
+    /**
+     * 查找对应用户的资源
+     * @param username
+     * @return
+     */
+    Resource findAllByUsername(String username);
 }

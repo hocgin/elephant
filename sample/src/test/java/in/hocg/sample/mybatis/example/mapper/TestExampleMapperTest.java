@@ -1,7 +1,7 @@
 package in.hocg.sample.mybatis.example.mapper;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import in.hocg.mybatis.enums.Enable;
+import in.hocg.mybatis.enums.Enabled;
 import in.hocg.mybatis.module.system.mapper.RoleStaffMapper;
 import in.hocg.sample.mybatis.example.entity.TestExample;
 import lombok.extern.slf4j.Slf4j;
@@ -68,11 +68,11 @@ public class TestExampleMapperTest {
     public void testEnum() throws InterruptedException {
         TestExample entity = new TestExample();
         entity.setName("Ld");
-        entity.setEnable(Enable.OFF);
+        entity.setEnabled(Enabled.OFF);
         testExampleMapper.insert(entity);
     
         TestExample testExample = testExampleMapper.selectById(entity.getId());
-        log.debug(testExample.getEnable().name());
+        log.debug(testExample.getEnabled().name());
     
     
         Thread.sleep(1000);

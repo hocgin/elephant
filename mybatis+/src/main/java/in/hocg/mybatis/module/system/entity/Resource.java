@@ -2,7 +2,9 @@ package in.hocg.mybatis.module.system.entity;
 
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
-import in.hocg.mybatis.basic.model.SuperModel;
+import in.hocg.mybatis.basic.model.NodeModel;
+import in.hocg.mybatis.enums.Enabled;
+import in.hocg.mybatis.enums.ResourceType;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
@@ -19,94 +21,64 @@ import lombok.experimental.Accessors;
 @EqualsAndHashCode(callSuper = true)
 @Accessors(chain = true)
 @TableName("resource")
-public class Resource extends SuperModel<Resource> {
-
+public class Resource extends NodeModel<Resource> {
+    
     private static final long serialVersionUID = 1L;
-
-    /**
-     * 树级路径
-     */
-    @TableField("tree_path")
-    private String treePath;
-    /**
-     * 父级ID
-     */
-    @TableField("parent_id")
-    private String parentId;
     /**
      * 菜单名称
      */
-    @TableField("name")
+    @TableField(NAME)
     private String name;
     /**
      * 菜单别称
      */
-    @TableField("alias")
+    @TableField(ALIAS)
     private String alias;
     /**
      * 菜单描述
      */
-    @TableField("description")
+    @TableField(DESCRIPTION)
     private String description;
     /**
      * 菜单类型(0:菜单;1:按钮)
      */
-    @TableField("type")
-    private Boolean type;
+    @TableField(TYPE)
+    private ResourceType type;
     /**
      * 请求类型(GET,POST,DELETE,PUT)
      */
-    @TableField("method")
+    @TableField(METHOD)
     private String method;
     /**
      * URI
      */
-    @TableField("uri")
+    @TableField(URI)
     private String uri;
     /**
      * 图标
      */
-    @TableField("icon")
+    @TableField(ICON)
     private String icon;
     /**
-     * 排序
+     * 是否开启显示(0:未启用; 1:启用)
      */
-    @TableField("sort")
-    private Integer sort;
-    /**
-     * 链接显示状态(0:不显示; 1:显示)
-     */
-    @TableField("showed")
-    private Boolean showed;
-    /**
-     * 是否开启显示(0:不开启; 1:开启)
-     */
-    @TableField("enabled")
-    private Boolean enabled;
-
-
-    public static final String TREE_PATH = "tree_path";
-
-    public static final String PARENT_ID = "parent_id";
-
+    @TableField(ENABLE)
+    private Enabled enabled;
+    
     public static final String NAME = "name";
-
+    
     public static final String ALIAS = "alias";
-
+    
     public static final String DESCRIPTION = "description";
-
+    
     public static final String TYPE = "type";
-
+    
     public static final String METHOD = "method";
-
+    
     public static final String URI = "uri";
-
+    
     public static final String ICON = "icon";
-
-    public static final String SORT = "sort";
-
-    public static final String SHOWED = "showed";
-
-    public static final String ENABLED = "enabled";
-
+    
+    public static final String ENABLE = "enabled";
+    
 }

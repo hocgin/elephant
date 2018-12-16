@@ -2,6 +2,9 @@ package in.hocg.manager.support.security;
 
 import in.hocg.manager.service.RoleStaffService;
 import in.hocg.manager.service.StaffService;
+import in.hocg.mybatis.enums.Enabled;
+import in.hocg.mybatis.enums.Expired;
+import in.hocg.mybatis.enums.Locked;
 import in.hocg.mybatis.module.system.entity.Role;
 import in.hocg.mybatis.module.system.entity.Staff;
 import lombok.AllArgsConstructor;
@@ -39,15 +42,15 @@ public class UserDetailServiceImpl implements UserDetailsService {
         Staff staff = staffOptional.get();
         Collection<Role> roles = roleStaffService.findByAllRoleUseStaffId(staff.getId());
         String[] roleMark = roles.stream()
-                .map(Role::getIdentification)
+                .map(Role::getMark)
                 .distinct().toArray(String[]::new);
         
         return new User(staff.getUsername(),
                 staff.getPassword(),
-                staff.getEnabled(),
-                staff.getExpired(),
+                staff.getEnabled() == Enabled.ON,
+                staff.getExpired() == Expired.ON,
                 true,
-                staff.getLocked(),
+                staff.getLocked() == Locked.ON,
                 AuthorityUtils.createAuthorityList(roleMark)
         );
     }

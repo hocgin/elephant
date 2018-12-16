@@ -2,7 +2,7 @@ package in.hocg.sample.mybatis.example.entity;
 
 import com.baomidou.mybatisplus.annotation.TableField;
 import in.hocg.mybatis.basic.model.DeletedModel;
-import in.hocg.mybatis.enums.Enable;
+import in.hocg.mybatis.enums.Enabled;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
@@ -28,8 +28,8 @@ public class TestExample extends DeletedModel<TestExample> {
     private String name;
     @TableField("type")
     private String type;
-    @TableField("enable")
-    private Enable enable = Enable.ON;
+    @TableField("enabled")
+    private Enabled enabled = Enabled.ON;
     
     
     public static final String NAME = "name";

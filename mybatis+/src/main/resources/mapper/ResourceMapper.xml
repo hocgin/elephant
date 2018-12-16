@@ -2,4 +2,14 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="in.hocg.mybatis.module.system.mapper.ResourceMapper">
 
+    <select id="findAllByUsername"
+            resultType="in.hocg.mybatis.module.system.entity.Resource">
+        SELECT r.*
+        FROM resource r
+                 LEFT JOIN role_resource rr ON rr.resource_id = r.id
+                 LEFT JOIN role r2 ON rr.role_id = r2.id
+                 LEFT JOIN role_staff rs ON rs.role_id = r2.id
+                 LEFT JOIN staff s ON rs.staff_id = s.id
+        WHERE s.username = #{username}
+    </select>
 </mapper>

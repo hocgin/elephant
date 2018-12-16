@@ -15,5 +15,10 @@ import java.util.Optional;
  */
 public interface StaffService extends IService<Staff> {
     
+    /**
+     * 根据`username`查找员工信息
+     * @param username
+     * @return
+     */
     Optional<Staff> findByUsername(String username);
 }

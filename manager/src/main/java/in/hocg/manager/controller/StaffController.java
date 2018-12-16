@@ -7,7 +7,10 @@ package in.hocg.manager.controller;
  * @author hocgin
  */
 
+import in.hocg.manager.service.ResourceService;
+import in.hocg.manager.service.StaffService;
 import in.hocg.manager.support.security.body.JwtToken;
+import in.hocg.mybatis.module.system.entity.Resource;
 import in.hocg.scaffold.support.basis.BaseController;
 import in.hocg.scaffold.support.http.Result;
 import lombok.AllArgsConstructor;
@@ -26,8 +29,10 @@ import java.security.Principal;
 public class StaffController extends BaseController {
     private final AuthenticationManager authenticationManager;
     private final TokenService tokenService;
+    private final StaffService staffService;
+    private final ResourceService resourceService;
     
-    @RequestMapping(value="/token", method= RequestMethod.POST)
+    @RequestMapping(value = "/token", method = RequestMethod.POST)
     @ResponseBody
     public ResponseEntity<Result> login(@RequestParam("username") String username,
                                         @RequestParam("password") String password) {
@@ -35,18 +40,19 @@ public class StaffController extends BaseController {
                 username,
                 password
         );
-    
+        
         Authentication authentication = authenticationManager.authenticate(authenticationToken);
         String token = tokenService.generateToken(authentication);
         return ResponseEntity.ok(Result.success(new JwtToken(token)));
     }
     
     /**
-     *
      * @return
      */
     @GetMapping("/menu")
-    public ResponseEntity<Result> getMenu(Principal principal, Authentication authentication) {
-        return ResponseEntity.ok(Result.error(String.format("No Impl %s", principal.getName())));
+    public ResponseEntity<Result> getMenu(Principal principal) {
+        String username = principal.getName();
+        Resource tree = resourceService.findAllByUsername(username);
+        return ResponseEntity.ok(Result.success(tree));
     }
 }

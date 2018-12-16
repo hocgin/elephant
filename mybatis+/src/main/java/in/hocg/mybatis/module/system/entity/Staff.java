@@ -3,6 +3,10 @@ package in.hocg.mybatis.module.system.entity;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import in.hocg.mybatis.basic.model.DefaultModel;
+import in.hocg.mybatis.enums.Enabled;
+import in.hocg.mybatis.enums.Expired;
+import in.hocg.mybatis.enums.Gender;
+import in.hocg.mybatis.enums.Locked;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
@@ -26,52 +30,52 @@ public class Staff extends DefaultModel<Staff> {
     /**
      * 昵称
      */
-    @TableField("nick_name")
+    @TableField(NICK_NAME)
     private String nickName;
     /**
      * 用户名
      */
-    @TableField("username")
+    @TableField(USERNAME)
     private String username;
     /**
      * 密码
      */
-    @TableField("password")
+    @TableField(PASSWORD)
     private String password;
     /**
      * 头像地址
      */
-    @TableField("avatar_uri")
+    @TableField(AVATAR_URI)
     private String avatarUri;
     /**
      * 性别(0:女, 1:男)
      */
-    @TableField("gender")
-    private Boolean gender;
+    @TableField(GENDER)
+    private Gender gender;
     /**
-     * 过期状态(0:为正常状态;1:为过期状态)
+     * 过期状态(0:为过期状态;1:为正常状态)
      */
-    @TableField("expired")
-    private Boolean expired;
+    @TableField(EXPIRED)
+    private Expired expired;
     /**
-     * 锁定状态(0:为正常状态;1:为锁定状态)
+     * 锁定状态(0:为过期状态;1:为正常状态)
      */
-    @TableField("locked")
-    private Boolean locked;
+    @TableField(LOCKED)
+    private Locked locked;
     /**
-     * 启用状态(0:为正常状态;1:为禁用状态)
+     * 启用状态(0:为过期状态;1:为正常状态)
      */
-    @TableField("enabled")
-    private Boolean enabled;
+    @TableField(ENABLED)
+    private Enabled enabled;
     /**
      * 注册时使用的IP
      */
-    @TableField("sign_up_ip")
+    @TableField(SIGN_UP_IP)
     private String signUpIp;
     /**
      * 最后登陆时使用的IP
      */
-    @TableField("last_login_ip")
+    @TableField(LAST_LOGIN_IP)
     private String lastLoginIp;
     
     

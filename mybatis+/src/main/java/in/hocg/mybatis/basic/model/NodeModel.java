@@ -22,9 +22,9 @@ import java.util.List;
 @Accessors(chain = true)
 @EqualsAndHashCode(callSuper = true)
 public class NodeModel<T extends Model> extends SuperModel<T> {
-    @TableField("lft")
+    @TableField(LFT)
     private int lft;
-    @TableField("rgt")
+    @TableField(RGT)
     private int rgt;
     
     @TableField(exist = false)

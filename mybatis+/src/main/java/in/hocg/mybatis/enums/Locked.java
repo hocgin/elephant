@@ -1,7 +1,7 @@
 package in.hocg.mybatis.enums;
 
 /**
- * Created by hocgin on 2018/12/12.
+ * Created by hocgin on 2018/12/16.
  * email: hocgin@gmail.com
  * <p>
  * 开启状态
@@ -10,7 +10,7 @@ package in.hocg.mybatis.enums;
  *
  * @author hocgin
  */
-public enum Enable {
+public enum  Locked {
     OFF,
     ON,
 }
