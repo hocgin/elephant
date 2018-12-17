@@ -29,5 +29,5 @@ public interface StaffService extends IService<Staff> {
      * @return
      * @param condition
      */
-    IPage<Staff> findAll(GetCondition condition);
+    IPage<Staff> page(GetCondition condition);
 }

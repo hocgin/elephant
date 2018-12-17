@@ -32,7 +32,7 @@ public class StaffServiceImpl extends BaseService<StaffMapper, Staff>
     }
     
     @Override
-    public IPage<Staff> findAll(GetCondition condition) {
+    public IPage<Staff> page(GetCondition condition) {
         Page<Staff> page = condition.page();
         QueryWrapper<Staff> wrapper = condition.wrapper();
         return baseMapper.selectPage(page, wrapper);

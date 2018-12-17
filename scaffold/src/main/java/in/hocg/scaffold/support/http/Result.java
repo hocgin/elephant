@@ -24,6 +24,10 @@ public class Result<T> implements Serializable {
         return new Result();
     }
     
+    public static Result result(boolean result) {
+        return result ? success() : error();
+    }
+    
     public int getCode() {
         return code;
     }
