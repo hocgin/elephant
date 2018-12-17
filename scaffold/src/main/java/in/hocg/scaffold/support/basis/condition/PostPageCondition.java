@@ -1,5 +1,6 @@
 package in.hocg.scaffold.support.basis.condition;
 
+import com.google.common.collect.Maps;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -20,7 +21,7 @@ import java.util.Map;
 public class PostPageCondition<T> extends PageCondition {
     @Valid
     protected T condition;
-    protected Map<String, String> sort;
+    protected Map<String, String> sort = Maps.newHashMap();
     
     
     @Override

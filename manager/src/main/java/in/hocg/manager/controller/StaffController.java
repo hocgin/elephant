@@ -12,6 +12,7 @@ import in.hocg.manager.service.ResourceService;
 import in.hocg.manager.service.StaffService;
 import in.hocg.manager.support.security.body.JwtToken;
 import in.hocg.mybatis.basic.condition.GetCondition;
+import in.hocg.mybatis.basic.condition.PostCondition;
 import in.hocg.mybatis.module.system.entity.Resource;
 import in.hocg.mybatis.module.system.entity.Staff;
 import in.hocg.scaffold.support.basis.BaseController;
@@ -84,6 +85,19 @@ public class StaffController extends BaseController {
     }
     
     /**
+     * POST /staff/s
+     * 查找所有员工列表
+     *
+     * @param condition
+     * @return
+     */
+    @PostMapping("/s")
+    public ResponseEntity<Object> post(@RequestBody PostCondition<Staff> condition) {
+        IPage<Staff> all = staffService.page(condition);
+        return Result.success(all).asResponseEntity();
+    }
+    
+    /**
      * GET /staff/{id}
      * 查找员工详情
      *
@@ -112,12 +126,27 @@ public class StaffController extends BaseController {
     
     /**
      * PUT /staff
+     * 修改
+     *
+     * @return
+     */
+    @PutMapping("/{id:[a-zA-Z0-9_]+}")
+    public ResponseEntity<Object> putStaff(@PathVariable("id") String id,
+                                           @RequestBody Staff staff) {
+        staff.setId(id);
+        boolean result = staffService.updateById(staff);
+        return Result.result(result).asResponseEntity();
+    }
+    
+    
+    /**
+     * POST /staff
      * 新增
      *
      * @return
      */
-    @PutMapping
-    public ResponseEntity<Object> put(Staff staff) {
+    @PostMapping
+    public ResponseEntity<Object> postStaff(@RequestBody Staff staff) {
         boolean result = staffService.save(staff);
         return Result.result(result).asResponseEntity();
     }

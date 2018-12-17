@@ -2,13 +2,17 @@ package in.hocg.scaffold.support.basis.condition;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.google.common.collect.HashMultimap;
+import com.google.common.collect.Maps;
 import in.hocg.scaffold.constant.Charset;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
-import java.util.*;
+import java.util.Arrays;
+import java.util.Map;
+import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Stream;
 
 /**
@@ -46,7 +50,7 @@ public class GetPageCondition extends PageCondition {
      */
     private String sort = "";
     @JsonIgnore
-    private Map<String, String> sortMap = new HashMap<>();
+    private Map<String, String> sortMap = Maps.newHashMap();
     
     /**
      * 获取所有过滤条件

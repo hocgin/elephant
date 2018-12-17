@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import in.hocg.manager.service.StaffService;
 import in.hocg.mybatis.basic.BaseService;
 import in.hocg.mybatis.basic.condition.GetCondition;
+import in.hocg.mybatis.basic.condition.PostCondition;
 import in.hocg.mybatis.module.system.entity.Staff;
 import in.hocg.mybatis.module.system.mapper.StaffMapper;
 import org.springframework.stereotype.Service;
@@ -33,6 +34,13 @@ public class StaffServiceImpl extends BaseService<StaffMapper, Staff>
     
     @Override
     public IPage<Staff> page(GetCondition condition) {
+        Page<Staff> page = condition.page();
+        QueryWrapper<Staff> wrapper = condition.wrapper();
+        return baseMapper.selectPage(page, wrapper);
+    }
+    
+    @Override
+    public IPage<Staff> page(PostCondition condition) {
         Page<Staff> page = condition.page();
         QueryWrapper<Staff> wrapper = condition.wrapper();
         return baseMapper.selectPage(page, wrapper);
