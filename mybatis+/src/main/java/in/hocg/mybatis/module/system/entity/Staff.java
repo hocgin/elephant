@@ -38,7 +38,7 @@ public class Staff extends DefaultModel<Staff> {
      * 密码
      */
     @TableField(PASSWORD)
-    private transient String password;
+    private String password;
     /**
      * 头像地址
      */

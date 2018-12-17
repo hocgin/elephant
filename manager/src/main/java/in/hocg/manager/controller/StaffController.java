@@ -17,7 +17,6 @@ import in.hocg.mybatis.module.system.entity.Staff;
 import in.hocg.scaffold.support.basis.BaseController;
 import in.hocg.scaffold.support.http.Result;
 import lombok.AllArgsConstructor;
-import org.apache.ibatis.annotations.Param;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -45,7 +44,7 @@ public class StaffController extends BaseController {
      * @param password
      * @return
      */
-    @RequestMapping(value = "/token", method = RequestMethod.POST)
+    @PostMapping(value = "/token")
     public ResponseEntity<Result> postToken(@RequestParam("username") String username,
                                             @RequestParam("password") String password) {
         UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
@@ -91,7 +90,7 @@ public class StaffController extends BaseController {
      * @param id
      * @return
      */
-    @GetMapping("/{id}")
+    @GetMapping("/{id:[a-zA-Z0-9_]+}")
     public ResponseEntity<Object> detail(@PathVariable("id") String id) {
         Staff result = staffService.getById(id);
         return Result.success(result).asResponseEntity();
@@ -106,7 +105,7 @@ public class StaffController extends BaseController {
      * @return
      */
     @DeleteMapping
-    public ResponseEntity<Object> delete(@Param("id") String... id) {
+    public ResponseEntity<Object> delete(@RequestParam("id") String... id) {
         boolean result = staffService.removeByIds(Arrays.asList(id));
         return Result.result(result).asResponseEntity();
     }
