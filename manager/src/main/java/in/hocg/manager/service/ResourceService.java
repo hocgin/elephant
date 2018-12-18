@@ -2,6 +2,7 @@ package in.hocg.manager.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import in.hocg.mybatis.module.system.entity.Resource;
+import in.hocg.scaffold.lang.exception.NotRollbackException;
 
 import java.util.List;
 
@@ -20,7 +21,7 @@ public interface ResourceService extends IService<Resource> {
      * @param username
      * @return
      */
-    Resource findResourceTreeByUsername(String username);
+    Resource findResourceTreeByUsername(String username) throws NotRollbackException;
     
     /**
      * 查找用户具备的资源

@@ -15,6 +15,7 @@ import in.hocg.mybatis.basic.condition.GetCondition;
 import in.hocg.mybatis.basic.condition.PostCondition;
 import in.hocg.mybatis.module.system.entity.Resource;
 import in.hocg.mybatis.module.system.entity.Staff;
+import in.hocg.scaffold.lang.exception.NotRollbackException;
 import in.hocg.scaffold.support.basis.BaseController;
 import in.hocg.scaffold.support.http.Result;
 import lombok.AllArgsConstructor;
@@ -65,7 +66,7 @@ public class StaffController extends BaseController {
      * @return
      */
     @GetMapping("/menu")
-    public ResponseEntity<Result> getMenu(Principal principal) {
+    public ResponseEntity<Result> getMenu(Principal principal) throws NotRollbackException {
         String username = principal.getName();
         Resource tree = resourceService.findResourceTreeByUsername(username);
         return Result.success(tree).asResponseEntity();
