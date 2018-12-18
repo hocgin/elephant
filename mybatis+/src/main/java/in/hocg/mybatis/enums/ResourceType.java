@@ -1,7 +1,5 @@
 package in.hocg.mybatis.enums;
 
-import com.baomidou.mybatisplus.core.enums.IEnum;
-
 /**
  * Created by hocgin on 2018/12/16.
  * email: hocgin@gmail.com
@@ -12,12 +10,7 @@ import com.baomidou.mybatisplus.core.enums.IEnum;
  *
  * @author hocgin
  */
-public enum ResourceType  implements IEnum<Integer> {
+public enum ResourceType {
     Menu,
     Button;
-    
-    @Override
-    public Integer getValue() {
-        return this.ordinal();
-    }
 }

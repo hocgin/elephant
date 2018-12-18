@@ -3,7 +3,6 @@ package in.hocg.mybatis.module.system.entity;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import in.hocg.mybatis.basic.model.DefaultModel;
-import in.hocg.mybatis.enums.Gender;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
@@ -48,7 +47,7 @@ public class Staff extends DefaultModel<Staff> {
      * 性别(0:女, 1:男)
      */
     @TableField(GENDER)
-    private Gender gender;
+    private int gender;
     /**
      * 过期状态(0:为过期状态;1:为正常状态)
      */

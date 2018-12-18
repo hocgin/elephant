@@ -47,8 +47,8 @@ public class StaffController extends BaseController {
      * @return
      */
     @PostMapping(value = "/token")
-    public ResponseEntity<Result> postToken(@RequestParam("username") String username,
-                                            @RequestParam("password") String password) {
+    public ResponseEntity postToken(@RequestParam("username") String username,
+                                    @RequestParam("password") String password) {
         UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
                 username,
                 password
@@ -66,7 +66,7 @@ public class StaffController extends BaseController {
      * @return
      */
     @GetMapping("/menu")
-    public ResponseEntity<Result> getMenu(Principal principal) throws NotRollbackException {
+    public ResponseEntity getMenu(Principal principal) throws NotRollbackException {
         String username = principal.getName();
         Resource tree = resourceService.findResourceTreeByUsername(username);
         return Result.success(tree).asResponseEntity();
@@ -80,7 +80,7 @@ public class StaffController extends BaseController {
      * @return
      */
     @GetMapping
-    public ResponseEntity<Object> get(GetCondition condition) {
+    public ResponseEntity get(GetCondition condition) {
         IPage<Staff> all = staffService.page(condition);
         return Result.success(all).asResponseEntity();
     }
@@ -93,7 +93,7 @@ public class StaffController extends BaseController {
      * @return
      */
     @PostMapping("/s")
-    public ResponseEntity<Object> post(@RequestBody PostCondition<Staff> condition) {
+    public ResponseEntity post(@RequestBody PostCondition<Staff> condition) {
         IPage<Staff> all = staffService.page(condition);
         return Result.success(all).asResponseEntity();
     }
@@ -106,7 +106,7 @@ public class StaffController extends BaseController {
      * @return
      */
     @GetMapping("/{id:[a-zA-Z0-9_]+}")
-    public ResponseEntity<Object> detail(@PathVariable("id") String id) {
+    public ResponseEntity detail(@PathVariable("id") String id) {
         Staff result = staffService.getById(id);
         return Result.success(result).asResponseEntity();
     }
@@ -120,7 +120,7 @@ public class StaffController extends BaseController {
      * @return
      */
     @DeleteMapping
-    public ResponseEntity<Object> delete(@RequestParam("id") String... id) {
+    public ResponseEntity delete(@RequestParam("id") String... id) {
         boolean result = staffService.removeByIds(Arrays.asList(id));
         return Result.result(result).asResponseEntity();
     }
@@ -132,8 +132,8 @@ public class StaffController extends BaseController {
      * @return
      */
     @PutMapping("/{id:[a-zA-Z0-9_]+}")
-    public ResponseEntity<Object> putStaff(@PathVariable("id") String id,
-                                           @RequestBody Staff staff) {
+    public ResponseEntity putStaff(@PathVariable("id") String id,
+                                   @RequestBody Staff staff) {
         staff.setId(id);
         boolean result = staffService.updateById(staff);
         return Result.result(result).asResponseEntity();
@@ -147,7 +147,7 @@ public class StaffController extends BaseController {
      * @return
      */
     @PostMapping
-    public ResponseEntity<Object> postStaff(@RequestBody Staff staff) {
+    public ResponseEntity postStaff(@RequestBody Staff staff) {
         boolean result = staffService.save(staff);
         return Result.result(result).asResponseEntity();
     }
