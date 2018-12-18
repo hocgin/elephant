@@ -1,14 +1,16 @@
 package in.hocg.scaffold.support;
 
-import in.hocg.scaffold.lang.exception.NotRollbackException;
-import in.hocg.scaffold.lang.exception.RollbackException;
 import in.hocg.scaffold.support.http.Result;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.core.Ordered;
+import org.springframework.core.annotation.Order;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindException;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
+
 
 /**
  * @author hocgin
@@ -19,18 +21,20 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 //@ProdAndTest
 @Slf4j
 @ControllerAdvice
-public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
+@Order(Ordered.HIGHEST_PRECEDENCE)
+public class GlobalExceptionHandler {
     
     @ExceptionHandler(value = Exception.class)
     @ResponseBody
     public ResponseEntity handle(Exception e) {
-        if (e instanceof NotRollbackException || e instanceof RollbackException) {
-            log.debug("异常[{}]", e.getClass());
+        String message;
+        if (e instanceof BindException) {
+            FieldError fieldError = ((BindException) e).getFieldError();
+            message = fieldError.getDefaultMessage();
         } else {
-            e.printStackTrace();
+            message = e.getLocalizedMessage();
         }
-        return Result.error(e.getLocalizedMessage())
-                .setData(e.getClass().getName())
+        return Result.error(message)
                 .asResponseEntity();
     }
     

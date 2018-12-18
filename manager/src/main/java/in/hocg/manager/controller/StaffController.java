@@ -17,17 +17,21 @@ import in.hocg.mybatis.module.system.entity.Resource;
 import in.hocg.mybatis.module.system.entity.Staff;
 import in.hocg.scaffold.lang.exception.NotRollbackException;
 import in.hocg.scaffold.support.basis.BaseController;
+import in.hocg.scaffold.support.basis.parameter.IDs;
 import in.hocg.scaffold.support.http.Result;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.visola.spring.security.tokenfilter.TokenService;
 
+import java.io.Serializable;
 import java.security.Principal;
 import java.util.Arrays;
+import java.util.List;
 
 @RestController
 @RequestMapping("/staff")
@@ -116,12 +120,13 @@ public class StaffController extends BaseController {
      * DELETE /staff
      * 批量删除
      *
-     * @param id
+     * @param parameter
      * @return
      */
     @DeleteMapping
-    public ResponseEntity delete(@RequestParam("id") String... id) {
-        boolean result = staffService.removeByIds(Arrays.asList(id));
+    public ResponseEntity delete(@Validated IDs parameter) {
+        List<Serializable> ids = Arrays.asList(parameter.getId());
+        boolean result = staffService.removeByIds(ids);
         return Result.result(result).asResponseEntity();
     }
     
