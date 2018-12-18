@@ -26,8 +26,8 @@ public class Staff extends DefaultModel<Staff> {
     /**
      * 昵称
      */
-    @TableField(NICK_NAME)
-    private String nickName;
+    @TableField(NICKNAME)
+    private String nickname;
     /**
      * 用户名
      */
@@ -75,7 +75,7 @@ public class Staff extends DefaultModel<Staff> {
     private String lastLoginIp;
     
     
-    public static final String NICK_NAME = "nick_name";
+    public static final String NICKNAME = "nickname";
     
     public static final String USERNAME = "username";
     

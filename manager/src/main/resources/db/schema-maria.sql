@@ -96,7 +96,7 @@ CREATE TABLE `staff` (
   `id`            CHAR(32)
   COMMENT 'UUID',
   --
-  `nick_name`     VARCHAR(10)  NOT NULL
+  `nickname`     VARCHAR(10)  NOT NULL
   COMMENT '昵称',
   `username`      VARCHAR(20)  NOT NULL UNIQUE
   COMMENT '用户名',

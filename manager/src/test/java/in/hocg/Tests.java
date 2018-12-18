@@ -31,8 +31,8 @@ public class Tests {
         entity.setId("tes2");
         entity.setUsername("gg");
         entity.setPassword("gg");
-        entity.setNickName("gg");
-        entity.setGender(Gender.Boy);
+        entity.setNickname("gg");
+        entity.setGender(Gender.Boy.ordinal());
         staffMapper.insert(entity);
     
         Staff test22 = staffMapper.selectById("tes2");
