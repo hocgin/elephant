@@ -39,7 +39,6 @@ public class ILogAspect {
     public Object logHandler(ProceedingJoinPoint point) {
         StopWatch watch = new StopWatch();
         watch.start();
-        
         Object result = null;
         try {
             result = point.proceed();
@@ -70,7 +69,6 @@ public class ILogAspect {
         } catch (Throwable ignored) {
             repository.error(src, ignored.getLocalizedMessage(), watch.getLastTaskTimeMillis());
         }
-        
         repository.handle(src, msg, watch.getLastTaskTimeMillis());
     }
 }

@@ -42,5 +42,14 @@ mybatis-plus:
     map-underscore-to-camel-case: true
     cache-enabled: false
     jdbc-type-for-null: 'null'
+################
+# 自定义功能开关 #
+###############
+scaffold:
+  # 防重放攻击
+  anti-replay:
+    ignore-url:
+    - /login
+    enabled: true
 server:
   port: 8080

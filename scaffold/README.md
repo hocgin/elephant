@@ -76,3 +76,7 @@ public class SpEl {
 }
 ```
 
+### 数据校验
+`@Validated` 可以设置分组
+
+`@NotEmpty`可以判定`String[]`是否为空, 或者长度为0

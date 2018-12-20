@@ -1,8 +1,6 @@
 package in.hocg.scaffold.support.basis.parameter;
 
-import lombok.Data;
-
-import java.io.Serializable;
+import in.hocg.scaffold.support.basis.Bean;
 
 /**
  * Created by hocgin on 2018/12/18.
@@ -10,5 +8,10 @@ import java.io.Serializable;
  *
  * @author hocgin
  */
-public abstract class BaseParameter implements Serializable {
+public abstract class BaseParameter implements Bean {
+    
+    @Override
+    public <T extends Bean> T fill(Object object) {
+        throw new UnsupportedOperationException("请实现它");
+    }
 }

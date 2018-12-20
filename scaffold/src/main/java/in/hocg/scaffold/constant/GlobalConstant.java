@@ -1,4 +1,4 @@
-package in.hocg.util;
+package in.hocg.scaffold.constant;
 
 /**
  * @author hocgin

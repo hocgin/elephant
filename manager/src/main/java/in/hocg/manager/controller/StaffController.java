@@ -8,6 +8,9 @@ package in.hocg.manager.controller;
  */
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import in.hocg.manager.controller.parameter.AddStaff;
+import in.hocg.manager.controller.parameter.QueryStaff;
+import in.hocg.manager.controller.parameter.UpdateStaff;
 import in.hocg.manager.service.ResourceService;
 import in.hocg.manager.service.StaffService;
 import in.hocg.manager.support.security.body.JwtToken;
@@ -17,6 +20,7 @@ import in.hocg.mybatis.module.system.entity.Resource;
 import in.hocg.mybatis.module.system.entity.Staff;
 import in.hocg.scaffold.lang.exception.NotRollbackException;
 import in.hocg.scaffold.support.basis.BaseController;
+import in.hocg.scaffold.support.basis.parameter.ID;
 import in.hocg.scaffold.support.basis.parameter.IDs;
 import in.hocg.scaffold.support.http.Result;
 import lombok.AllArgsConstructor;
@@ -65,7 +69,7 @@ public class StaffController extends BaseController {
     
     /**
      * GET /staff/menu
-     * 查找指定员工的菜单列表
+     * 查找当前员工的菜单列表
      *
      * @return
      */
@@ -97,7 +101,7 @@ public class StaffController extends BaseController {
      * @return
      */
     @PostMapping("/s")
-    public ResponseEntity post(@RequestBody PostCondition<Staff> condition) {
+    public ResponseEntity post(@RequestBody PostCondition<QueryStaff> condition) {
         IPage<Staff> all = staffService.page(condition);
         return Result.success(all).asResponseEntity();
     }
@@ -106,11 +110,12 @@ public class StaffController extends BaseController {
      * GET /staff/{id}
      * 查找员工详情
      *
-     * @param id
+     * @param parameter
      * @return
      */
     @GetMapping("/{id:[a-zA-Z0-9_]+}")
-    public ResponseEntity detail(@PathVariable("id") String id) {
+    public ResponseEntity detail(@PathVariable("id") ID parameter) {
+        Serializable id = parameter.getId();
         Staff result = staffService.getById(id);
         return Result.success(result).asResponseEntity();
     }
@@ -138,7 +143,8 @@ public class StaffController extends BaseController {
      */
     @PutMapping("/{id:[a-zA-Z0-9_]+}")
     public ResponseEntity putStaff(@PathVariable("id") String id,
-                                   @RequestBody Staff staff) {
+                                   @RequestBody UpdateStaff parameter) {
+        Staff staff = parameter.cast(Staff.class);
         staff.setId(id);
         boolean result = staffService.updateById(staff);
         return Result.result(result).asResponseEntity();
@@ -152,7 +158,8 @@ public class StaffController extends BaseController {
      * @return
      */
     @PostMapping
-    public ResponseEntity postStaff(@RequestBody Staff staff) {
+    public ResponseEntity postStaff(@RequestBody AddStaff parameter) {
+        Staff staff = parameter.cast(Staff.class);
         boolean result = staffService.save(staff);
         return Result.result(result).asResponseEntity();
     }

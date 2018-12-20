@@ -8,7 +8,6 @@ dependencies {
     compile libs.quartz
     compile libs.mail
     compileOnly 'org.springframework.boot:spring-boot-configuration-processor'
-    compile 'org.springframework.boot:spring-boot-validation'
 //    runtimeOnly libs.spring.devtool
 }
 

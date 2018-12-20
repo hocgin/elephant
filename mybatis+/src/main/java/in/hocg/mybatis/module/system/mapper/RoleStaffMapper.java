@@ -18,5 +18,6 @@ import java.util.Collection;
  */
 @Mapper
 public interface RoleStaffMapper extends BaseMapper<RoleStaff> {
+    
     Collection<Role> findByAllRoleUseStaffId(@Param("id") String id);
 }

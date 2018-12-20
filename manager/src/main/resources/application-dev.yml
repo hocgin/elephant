@@ -12,13 +12,29 @@ spring:
     initialization-mode: always
 logging:
   level:
-#    root: debug
-#    org.springframework: debug
+    #    root: debug
+    #    org.springframework: debug
     com.baomidou.mybatisplus: debug
     in.hocg: debug
 
 
+###########################
+#        AliYun OSS 开发参数
+# https://www.aliyun.com/product/oss?spm=5176.8142029.388261.574.e9396d3eKg8j7h
+###########################
+oss:
+  enabled: true
+  type: aliyun
+  ali-yun:
+    endpoint: http://oss-cn-beijing.aliyuncs.com
+    secret-access: WTNAERBXO7DQOLXILIHjx8NZCzdRmw
+    access-key: LTAIMo7TgRT1ZohX
+
+################
+# 自定义功能开关 #
+###############
 scaffold:
+  # 防重放攻击
   anti-replay:
     ignore-url:
     - /login

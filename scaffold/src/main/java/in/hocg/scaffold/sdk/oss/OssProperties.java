@@ -1,4 +1,4 @@
-package in.hocg.scaffold.sdk.aliyun;
+package in.hocg.scaffold.sdk.oss;
 
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -10,15 +10,20 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
  * @author hocgin
  */
 @Data
-@ConfigurationProperties(prefix = "ali-yun")
-public class AliYunProperties {
-    private Oss oss;
+@ConfigurationProperties(prefix = "oss")
+public class OssProperties {
+    private boolean enabled = false;
+    private Type type = Type.AliYun;
+    private AliYunOss aliYun;
     
     @Data
-    static class Oss {
-        private boolean enabled = false;
+    static class AliYunOss {
         private String accessKey;
         private String secretAccess;
         private String endpoint;
+    }
+    
+    enum Type {
+        AliYun,
     }
 }
