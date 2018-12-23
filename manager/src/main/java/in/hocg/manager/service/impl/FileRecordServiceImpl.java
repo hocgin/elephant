@@ -25,7 +25,8 @@ public class FileRecordServiceImpl extends BaseService<FileManagerMapper, FileRe
     @Override
     public Optional<FileRecord> fetchNotDeletedForId(Serializable id) {
         QueryWrapper<FileRecord> wrapper = queryWrapper()
-                .ge(FileRecord.DELETED, 0);
+                .eq(FileRecord.ID, id)
+                .eq(FileRecord.DELETED, 0);
         return Optional.ofNullable(baseMapper.selectOne(wrapper));
     }
 }

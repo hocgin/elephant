@@ -57,7 +57,7 @@ public class StaffServiceImpl extends BaseService<StaffMapper, Staff>
             throw ResponseException.wrap(NotRollbackException.class, "请先进行登陆");
         }
         Optional<Staff> staff = findByUsername(username);
-        return staff.map(Staff::getAccountId)
+        return staff.map(Staff::getAccount)
                 .orElse(null);
     }
 }

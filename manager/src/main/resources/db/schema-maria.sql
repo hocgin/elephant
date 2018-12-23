@@ -123,25 +123,6 @@ CREATE TABLE `organization` (
   COMMENT = '[基础模块] 组织结构表';
 /**
 * ============================
-*            文件表
-* ============================
-*/
-DROP TABLE IF EXISTS `file`;
-CREATE TABLE `file` (
-  `id`            CHAR(32)
-  COMMENT 'UUID',
-  `original_name` VARCHAR(20) NOT NULL,
-  `type`          INT         NOT NULL
-  COMMENT '账号类型 [用户, 员工]',
-  --
-  PRIMARY KEY (`id`)
-)
-  ENGINE = InnoDB
-  DEFAULT CHARSET = utf8mb4
-  COMMENT = '[基础模块] 文件表';
-
-/**
-* ============================
 *           账号表
 * ============================
 */
@@ -169,7 +150,7 @@ CREATE TABLE `staff` (
   `id`          CHAR(32)
   COMMENT 'UUID',
   --
-  `account_id`  VARCHAR(10)  NOT NULL
+  `account`     VARCHAR(10)  NOT NULL
     UNIQUE
   COMMENT '关联账号ID',
   `nickname`    VARCHAR(10)  NOT NULL

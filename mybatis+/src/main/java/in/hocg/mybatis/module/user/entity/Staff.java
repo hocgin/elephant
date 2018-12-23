@@ -25,8 +25,8 @@ public class Staff extends DefaultModel<Staff> {
     /**
      * 关联账号ID
      */
-    @TableField(ACCOUNT_ID)
-    private String accountId;
+    @TableField(ACCOUNT)
+    private String account;
     /**
      * 昵称
      */
@@ -69,7 +69,7 @@ public class Staff extends DefaultModel<Staff> {
     private boolean enabled;
     
     
-    public static final String ACCOUNT_ID = "account_id";
+    public static final String ACCOUNT = "account";
     
     public static final String NICKNAME = "nickname";
     

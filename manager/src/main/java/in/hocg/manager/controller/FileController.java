@@ -168,7 +168,7 @@ public class FileController extends BaseController {
                 .map(item -> String.format(",h_%d", item))
                 .orElse("");
         
-        return String.format("%s/%s?x-oss-process=image/resize%s%s", HOST, uri, w, h);
+        return String.format("%s/%s%s%s%s", HOST, uri, w.isEmpty() && h.isEmpty() ? "" : "?x-oss-process=image/resize", w, h);
     }
     
     
