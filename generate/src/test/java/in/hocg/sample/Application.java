@@ -34,8 +34,8 @@ public class Application {
     private DataSourceProperties properties;
     
     private static String OUTPUT_DIR;
-    private static String PACKAGE_NAME = "in.hocg.generate";
-    private static List TABLES = Arrays.asList("staff");
+    private static String PACKAGE_NAME = "in.hocg.manager";
+    private static List TABLES = Arrays.asList("access_log");
     
     @Test
     public void main() {

@@ -9,12 +9,12 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class DefaultLogRepository implements LogRepository {
     @Override
-    public void handle(String source, String message, long timeMillis) {
-        log.info("\n[@ILog]来源:{}\n信息:{}\n耗时:{}ms", source, message, timeMillis);
-    }
-    
-    @Override
-    public void error(String source, String error, long timeMillis) {
-        log.error("\n[@ILog]来源:{}\n错误信息:{}\n耗时:{}ms", source, error, timeMillis);
+    public void handle(Level level, String mapping, String message, long timeMillis, Object result) {
+        String format = "\n[@ILog]来源:{}\n信息:{}\n耗时:{}ms";
+        if (Level.INFO == level) {
+            log.info(format, mapping, message, timeMillis);
+        } else {
+            log.error(format, mapping, message, timeMillis);
+        }
     }
 }

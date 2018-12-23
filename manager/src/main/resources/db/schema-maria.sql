@@ -32,7 +32,48 @@ CREATE TABLE `file_manager` (
 
  */
 
+DROP TABLE IF EXISTS `access_log`;
+CREATE TABLE `access_log` (
+  `id`         CHAR(32)
+  COMMENT 'UUID',
+  `level`      VARCHAR(6)
+  COMMENT '日志级别(INFO, ERROR)',
+  `visitor`    CHAR(32)
+    DEFAULT 'Unknown'
+  COMMENT '访问者账号ID',
+  `response`   LONGTEXT
+  COMMENT '响应结果(JSON)',
+  `parameters` LONGTEXT
+  COMMENT '请求参数(JSON)',
+  `mapping`    LONGTEXT
+  COMMENT 'Class#Method',
+  `message`    LONGTEXT
+  COMMENT '日志信息',
+  `method`     VARCHAR(8)
+  COMMENT '发起请求的方式',
+  `uri`        VARCHAR(100)
+  COMMENT '请求路径',
+  `usage_time` INT
+    DEFAULT '0'
+  COMMENT '耗时 单位:ms',
+  `ip`         VARCHAR(20)
+  COMMENT '访问者IP地址',
 
+  `created_at` DATETIME(6) NOT NULL
+  COMMENT '创建时间',
+  `creator`    CHAR(32)
+  COMMENT '创建者',
+  `updated_at` DATETIME(6)
+  COMMENT '更新时间',
+  `updater`    CHAR(32)
+  COMMENT '更新者',
+
+  --
+  PRIMARY KEY (`id`)
+)
+  ENGINE = InnoDB
+  DEFAULT CHARSET = utf8mb4
+  COMMENT = '[基础模块] 访问日志';
 
 /**
 * ============================

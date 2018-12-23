@@ -31,7 +31,8 @@ public class ILogAspect {
     
     private final LogRepository repository;
     
-    @Pointcut("execution(* in.hocg..*(..)) && @annotation(in.hocg.scaffold.support.aspect.log.ILog)")
+    //    @Pointcut("execution(* in.hocg..*(..)) && @annotation(in.hocg.scaffold.support.aspect.log.ILog)")
+    @Pointcut("execution(public * in.hocg..*Controller.*(..))")
     public void logPointcut() {
     }
     
@@ -42,33 +43,41 @@ public class ILogAspect {
         Object result = null;
         try {
             result = point.proceed();
-            doLog(watch, point, result, null);
+            watch.stop();
         } catch (Throwable throwable) {
-            doLog(watch, point, null, throwable);
-            throwable.printStackTrace();
+            doLog(watch.getLastTaskTimeMillis(), point, result, throwable);
+        } finally {
+            doLog(watch.getLastTaskTimeMillis(), point, result, null);
         }
         return result;
     }
     
-    private void doLog(StopWatch watch, ProceedingJoinPoint point, Object result, Throwable e) {
-        watch.stop();
+    private void doLog(long usageTime, ProceedingJoinPoint point, Object result, Throwable e) {
         MethodSignature methodSignature = (MethodSignature) point.getSignature();
         Method method = methodSignature.getMethod();
-        ILog annotation = method.getAnnotation(ILog.class);
         Class aClass = point.getSourceLocation().getWithinType();
-        String src = String.format("%s#%s", aClass.getName(), method.getName());
-        
-        String msg = annotation.message();
-        try {
+        String mapping = String.format("%s#%s", aClass.getName(), method.getName());
+        ILog annotation = method.getAnnotation(ILog.class);
+        String msg = "";
+        if (annotation != null) {
+            msg = annotation.message();
             StandardEvaluationContext context = new StandardEvaluationContext();
             context.setVariable("args", point.getArgs());
             context.setVariable("request", RequestKit.get());
             context.setVariable("response", ResponseKit.get());
             context.setVariable("return", result);
             msg = SpelParser.parser(msg, context);
-        } catch (Throwable ignored) {
-            repository.error(src, ignored.getLocalizedMessage(), watch.getLastTaskTimeMillis());
         }
-        repository.handle(src, msg, watch.getLastTaskTimeMillis());
+        Level level = Level.INFO;
+        if (e != null) {
+            msg = e.getLocalizedMessage();
+            level = Level.ERROR;
+        }
+        
+        repository.handle(level,
+                mapping,
+                msg,
+                usageTime,
+                result);
     }
 }
