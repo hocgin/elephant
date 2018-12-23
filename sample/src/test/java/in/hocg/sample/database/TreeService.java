@@ -23,18 +23,18 @@ public class TreeService<M extends NodeModel, T extends NodeMapper<M>> {
      * @param parentId
      * @param newNode
      */
-    public void appendChild(String parentId, M newNode) {
-        mapper.appendChild(parentId, newNode);
+    public void addChildNode(String parentId, M newNode) {
+        mapper.addChildNode(parentId, newNode);
     }
     
     /**
-     * 添加兄弟节点
+     * 添加兄弟节点(该节点之后)
      *
      * @param id
      * @param newNode
      */
-    public void afterChild(String id, M newNode) {
-        mapper.afterChild(id, newNode);
+    public void addSiblingNode(String id, M newNode) {
+        mapper.addSiblingNode(id, newNode);
     }
     
     /**
@@ -97,8 +97,8 @@ public class TreeService<M extends NodeModel, T extends NodeMapper<M>> {
     /**
      * 删除节点及其子节点
      */
-    public void emptyNode(String id) {
-        mapper.emptyNode(id);
+    public void deleteNodes(String id) {
+        mapper.deleteNodes(id);
     }
     
     /**

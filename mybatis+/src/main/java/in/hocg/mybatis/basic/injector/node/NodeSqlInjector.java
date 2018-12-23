@@ -35,8 +35,8 @@ public class NodeSqlInjector extends DefaultSqlInjector {
                 // 循环注入自定义方法
                 methodList.forEach(m -> m.inject(builderAssistant, mapperClass));
                 mapperRegistryCache.add(className);
-                /**
-                 * 初始化 SQL 解析
+                /*
+                  初始化 SQL 解析
                  */
                 if (GlobalConfigUtils.getGlobalConfig(builderAssistant.getConfiguration()).isSqlParserCache()) {
                     SqlParserHelper.initSqlParserInfoCache(mapperClass);
@@ -49,9 +49,9 @@ public class NodeSqlInjector extends DefaultSqlInjector {
     
     public List<AbstractMethod> getNodeMethod() {
         return Arrays.asList(
-                new AppendChild(),
-                new AfterChild(),
-                new EmptyNode(),
+                new AddChildNode(),
+                new AddSiblingNode(),
+                new DeleteNodes(),
                 new DeleteNode(),
                 new QueryNodeAndChildren(),
                 new QueryAllChildren(),

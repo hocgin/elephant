@@ -12,7 +12,7 @@ import org.apache.ibatis.mapping.SqlSource;
  * @author hocgin
  */
 public class QueryTreeNodeForLeaf extends AbstractMethod {
-    StringBuilder SQL = new StringBuilder("<script>")
+    private static StringBuilder SQL = new StringBuilder("<script>")
             .append("SELECT :columns\n" +
                     "        FROM :table AS node,\n" +
                     "             :table AS parent\n" +

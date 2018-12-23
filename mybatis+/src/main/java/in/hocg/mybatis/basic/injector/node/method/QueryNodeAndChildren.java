@@ -12,7 +12,7 @@ import org.apache.ibatis.mapping.SqlSource;
  * @author hocgin
  */
 public class QueryNodeAndChildren extends AbstractMethod {
-    StringBuilder SQL = new StringBuilder("<script><![CDATA[")
+    private static StringBuilder SQL = new StringBuilder("<script><![CDATA[")
             .append("SELECT :columns, (COUNT(parent.:id) - (sub_tree.depth + 1)) AS depth\n" +
                     "        FROM :table AS node,\n" +
                     "             :table AS parent,\n" +

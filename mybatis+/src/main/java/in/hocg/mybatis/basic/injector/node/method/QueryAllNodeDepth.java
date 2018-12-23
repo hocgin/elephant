@@ -13,7 +13,7 @@ import org.apache.ibatis.mapping.SqlSource;
  * 查询所有节点及其深度
  */
 public class QueryAllNodeDepth extends AbstractMethod {
-    StringBuilder SQL = new StringBuilder("<script>")
+    private static StringBuilder SQL = new StringBuilder("<script>")
             .append("SELECT :columns, (COUNT(parent.:id) - 1) AS depth\n" +
                     "        FROM :table AS node,\n" +
                     "             :table AS parent\n" +

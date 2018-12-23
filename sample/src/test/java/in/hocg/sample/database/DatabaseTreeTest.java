@@ -28,16 +28,16 @@ public class DatabaseTreeTest {
     private TreeService<Tree, TreeMapper> treeService;
     
     @Test
-    public void appendChild() {
+    public void addChildNode() {
         Tree newNode = new Tree();
         newNode.setName("OK2");
         newNode.setId(UUID.randomUUID().toString());
-        treeService.appendChild("9", newNode);
+        treeService.addChildNode("9", newNode);
     }
     
     @Test
-    public void emptyNode() {
-        treeService.emptyNode("7");
+    public void deleteNodes() {
+        treeService.deleteNodes("7");
     }
     
     @Test
@@ -46,11 +46,11 @@ public class DatabaseTreeTest {
     }
     
     @Test
-    public void afterChild() {
+    public void addSiblingNode() {
         Tree newNode = new Tree();
         newNode.setId(UUID.randomUUID().toString());
         newNode.setName("jjjj");
-        treeService.afterChild("6", newNode);
+        treeService.addSiblingNode("6", newNode);
     }
     
     @Test

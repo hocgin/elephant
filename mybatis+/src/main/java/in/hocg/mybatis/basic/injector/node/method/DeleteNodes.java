@@ -28,9 +28,9 @@ import org.apache.ibatis.mapping.SqlSource;
  *
  * @author hocgin
  */
-public class EmptyNode extends AbstractMethod {
+public class DeleteNodes extends AbstractMethod {
     
-    StringBuilder SQL = new StringBuilder("<script>")
+    private static StringBuilder SQL = new StringBuilder("<script>")
             .append("SELECT @myLeft := lft, @myRight := rgt, @myWidth := rgt - lft + 1 FROM :table WHERE :id = #{id};")
             .append("DELETE FROM :table WHERE lft BETWEEN @myLeft AND @myRight;")
             .append("UPDATE :table SET rgt = rgt - @myWidth WHERE rgt > @myRight;")
@@ -38,7 +38,7 @@ public class EmptyNode extends AbstractMethod {
             .append("</script>");
     
     private String getMethodName() {
-        return "emptyNode";
+        return "deleteNodes";
     }
     
     /**

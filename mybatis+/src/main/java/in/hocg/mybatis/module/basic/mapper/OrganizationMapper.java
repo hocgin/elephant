@@ -1,6 +1,7 @@
 package in.hocg.mybatis.module.basic.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import in.hocg.mybatis.basic.NodeMapper;
 import in.hocg.mybatis.module.basic.entity.Organization;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -13,6 +14,7 @@ import org.apache.ibatis.annotations.Mapper;
  * @since 2018-10-21
  */
 @Mapper
-public interface OrganizationMapper extends BaseMapper<Organization> {
+public interface OrganizationMapper extends BaseMapper<Organization>,
+        NodeMapper<Organization> {
     
 }

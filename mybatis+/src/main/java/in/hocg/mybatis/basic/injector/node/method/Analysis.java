@@ -12,7 +12,7 @@ import org.apache.ibatis.mapping.SqlSource;
  * @author hocgin
  */
 public class Analysis extends AbstractMethod {
-    StringBuilder SQL = new StringBuilder("<script>")
+    private static StringBuilder SQL = new StringBuilder("<script>")
             .append("SELECT CONCAT(REPEAT(' ', COUNT(parent.:id) - 1), node.name) AS name\n" +
                     "        FROM :table AS node,\n" +
                     "             :table AS parent\n" +

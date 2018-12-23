@@ -33,9 +33,9 @@ import org.apache.ibatis.mapping.SqlSource;
  *
  * @author hocgin
  */
-public class AppendChild extends AbstractMethod {
+public class AddChildNode extends AbstractMethod {
     
-    StringBuilder SQL = new StringBuilder("<script>")
+    private static StringBuilder SQL = new StringBuilder("<script>")
             .append("SELECT @myLeft := lft FROM :table WHERE :id = #{id};")
             .append("UPDATE :table SET rgt = rgt + 2 WHERE rgt > @myLeft;")
             .append("UPDATE :table SET lft = lft + 2 WHERE lft > @myLeft;")
@@ -43,7 +43,7 @@ public class AppendChild extends AbstractMethod {
             .append("</script>");
     
     private String getMethodName() {
-        return "appendChild";
+        return "addChildNode";
     }
     
     /**

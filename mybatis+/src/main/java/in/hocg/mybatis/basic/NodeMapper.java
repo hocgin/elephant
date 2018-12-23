@@ -18,12 +18,13 @@ public interface NodeMapper<M extends NodeModel> extends BaseMapper<M> {
     /**
      * 删除节点及其所有子节点
      *
+     * @param id
      * @return
      */
-    int emptyNode(@Param("id") Serializable id);
+    int deleteNodes(@Param("id") Serializable id);
     
     /**
-     * 删除父节点不删除子节点, 子节点会向上移动
+     * 删除指定节点, 并移动其子节点到该节点所在层级
      *
      * @param id
      */
@@ -83,19 +84,19 @@ public interface NodeMapper<M extends NodeModel> extends BaseMapper<M> {
     List<String> analysis();
     
     /**
-     * 追加子节点
+     * 添加子节点(在该节点子代的最后)
      *
      * @param id
      * @param node
      */
-    void appendChild(@Param("id") Serializable id, @Param("node") M node);
+    void addChildNode(@Param("id") Serializable id, @Param("node") M node);
     
     /**
-     * 添加兄弟节点
+     * 添加兄弟节点(在该节点之后)
      *
      * @param id
      * @param node
      */
-    void afterChild(@Param("id") Serializable id, @Param("node") M node);
+    void addSiblingNode(@Param("id") Serializable id, @Param("node") M node);
     
 }

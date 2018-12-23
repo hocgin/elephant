@@ -29,7 +29,7 @@ import org.apache.ibatis.mapping.SqlSource;
  */
 public class DeleteNode extends AbstractMethod {
     
-    StringBuilder SQL = new StringBuilder("<script>")
+    private static StringBuilder SQL = new StringBuilder("<script>")
             .append("SELECT @myLeft := lft, @myRight := rgt, @myWidth := rgt - lft + 1 FROM :table WHERE :id = #{id};")
             .append("DELETE FROM :table WHERE lft = @myLeft;")
             .append("UPDATE :table SET rgt = rgt - 1, lft = lft - 1 WHERE lft BETWEEN @myLeft AND @myRight;")
