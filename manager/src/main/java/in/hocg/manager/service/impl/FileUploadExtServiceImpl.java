@@ -33,8 +33,7 @@ public class FileUploadExtServiceImpl implements FileUploadExtService {
     
     @Override
     public String upload(MultipartFile file, boolean isPublic, String uploader) throws IOException {
-        String space = (String) cacheService.get(CacheKey.FILE_UPLOAD_SPACE.name())
-                .orElse(CacheKey.FILE_UPLOAD_SPACE.def());
+        String space = space();
         String storageName = ossService.checkIfNoUpload(file, space);
         HashCode hashCode = LangKit.md5(file.getBytes());
         FileRecord fileRecord = new FileRecord()
@@ -60,6 +59,10 @@ public class FileUploadExtServiceImpl implements FileUploadExtService {
         throw ResponseException.wrap(ResponseException.class, "文件不存在");
     }
     
+    /**
+     * 命名空间
+     * @return
+     */
     public String space() {
         return  (String) cacheService.get(CacheKey.FILE_UPLOAD_SPACE.name())
                 .orElse(CacheKey.FILE_UPLOAD_SPACE.def());

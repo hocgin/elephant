@@ -43,10 +43,10 @@ public class UserDetailServiceImpl implements UserDetailsService {
                 .distinct().toArray(String[]::new);
         return new User(staff.getUsername(),
                 staff.getPassword(),
-                staff.isEnabled(),
-                staff.isNonExpired(),
+                staff.getEnabled(),
+                staff.getNonExpired(),
                 true,
-                staff.isNonLocked(),
+                staff.getNonLocked(),
                 AuthorityUtils.createAuthorityList(roleMark)
         );
     }
