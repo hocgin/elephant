@@ -3,7 +3,7 @@ package in.hocg.manager.support.security;
 import in.hocg.manager.service.RoleStaffService;
 import in.hocg.manager.service.StaffService;
 import in.hocg.mybatis.module.system.entity.Role;
-import in.hocg.mybatis.module.system.entity.Staff;
+import in.hocg.mybatis.module.user.entity.Staff;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.User;

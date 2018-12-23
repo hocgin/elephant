@@ -1,8 +1,8 @@
 package in.hocg;
 
 import in.hocg.mybatis.enums.Gender;
-import in.hocg.mybatis.module.system.entity.Staff;
-import in.hocg.mybatis.module.system.mapper.StaffMapper;
+import in.hocg.mybatis.module.user.entity.Staff;
+import in.hocg.mybatis.module.user.mapper.StaffMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 import org.junit.runner.RunWith;

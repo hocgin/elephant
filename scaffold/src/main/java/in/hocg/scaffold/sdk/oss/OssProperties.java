@@ -23,7 +23,7 @@ public class OssProperties {
         private String endpoint;
     }
     
-    enum Type {
+    public enum Type {
         AliYun,
     }
 }

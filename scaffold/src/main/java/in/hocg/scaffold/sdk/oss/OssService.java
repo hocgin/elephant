@@ -1,6 +1,10 @@
 package in.hocg.scaffold.sdk.oss;
 
+import com.google.common.hash.HashCode;
+import com.google.common.io.Files;
 import in.hocg.scaffold.sdk.oss.result.QueryResult;
+import in.hocg.util.LangKit;
+import lombok.SneakyThrows;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -14,37 +18,68 @@ import java.util.Optional;
  */
 public interface OssService {
     
+    
+    /**
+     * 获取文件名
+     *
+     * @param file
+     * @return
+     */
+    @SneakyThrows
+    default String filename(MultipartFile file) {
+        String prefix = Files.getFileExtension(file.getOriginalFilename());
+        HashCode hashCode = LangKit.md5(file.getBytes());
+        return String.format("%s.%s", hashCode.toString(), prefix);
+    }
+    
+    /**
+     * 上传文件前，检查是否已经上传
+     *
+     * @param file  文件
+     * @param space 上传空间
+     * @return 保存的文件名
+     * @throws IOException
+     */
+    String checkIfNoUpload(MultipartFile file, String space) throws IOException;
+    
     /**
      * 上传文件
      *
-     * @param file 文件
+     * @param file  文件
      * @param space 上传空间
      * @return 保存的文件名
+     * @throws IOException
      */
     String upload(MultipartFile file, String space) throws IOException;
     
+    
     /**
      * 是否已经存在
-     * @param space 上传空间
+     *
+     * @param space    上传空间
      * @param filename 保存的文件名
-     * @return
+     * @return 是否存在
      */
     boolean isExist(String space, String filename);
     
     /**
      * 查找文件
-     * @param space 上传空间
+     *
+     * @param space    上传空间
      * @param filename 保存的文件名
-     * @return
+     * @return 查找结果
      */
     Optional<QueryResult> fetch(String space, String filename);
     
     
     /**
      * 删除文件
-     * @param space 上传空间
+     *
+     * @param space    上传空间
      * @param filename 保存的文件名
-     * @return
+     * @return 是否删除成功
      */
     boolean delete(String space, String filename);
+    
+    OssProperties.Type type();
 }

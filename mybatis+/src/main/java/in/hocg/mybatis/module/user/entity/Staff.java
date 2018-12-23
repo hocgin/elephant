@@ -1,4 +1,4 @@
-package in.hocg.mybatis.module.system.entity;
+package in.hocg.mybatis.module.user.entity;
 
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
@@ -20,9 +20,13 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true)
 @TableName("staff")
 public class Staff extends DefaultModel<Staff> {
-    
     private static final long serialVersionUID = 1L;
     
+    /**
+     * 关联账号ID
+     */
+    @TableField(ACCOUNT_ID)
+    private String accountId;
     /**
      * 昵称
      */
@@ -39,41 +43,33 @@ public class Staff extends DefaultModel<Staff> {
     @TableField(PASSWORD)
     private String password;
     /**
-     * 头像地址
+     * 头像
      */
-    @TableField(AVATAR_URI)
-    private String avatarUri;
+    @TableField(AVATAR)
+    private String avatar;
     /**
-     * 性别(0:女, 1:男)
+     * 性别 [女, 男]
      */
     @TableField(GENDER)
-    private int gender;
+    private Integer gender;
     /**
-     * 过期状态(0:为过期状态;1:为正常状态)
+     * 过期状态 [过期状态,正常状态]
      */
     @TableField(NON_EXPIRED)
-    private boolean nonExpired;
+    private Boolean nonExpired;
     /**
-     * 锁定状态(0:为过期状态;1:为正常状态)
+     * 锁定状态 [过期状态,正常状态]
      */
     @TableField(NON_LOCKED)
-    private boolean nonLocked;
+    private Boolean nonLocked;
     /**
-     * 启用状态(0:为禁用状态;1:为正常状态)
+     * 启用状态 [关闭状态,开启状态]
      */
     @TableField(ENABLED)
-    private boolean enabled;
-    /**
-     * 注册时使用的IP
-     */
-    @TableField(SIGN_UP_IP)
-    private String signUpIp;
-    /**
-     * 最后登陆时使用的IP
-     */
-    @TableField(LAST_LOGIN_IP)
-    private String lastLoginIp;
+    private Boolean enabled;
     
+    
+    public static final String ACCOUNT_ID = "account_id";
     
     public static final String NICKNAME = "nickname";
     
@@ -81,7 +77,7 @@ public class Staff extends DefaultModel<Staff> {
     
     public static final String PASSWORD = "password";
     
-    public static final String AVATAR_URI = "avatar_uri";
+    public static final String AVATAR = "avatar";
     
     public static final String GENDER = "gender";
     
@@ -90,9 +86,5 @@ public class Staff extends DefaultModel<Staff> {
     public static final String NON_LOCKED = "non_locked";
     
     public static final String ENABLED = "enabled";
-    
-    public static final String SIGN_UP_IP = "sign_up_ip";
-    
-    public static final String LAST_LOGIN_IP = "last_login_ip";
     
 }

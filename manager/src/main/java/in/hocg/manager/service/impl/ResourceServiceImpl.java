@@ -6,6 +6,7 @@ import in.hocg.mybatis.basic.model.NodeModel;
 import in.hocg.mybatis.module.system.entity.Resource;
 import in.hocg.mybatis.module.system.mapper.ResourceMapper;
 import in.hocg.scaffold.lang.exception.NotRollbackException;
+import in.hocg.scaffold.lang.exception.ResponseException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -26,7 +27,7 @@ public class ResourceServiceImpl extends BaseService<ResourceMapper, Resource>
     public Resource findResourceTreeByUsername(String username) throws NotRollbackException {
         List<Resource> resources = baseMapper.findAllByUsername(username);
         if (resources.isEmpty()) {
-            throw NotRollbackException.wrap("未找到资源");
+            throw ResponseException.wrap(NotRollbackException.class,"未找到资源");
         }
         Resource root = resources.get(0);
         return NodeModel.buildTree(root, resources);

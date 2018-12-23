@@ -1,7 +1,7 @@
-package in.hocg.mybatis.module.system.mapper;
+package in.hocg.mybatis.module.user.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import in.hocg.mybatis.module.system.entity.Staff;
+import in.hocg.mybatis.module.user.entity.Staff;
 import org.apache.ibatis.annotations.Mapper;
 
 /**

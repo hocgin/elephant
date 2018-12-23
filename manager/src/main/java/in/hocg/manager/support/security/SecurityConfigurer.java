@@ -67,6 +67,8 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
         */
         http.authorizeRequests()
                 .antMatchers(HttpMethod.POST, "/staff/token").anonymous()
+                .antMatchers(HttpMethod.GET, "/image/**").anonymous()
+                .antMatchers(HttpMethod.GET, "/download/**").anonymous()
                 .anyRequest().access("@rbacService.hasPermission(request, authentication)")
         ;
           /*

@@ -7,10 +7,14 @@ import in.hocg.manager.service.StaffService;
 import in.hocg.mybatis.basic.BaseService;
 import in.hocg.mybatis.basic.condition.GetCondition;
 import in.hocg.mybatis.basic.condition.PostCondition;
-import in.hocg.mybatis.module.system.entity.Staff;
-import in.hocg.mybatis.module.system.mapper.StaffMapper;
+import in.hocg.mybatis.module.user.entity.Staff;
+import in.hocg.mybatis.module.user.mapper.StaffMapper;
+import in.hocg.scaffold.lang.exception.NotRollbackException;
+import in.hocg.scaffold.lang.exception.ResponseException;
+import org.apache.logging.log4j.util.Strings;
 import org.springframework.stereotype.Service;
 
+import java.security.Principal;
 import java.util.Optional;
 
 /**
@@ -44,5 +48,16 @@ public class StaffServiceImpl extends BaseService<StaffMapper, Staff>
         Page<Staff> page = condition.page();
         QueryWrapper<Staff> wrapper = condition.wrapper();
         return baseMapper.selectPage(page, wrapper);
+    }
+    
+    @Override
+    public String getAccountIdOfStaff(Principal principal) throws Exception {
+        String username = principal.getName();
+        if (Strings.isBlank(username)) {
+            throw ResponseException.wrap(NotRollbackException.class, "请先进行登陆");
+        }
+        Optional<Staff> staff = findByUsername(username);
+        return staff.map(Staff::getAccountId)
+                .orElse(null);
     }
 }

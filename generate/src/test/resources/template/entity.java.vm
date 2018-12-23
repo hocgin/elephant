@@ -68,7 +68,7 @@ public class ${entity} implements Serializable {
     @TableField(fill = FieldFill.${field.fill})
 #end
 #elseif(${field.convert})
-    @TableField("${field.name}")
+    @TableField(${field.name.toUpperCase()})
 #end
 ## 乐观锁注解
 #if(${versionFieldName}==${field.name})

@@ -3,6 +3,9 @@ dependencies {
     compile project(':mybatis+')
     compile libs.jwt
     compile libs.spring['security']
-    compile 'org.visola.spring.security:spring-security-token-filter-spring-boot-starter:1.1'
     testCompile libs.spring.test
+    
+    
+    
+    compile 'org.visola.spring.security:spring-security-token-filter-spring-boot-starter:1.1'
 }

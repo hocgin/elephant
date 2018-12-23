@@ -17,7 +17,7 @@ import in.hocg.manager.support.security.body.JwtToken;
 import in.hocg.mybatis.basic.condition.GetCondition;
 import in.hocg.mybatis.basic.condition.PostCondition;
 import in.hocg.mybatis.module.system.entity.Resource;
-import in.hocg.mybatis.module.system.entity.Staff;
+import in.hocg.mybatis.module.user.entity.Staff;
 import in.hocg.scaffold.lang.exception.NotRollbackException;
 import in.hocg.scaffold.support.basis.BaseController;
 import in.hocg.scaffold.support.basis.parameter.ID;

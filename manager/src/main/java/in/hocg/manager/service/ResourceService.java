@@ -20,6 +20,7 @@ public interface ResourceService extends IService<Resource> {
      * 查找对应用户的资源树
      * @param username
      * @return
+     * @throws NotRollbackException
      */
     Resource findResourceTreeByUsername(String username) throws NotRollbackException;
     

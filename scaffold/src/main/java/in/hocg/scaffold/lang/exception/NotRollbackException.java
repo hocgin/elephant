@@ -8,13 +8,8 @@ package in.hocg.scaffold.lang.exception;
  *
  * @author hocgin
  */
-public class NotRollbackException extends Exception {
-    
-    private NotRollbackException(String message) {
-        super(message);
-    }
-    
-    public static NotRollbackException wrap(String message) {
-        return new NotRollbackException(message);
+public class NotRollbackException extends ResponseException {
+    public NotRollbackException(String message, int code) {
+        super(message, code);
     }
 }
