@@ -4,6 +4,7 @@ import in.hocg.scaffold.constant.Charset;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
+import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletResponse;
 
 /**
@@ -22,7 +23,7 @@ public class ResponseKit {
      * @param response
      * @return
      */
-    public static HttpServletResponse utf8(HttpServletResponse response) {
+    public static ServletResponse utf8(ServletResponse response) {
         response.setContentType("text/html;charset=utf-8");
         response.setCharacterEncoding(Charset.UTF_8);
         return response;

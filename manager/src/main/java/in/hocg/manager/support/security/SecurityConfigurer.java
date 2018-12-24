@@ -47,35 +47,50 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
     
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+        /*
+         配置拦截器
+        */
+        http.addFilterBefore(tokenAuthenticationFilter, BasicAuthenticationFilter.class)
+                .addFilterBefore(fixBugFilter(), TokenAuthenticationFilter.class)
+        ;
         
         /*
          全局配置
         */
         http.csrf().disable()
-                .httpBasic().disable()
+//                .httpBasic().disable()
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .headers().cacheControl();
-        /*
-         配置拦截器
-        */
-        http.addFilterBefore(tokenAuthenticationFilter, BasicAuthenticationFilter.class);
         
         /*
          URL 授权管理
         */
         http.authorizeRequests()
+                .antMatchers(HttpMethod.GET, "/error").anonymous()
                 .antMatchers(HttpMethod.POST, "/staff/token").anonymous()
                 .antMatchers(HttpMethod.GET, "/image/**").anonymous()
                 .antMatchers(HttpMethod.GET, "/download/**").anonymous()
                 .anyRequest().access("@rbacService.hasPermission(request, authentication)")
         ;
-          /*
-           异常处理
-          */
+    
+    
+        /*
+         异常处理
+        */
+//        ExceptionHandling authenticationEntryPoint = new ExceptionHandling();
 //        http.exceptionHandling()
-//                .authenticationEntryPoint(unauthorizedHandler);
+//                .authenticationEntryPoint(authenticationEntryPoint)
+//                .accessDeniedHandler(authenticationEntryPoint)
+//        ;
+    
+    }
+    
+    @Bean
+    FixBugFilter fixBugFilter() {
+        // 处理 TokenAuthenticationFilter 异常不能被拦截的问题
+        return new FixBugFilter();
     }
     
     @Bean(name = BeanIds.AUTHENTICATION_MANAGER)
