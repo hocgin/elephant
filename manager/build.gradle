@@ -3,6 +3,7 @@ dependencies {
     compile project(':mybatis+')
     compile libs.jwt
     compile libs.spring['security']
+    compile 'org.springframework.boot:spring-boot-starter-data-redis'
     testCompile libs.spring.test
     
     
