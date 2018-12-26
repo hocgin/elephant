@@ -1,4 +1,4 @@
-package in.hocg.manager.controller.parameter;
+package in.hocg.manager.model.parameter;
 
 import in.hocg.scaffold.support.basis.parameter.BaseParameter;
 import lombok.Data;

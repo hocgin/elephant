@@ -8,9 +8,9 @@ package in.hocg.manager.controller;
  */
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import in.hocg.manager.controller.parameter.AddStaff;
-import in.hocg.manager.controller.parameter.QueryStaff;
-import in.hocg.manager.controller.parameter.UpdateStaff;
+import in.hocg.manager.model.parameter.AddStaff;
+import in.hocg.manager.model.parameter.QueryStaff;
+import in.hocg.manager.model.parameter.UpdateStaff;
 import in.hocg.manager.service.ResourceService;
 import in.hocg.manager.service.StaffService;
 import in.hocg.manager.support.security.body.JwtToken;

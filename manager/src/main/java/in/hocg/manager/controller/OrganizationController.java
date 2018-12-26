@@ -1,9 +1,9 @@
 package in.hocg.manager.controller;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import in.hocg.manager.controller.parameter.AddOrganization;
-import in.hocg.manager.controller.parameter.QueryOrganization;
-import in.hocg.manager.controller.parameter.UpdateOrganization;
+import in.hocg.manager.model.parameter.AddOrganization;
+import in.hocg.manager.model.parameter.QueryOrganization;
+import in.hocg.manager.model.parameter.UpdateOrganization;
 import in.hocg.manager.service.OrganizationService;
 import in.hocg.mybatis.basic.condition.GetCondition;
 import in.hocg.mybatis.basic.condition.PostCondition;
