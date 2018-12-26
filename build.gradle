@@ -36,9 +36,14 @@ subprojects {
 
     // 通用依赖
     dependencies {
-        compile 'org.projectlombok:lombok'
         compile 'javax.xml.bind:jaxb-api'
         compile 'com.google.guava:guava'
+
+        // lombok
+        compile 'org.projectlombok:lombok'
+        // mapstruct
+        compile 'org.mapstruct:mapstruct-jdk8:1.2.0.Final'
+        compile 'org.mapstruct:mapstruct-processor:1.2.0.Final'
     }
 
     dependencyManagement {
