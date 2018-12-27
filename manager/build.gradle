@@ -4,6 +4,7 @@ dependencies {
     compile libs.jwt
     compile libs.spring['security']
     compile 'org.springframework.boot:spring-boot-starter-data-redis'
+    compile 'org.springframework.boot:spring-boot-starter-actuator'
     testCompile libs.spring.test
     
     
