@@ -113,7 +113,7 @@ public class StaffController extends BaseController {
      * @param parameter
      * @return
      */
-    @GetMapping("/{id:[a-zA-Z0-9_]+}")
+    @GetMapping("/{id:[a-zA-Z0-9]{32}}")
     public ResponseEntity detail(@PathVariable("id") ID parameter) {
         Serializable id = parameter.getId();
         Staff result = staffService.getById(id);
@@ -141,7 +141,7 @@ public class StaffController extends BaseController {
      *
      * @return
      */
-    @PutMapping("/{id:[a-zA-Z0-9_]+}")
+    @PutMapping("/{id:[a-zA-Z0-9]{32}}")
     public ResponseEntity putStaff(@PathVariable("id") String id,
                                    @RequestBody UpdateStaff parameter) {
         Staff staff = parameter.cast(Staff.class);

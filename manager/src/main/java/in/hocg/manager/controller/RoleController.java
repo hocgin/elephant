@@ -15,4 +15,6 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/resource")
 @AllArgsConstructor
 public class RoleController extends BaseController {
+    
+    
 }

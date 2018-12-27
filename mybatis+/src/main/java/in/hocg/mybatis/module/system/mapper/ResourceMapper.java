@@ -1,6 +1,7 @@
 package in.hocg.mybatis.module.system.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import in.hocg.mybatis.basic.NodeMapper;
 import in.hocg.mybatis.module.system.entity.Resource;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -15,7 +16,7 @@ import java.util.List;
  * @since 2018-10-21
  */
 @Mapper
-public interface ResourceMapper extends BaseMapper<Resource> {
+public interface ResourceMapper extends NodeMapper<Resource> {
     /**
      * 查找对应用户的资源
      *
