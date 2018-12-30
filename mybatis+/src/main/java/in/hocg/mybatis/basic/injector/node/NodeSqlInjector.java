@@ -36,7 +36,7 @@ public class NodeSqlInjector extends DefaultSqlInjector {
                 methodList.forEach(m -> m.inject(builderAssistant, mapperClass));
                 mapperRegistryCache.add(className);
                 /*
-                  初始化 SQL 解析
+                  初始化 AntiSQL 解析
                  */
                 if (GlobalConfigUtils.getGlobalConfig(builderAssistant.getConfiguration()).isSqlParserCache()) {
                     SqlParserHelper.initSqlParserInfoCache(mapperClass);

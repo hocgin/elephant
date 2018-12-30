@@ -43,16 +43,19 @@ public class ILogAspect {
         Object result = null;
         try {
             result = point.proceed();
-            watch.stop();
         } catch (Throwable throwable) {
-            doLog(watch.getLastTaskTimeMillis(), point, result, throwable);
+            doLog(watch, point, result, throwable);
         } finally {
-            doLog(watch.getLastTaskTimeMillis(), point, result, null);
+            doLog(watch, point, result, null);
         }
         return result;
     }
     
-    private void doLog(long usageTime, ProceedingJoinPoint point, Object result, Throwable e) {
+    private void doLog(StopWatch watch, ProceedingJoinPoint point, Object result, Throwable e) {
+        if (watch.isRunning()) {
+            watch.stop();
+        }
+        long usageTime = watch.getTotalTimeMillis();
         MethodSignature methodSignature = (MethodSignature) point.getSignature();
         Method method = methodSignature.getMethod();
         Class aClass = point.getSourceLocation().getWithinType();

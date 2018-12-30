@@ -13,7 +13,6 @@ import in.hocg.manager.model.parameter.QueryStaff;
 import in.hocg.manager.model.parameter.UpdateStaff;
 import in.hocg.manager.service.ResourceService;
 import in.hocg.manager.service.StaffService;
-import in.hocg.manager.support.security.body.JwtToken;
 import in.hocg.mybatis.basic.condition.GetCondition;
 import in.hocg.mybatis.basic.condition.PostCondition;
 import in.hocg.mybatis.module.system.entity.Resource;
@@ -25,12 +24,8 @@ import in.hocg.scaffold.support.basis.parameter.IDs;
 import in.hocg.scaffold.support.http.Result;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import org.visola.spring.security.tokenfilter.TokenService;
 
 import java.io.Serializable;
 import java.security.Principal;
@@ -41,31 +36,8 @@ import java.util.List;
 @RequestMapping("/staff")
 @AllArgsConstructor
 public class StaffController extends BaseController {
-    private final AuthenticationManager authenticationManager;
-    private final TokenService tokenService;
     private final StaffService staffService;
     private final ResourceService resourceService;
-    
-    /**
-     * POST /staff/token
-     * 登陆
-     *
-     * @param username
-     * @param password
-     * @return
-     */
-    @PostMapping(value = "/token")
-    public ResponseEntity postToken(@RequestParam("username") String username,
-                                    @RequestParam("password") String password) {
-        UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
-                username,
-                password
-        );
-        
-        Authentication authentication = authenticationManager.authenticate(authenticationToken);
-        String token = tokenService.generateToken(authentication);
-        return Result.success(new JwtToken(token)).asResponseEntity();
-    }
     
     /**
      * GET /staff/menu

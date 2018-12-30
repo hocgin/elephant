@@ -68,8 +68,10 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
          URL 授权管理
         */
         http.authorizeRequests()
+                // 针对 fetch 对跨域请求发送 OPTIONS 请求的处理
+                .antMatchers(HttpMethod.OPTIONS, "/**").anonymous()
                 .antMatchers(HttpMethod.GET, "/error").anonymous()
-                .antMatchers(HttpMethod.POST, "/staff/token").anonymous()
+                .antMatchers(HttpMethod.POST, "/account/login").anonymous()
                 .antMatchers(HttpMethod.GET, "/image/**").anonymous()
                 .antMatchers(HttpMethod.GET, "/download/**").anonymous()
                 .anyRequest().access("@rbacService.hasPermission(request, authentication)")
