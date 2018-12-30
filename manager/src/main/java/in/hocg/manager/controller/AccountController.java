@@ -2,6 +2,7 @@ package in.hocg.manager.controller;
 
 import in.hocg.manager.model.parameter.Login;
 import in.hocg.manager.support.security.body.JwtToken;
+import in.hocg.scaffold.support.aspect.log.ILog;
 import in.hocg.scaffold.support.basis.BaseController;
 import in.hocg.scaffold.support.http.Result;
 import lombok.AllArgsConstructor;
@@ -40,6 +41,7 @@ public class AccountController extends BaseController {
      */
     @PostMapping(value = "/login")
     @ResponseBody
+    @ILog
     public ResponseEntity postToken(@RequestBody Login parameter) {
         String password = parameter.getPassword();
         String username = parameter.getUsername();

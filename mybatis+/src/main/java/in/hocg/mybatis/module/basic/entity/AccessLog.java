@@ -63,6 +63,16 @@ public class AccessLog extends DefaultModel<AccessLog> {
     @TableField(URI)
     private String uri;
     /**
+     * 来源,eg: 系统管理后台
+     */
+    @TableField(SOURCE)
+    private String source;
+    /**
+     * 操作行为,eg: 注册管理员账号
+     */
+    @TableField(OPERATING)
+    private String operating;
+    /**
      * 耗时 单位:ms
      */
     @TableField(USAGE_TIME)
@@ -93,5 +103,9 @@ public class AccessLog extends DefaultModel<AccessLog> {
     public static final String MAPPING = "mapping";
     
     private static final String LEVEL = "level";
+    
+    private static final String OPERATING = "operating";
+    
+    private static final String SOURCE = "source";
     
 }

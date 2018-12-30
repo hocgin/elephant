@@ -30,7 +30,7 @@ public @interface ILog {
      */
     String message() default "''";
     
-    String from() default "SYSTEM";
+    String source() default "系统管理后台";
     
-    String level() default "INFO";
+    Level level() default Level.INFO;
 }

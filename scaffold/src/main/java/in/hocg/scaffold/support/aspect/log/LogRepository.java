@@ -17,6 +17,8 @@ public interface LogRepository {
     void handle(Level level,
                 String mapping,
                 String message,
+                String source,
+                String operating,
                 long timeMillis,
                 Object result);
 }

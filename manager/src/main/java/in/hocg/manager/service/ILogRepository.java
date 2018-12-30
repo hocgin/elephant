@@ -28,12 +28,24 @@ public class ILogRepository implements LogRepository {
     private final AccessLogService accessLogService;
     
     @Override
-    public void handle(Level level, String mapping, String message, long timeMillis, Object result) {
-        log(level, mapping, message, timeMillis, result);
+    public void handle(Level level,
+                       String mapping,
+                       String message,
+                       String source,
+                       String operating,
+                       long timeMillis,
+                       Object result) {
+        log(level, mapping, message, source, operating, timeMillis, result);
     }
     
     @SneakyThrows
-    private void log(Level level, String mapping, String message, long timeMillis, Object result) {
+    private void log(Level level,
+                     String mapping,
+                     String message,
+                     String source,
+                     String operating,
+                     long timeMillis,
+                     Object result) {
         HttpServletRequest request = RequestKit.get();
         String ip = RequestKit.getClientIP(request);
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();

@@ -58,6 +58,10 @@ CREATE TABLE `access_log` (
   COMMENT '耗时 单位:ms',
   `ip`         VARCHAR(20)
   COMMENT '访问者IP地址',
+  `operating`  VARCHAR(20)
+  COMMENT '操作行为,eg: 注册管理员账号',
+  `source`     VARCHAR(10)
+  COMMENT '来源,eg: 系统管理后台',
 
   `created_at` DATETIME(6) NOT NULL
   COMMENT '创建时间',
