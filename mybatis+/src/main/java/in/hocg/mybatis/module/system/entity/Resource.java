@@ -28,11 +28,6 @@ public class Resource extends NodeModel<Resource> {
     @TableField(NAME)
     private String name;
     /**
-     * 菜单别称
-     */
-    @TableField(ALIAS)
-    private String alias;
-    /**
      * 菜单描述
      */
     @TableField(DESCRIPTION)
@@ -50,8 +45,8 @@ public class Resource extends NodeModel<Resource> {
     /**
      * URI
      */
-    @TableField(URI)
-    private String uri;
+    @TableField(PATH)
+    private String path;
     /**
      * 图标
      */
@@ -65,15 +60,13 @@ public class Resource extends NodeModel<Resource> {
     
     public static final String NAME = "name";
     
-    public static final String ALIAS = "alias";
-    
     public static final String DESCRIPTION = "description";
     
     public static final String TYPE = "type";
     
     public static final String METHOD = "method";
     
-    public static final String URI = "uri";
+    public static final String PATH = "path";
     
     public static final String ICON = "icon";
     

@@ -258,7 +258,7 @@ CREATE TABLE `resource` (
   COMMENT '菜单类型 [菜单,按钮]',
   `method`      VARCHAR(6)  NOT NULL
   COMMENT '请求类型 [GET,POST,DELETE,PUT]',
-  `uri`         VARCHAR(20) NOT NULL
+  `path`        VARCHAR(20) NOT NULL
   COMMENT 'URI',
   `icon`        VARCHAR(20) NOT NULL
   COMMENT '图标',
@@ -282,19 +282,21 @@ CREATE TABLE `role` (
   `id`          CHAR(32)
   COMMENT 'UUID',
   --
-  `lft`         INT         NOT NULL
-  COMMENT '左侧',
-  `rgt`         INT         NOT NULL
-  COMMENT '右侧',
   `mark`        CHAR(32)    NOT NULL
   COMMENT '角色标识',
   `name`        VARCHAR(10) NOT NULL
   COMMENT '角色名称',
-  `alias`       VARCHAR(10) NOT NULL
-  COMMENT '角色别称',
   `description` VARCHAR(10) NOT NULL
   COMMENT '角色描述',
   --
+  `created_at`  DATETIME(6) NOT NULL
+  COMMENT '创建时间',
+  `creator`     CHAR(32)
+  COMMENT '创建者',
+  `updated_at`  DATETIME(6)
+  COMMENT '更新时间',
+  `updater`     CHAR(32)
+  COMMENT '更新者',
   PRIMARY KEY (`id`)
 )
   ENGINE = InnoDB

@@ -4,12 +4,16 @@
 
     <select id="findAllByUsername"
             resultType="in.hocg.mybatis.module.system.entity.Resource">
-        SELECT r.*
-        FROM resource r
-                 LEFT JOIN role_resource rr ON rr.resource_id = r.id
+        SELECT node.*, (COUNT(parent.id) - 1) AS depth
+        FROM resource node
+                 INNER JOIN resource AS parent
+                 LEFT JOIN role_resource rr ON rr.resource_id = node.id
                  LEFT JOIN role r2 ON rr.role_id = r2.id
                  LEFT JOIN role_staff rs ON rs.role_id = r2.id
                  LEFT JOIN staff s ON rs.staff_id = s.id
         WHERE s.username = #{username}
+          AND node.lft BETWEEN parent.lft AND parent.rgt
+        GROUP BY node.id
+        ORDER BY node.lft
     </select>
 </mapper>

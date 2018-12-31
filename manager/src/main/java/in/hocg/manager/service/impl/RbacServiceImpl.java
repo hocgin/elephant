@@ -38,7 +38,7 @@ public class RbacServiceImpl implements RbacService {
                 .parallelStream()
                 .anyMatch(resource -> {
                     String method = resource.getMethod();
-                    String uri = resource.getUri();
+                    String uri = resource.getPath();
                     return method.equalsIgnoreCase(requestMethod)
                             && antPathMatcher.match(uri, requestURI);
                 });

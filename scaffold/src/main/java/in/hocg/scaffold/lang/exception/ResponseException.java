@@ -29,7 +29,7 @@ public class ResponseException extends Exception {
     
     @SneakyThrows
     public static <T extends ResponseException> T wrap(Class<T> tClass, String message, int code) {
-        Constructor<T> constructor = tClass.getConstructor(String.class, Integer.class);
+        Constructor<T> constructor = tClass.getConstructor(String.class, int.class);
         return constructor.newInstance(message, code);
     }
     

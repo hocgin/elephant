@@ -15,9 +15,7 @@ import in.hocg.manager.service.ResourceService;
 import in.hocg.manager.service.StaffService;
 import in.hocg.mybatis.basic.condition.GetCondition;
 import in.hocg.mybatis.basic.condition.PostCondition;
-import in.hocg.mybatis.module.system.entity.Resource;
 import in.hocg.mybatis.module.user.entity.Staff;
-import in.hocg.scaffold.lang.exception.NotRollbackException;
 import in.hocg.scaffold.support.basis.BaseController;
 import in.hocg.scaffold.support.basis.parameter.ID;
 import in.hocg.scaffold.support.basis.parameter.IDs;
@@ -28,7 +26,6 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.Serializable;
-import java.security.Principal;
 import java.util.Arrays;
 import java.util.List;
 
@@ -38,19 +35,6 @@ import java.util.List;
 public class StaffController extends BaseController {
     private final StaffService staffService;
     private final ResourceService resourceService;
-    
-    /**
-     * GET /staff/menu
-     * 查找当前员工的菜单列表
-     *
-     * @return
-     */
-    @GetMapping("/menu")
-    public ResponseEntity getMenu(Principal principal) throws NotRollbackException {
-        String username = principal.getName();
-        Resource tree = resourceService.findResourceTreeByUsername(username);
-        return Result.success(tree).asResponseEntity();
-    }
     
     /**
      * GET /staff
