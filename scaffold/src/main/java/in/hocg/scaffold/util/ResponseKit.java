@@ -28,9 +28,10 @@ public class ResponseKit {
      * @param response
      * @return
      */
-    public static ServletResponse utf8(ServletResponse response) {
-        response.setContentType("text/html;charset=utf-8");
-        response.setCharacterEncoding(Charset.UTF_8);
-        return response;
+    public static HttpServletResponse utf8(ServletResponse response) {
+        HttpServletResponse httpServletResponse = (HttpServletResponse) response;
+        httpServletResponse.setContentType("text/html;charset=utf-8");
+        httpServletResponse.setCharacterEncoding(Charset.UTF_8);
+        return httpServletResponse;
     }
 }

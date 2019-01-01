@@ -1,6 +1,7 @@
 package in.hocg.manager.support;
 
 import in.hocg.scaffold.support.http.wrapper.RequestWrapper;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.*;
@@ -15,11 +16,14 @@ import java.io.IOException;
  *
  * @author hocgin
  */
+@Slf4j
 @Component
 @WebFilter(filterName = "CustomFilter", urlPatterns = "/*")
 public class CustomFilter implements Filter {
     @Override
-    public void init(FilterConfig filterConfig) throws ServletException {}
+    public void init(FilterConfig filterConfig) throws ServletException {
+        log.debug("开启自定义拦截器");
+    }
     
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
@@ -33,8 +37,7 @@ public class CustomFilter implements Filter {
         servletResponse.setHeader("Access-Control-Allow-Headers", "Content-Type,Authorization");
         servletResponse.setHeader("Access-Control-Expose-Headers", "http://localhost:8000");
         // 防 XSS 注入
-        HttpServletRequest req = (HttpServletRequest) request;
-        chain.doFilter(new RequestWrapper(req), response);
+        chain.doFilter(new RequestWrapper((HttpServletRequest) request), servletResponse);
     }
     
     @Override

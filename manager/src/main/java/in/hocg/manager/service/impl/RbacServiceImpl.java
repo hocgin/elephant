@@ -27,7 +27,11 @@ public class RbacServiceImpl implements RbacService {
     
     @Override
     public boolean hasPermission(HttpServletRequest request, Authentication authentication) {
+        
         String username = ((String) authentication.getPrincipal());
+        if ("anonymousUser".equals(username)) {
+            return false;
+        }
         String requestURI = request.getRequestURI();
         String requestMethod = request.getMethod();
         if ("admin".equals(username)) {
