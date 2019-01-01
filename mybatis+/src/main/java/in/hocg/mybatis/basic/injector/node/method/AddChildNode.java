@@ -15,31 +15,31 @@ import org.apache.ibatis.mapping.SqlSource;
 /**
  * Created by hocgin on 2018/12/9.
  * email: hocgin@gmail.com
- *
- *```sql
+ * <p>
+ * ```sql
  * LOCK TABLE nested_category WRITE;
- *
+ * <p>
  * SELECT @myLeft := lft FROM nested_category
- *
+ * <p>
  * WHERE name = '2 WAY RADIOS';
- *
+ * <p>
  * UPDATE nested_category SET rgt = rgt + 2 WHERE rgt > @myLeft;
  * UPDATE nested_category SET lft = lft + 2 WHERE lft > @myLeft;
- *
+ * <p>
  * INSERT INTO nested_category(name, lft, rgt) VALUES('FRS', @myLeft + 1, @myLeft + 2);
- *
+ * <p>
  * UNLOCK TABLES;
- *```
+ * ```
  *
  * @author hocgin
  */
 public class AddChildNode extends AbstractMethod {
     
     private static StringBuilder SQL = new StringBuilder("<script>")
-            .append("SELECT @myLeft := lft FROM :table WHERE :id = #{id};")
-            .append("UPDATE :table SET rgt = rgt + 2 WHERE rgt > @myLeft;")
-            .append("UPDATE :table SET lft = lft + 2 WHERE lft > @myLeft;")
-            .append("INSERT INTO :table :columnScript VALUES :valuesScript;")
+            .append("SELECT @myLeft := lft FROM :table WHERE :id = #{id};\n")
+            .append("UPDATE :table SET rgt = rgt + 2 WHERE rgt > @myLeft;\n")
+            .append("UPDATE :table SET lft = lft + 2 WHERE lft > @myLeft;\n")
+            .append("INSERT INTO :table :columnScript VALUES :valuesScript;\n")
             .append("</script>");
     
     private String getMethodName() {
@@ -72,14 +72,13 @@ public class AddChildNode extends AbstractMethod {
                 // ---
                 .replace("<if test=\"node.lft != null\">#{node.lft},</if>", "@myLeft + 1,")
                 .replace("<if test=\"node.rgt != null\">#{node.rgt},</if>", "@myLeft + 2,");
-    
-    
+        
+        
         String sql = SQL.toString().replaceAll(":table", tableInfo.getTableName())
                 .replaceAll(":id", tableInfo.getKeyColumn())
                 .replaceAll(":columns", sqlSelectColumns(tableInfo, true))
                 .replaceAll(":valuesScript", valuesScript)
-                .replaceAll(":columnScript", columnScript)
-                ;
+                .replaceAll(":columnScript", columnScript);
         
         KeyGenerator keyGenerator = new NoKeyGenerator();
         String keyProperty = null;

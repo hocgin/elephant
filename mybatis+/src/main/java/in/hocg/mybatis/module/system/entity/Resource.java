@@ -55,7 +55,7 @@ public class Resource extends NodeModel<Resource> {
     /**
      * 是否开启显示(0:未启用; 1:启用)
      */
-    @TableField(ENABLE)
+    @TableField(ENABLED)
     private boolean enabled = true;
     
     public static final String NAME = "name";
@@ -70,6 +70,6 @@ public class Resource extends NodeModel<Resource> {
     
     public static final String ICON = "icon";
     
-    public static final String ENABLE = "enabled";
+    public static final String ENABLED = "enabled";
     
 }

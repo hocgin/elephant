@@ -25,4 +25,5 @@ public class Tree extends NodeModel<Tree> {
     @TableField("name")
     private String name;
     
+    private boolean enabled;
 }

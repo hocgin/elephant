@@ -1,9 +1,6 @@
 package in.hocg.manager.service;
 
-import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
-import in.hocg.mybatis.basic.condition.GetCondition;
-import in.hocg.mybatis.basic.condition.PostCondition;
 import in.hocg.mybatis.module.system.entity.Resource;
 import in.hocg.scaffold.lang.exception.NotRollbackException;
 import lombok.NonNull;
@@ -63,7 +60,7 @@ public interface ResourceService extends IService<Resource> {
      * @param resource
      * @return
      */
-    boolean addChildNode(@NonNull Serializable parentId, @NonNull Resource resource);
+    boolean addChildNode(@NonNull Serializable parentId, @NonNull Resource resource) throws NotRollbackException;
     
     /**
      * 在同一级指定节点之后, 追加一个子节点
@@ -73,21 +70,11 @@ public interface ResourceService extends IService<Resource> {
      * @return
      */
     boolean addSiblingNode(@NonNull Serializable id, @NonNull Resource resource);
+
     
     /**
-     * 分页查找
-     *
-     * @param condition
+     * 查找完整的树
      * @return
      */
-    IPage<Resource> page(GetCondition condition);
-    
-    /**
-     * 分页查找
-     *
-     * @param condition
-     * @return
-     */
-    IPage<Resource> page(PostCondition condition);
-    
+    Resource findAll() throws NotRollbackException;
 }

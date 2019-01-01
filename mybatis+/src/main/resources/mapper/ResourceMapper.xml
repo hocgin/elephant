@@ -14,6 +14,6 @@
         WHERE s.username = #{username}
           AND node.lft BETWEEN parent.lft AND parent.rgt
         GROUP BY node.id
-        ORDER BY node.lft
+        ORDER BY node.lft ASC
     </select>
 </mapper>

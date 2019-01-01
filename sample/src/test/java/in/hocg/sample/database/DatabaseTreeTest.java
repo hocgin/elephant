@@ -25,14 +25,15 @@ import java.util.UUID;
 public class DatabaseTreeTest {
     
     @Autowired
-    private TreeService<Tree, TreeMapper> treeService;
+    private TreeService treeService;
     
     @Test
     public void addChildNode() {
         Tree newNode = new Tree();
         newNode.setName("OK2");
         newNode.setId(UUID.randomUUID().toString());
-        treeService.addChildNode("9", newNode);
+        newNode.setEnabled(true);
+        treeService.addChildNode("root", newNode);
     }
     
     @Test
@@ -50,7 +51,7 @@ public class DatabaseTreeTest {
         Tree newNode = new Tree();
         newNode.setId(UUID.randomUUID().toString());
         newNode.setName("jjjj");
-        treeService.addSiblingNode("6", newNode);
+        treeService.addSiblingNode("root", newNode);
     }
     
     @Test

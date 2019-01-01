@@ -1,7 +1,9 @@
 package in.hocg.sample.database;
 
-import in.hocg.mybatis.basic.NodeMapper;
-import in.hocg.mybatis.basic.model.NodeModel;
+import in.hocg.mybatis.basic.BaseService;
+import in.hocg.sample.mybatis.example.entity.Tree;
+import in.hocg.sample.mybatis.example.mapper.TreeMapper;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
@@ -11,11 +13,8 @@ import java.util.List;
  *
  * @author hocgin
  */
-//@Service
-//@AllArgsConstructor
-//@Transactional
-public class TreeService<M extends NodeModel, T extends NodeMapper<M>> {
-    private T mapper;
+@Service
+public class TreeService extends BaseService<TreeMapper, Tree> {
     
     /**
      * 追加子节点
@@ -23,8 +22,8 @@ public class TreeService<M extends NodeModel, T extends NodeMapper<M>> {
      * @param parentId
      * @param newNode
      */
-    public void addChildNode(String parentId, M newNode) {
-        mapper.addChildNode(parentId, newNode);
+    public void addChildNode(String parentId, Tree newNode) {
+        baseMapper.addChildNode(parentId, newNode);
     }
     
     /**
@@ -33,8 +32,8 @@ public class TreeService<M extends NodeModel, T extends NodeMapper<M>> {
      * @param id
      * @param newNode
      */
-    public void addSiblingNode(String id, M newNode) {
-        mapper.addSiblingNode(id, newNode);
+    public void addSiblingNode(String id, Tree newNode) {
+        baseMapper.addSiblingNode(id, newNode);
     }
     
     /**
@@ -43,8 +42,8 @@ public class TreeService<M extends NodeModel, T extends NodeMapper<M>> {
      * @param id
      * @return
      */
-    public List<M> queryNodeAndChildren(String id) {
-        return mapper.queryNodeAndChildren(id);
+    public List<Tree> queryNodeAndChildren(String id) {
+        return baseMapper.queryNodeAndChildren(id);
     }
     
     /**
@@ -53,8 +52,8 @@ public class TreeService<M extends NodeModel, T extends NodeMapper<M>> {
      * @param id
      * @return
      */
-    public List<M> queryAllChildren(String id) {
-        return mapper.queryAllChildren(id);
+    public List<Tree> queryAllChildren(String id) {
+        return baseMapper.queryAllChildren(id);
     }
     
     /**
@@ -62,8 +61,8 @@ public class TreeService<M extends NodeModel, T extends NodeMapper<M>> {
      *
      * @return
      */
-    public List<M> queryAllLeafNode() {
-        return mapper.queryAllLeafNode();
+    public List<Tree> queryAllLeafNode() {
+        return baseMapper.queryAllLeafNode();
     }
     
     /**
@@ -71,8 +70,8 @@ public class TreeService<M extends NodeModel, T extends NodeMapper<M>> {
      *
      * @return
      */
-    public List<M> queryTreeNodeForLeaf(String leafNodeId) {
-        return mapper.queryTreeNodeForLeaf(leafNodeId);
+    public List<Tree> queryTreeNodeForLeaf(String leafNodeId) {
+        return baseMapper.queryTreeNodeForLeaf(leafNodeId);
     }
     
     /**
@@ -80,8 +79,8 @@ public class TreeService<M extends NodeModel, T extends NodeMapper<M>> {
      *
      * @return
      */
-    public List<M> queryAllNodeDepth() {
-        return mapper.queryAllNodeDepth();
+    public List<Tree> queryAllNodeDepth() {
+        return baseMapper.queryAllNodeDepth();
     }
     
     /**
@@ -90,15 +89,15 @@ public class TreeService<M extends NodeModel, T extends NodeMapper<M>> {
      * @param id
      * @return
      */
-    public List<M> queryTreeNodeDepth(String id) {
-        return mapper.queryTreeNodeDepth(id);
+    public List<Tree> queryTreeNodeDepth(String id) {
+        return baseMapper.queryTreeNodeDepth(id);
     }
     
     /**
      * 删除节点及其子节点
      */
     public void deleteNodes(String id) {
-        mapper.deleteNodes(id);
+        baseMapper.deleteNodes(id);
     }
     
     /**
@@ -107,7 +106,7 @@ public class TreeService<M extends NodeModel, T extends NodeMapper<M>> {
      * @param id
      */
     public void deleteNode(String id) {
-        mapper.deleteNode(id);
+        baseMapper.deleteNode(id);
     }
     
     /**
@@ -116,6 +115,6 @@ public class TreeService<M extends NodeModel, T extends NodeMapper<M>> {
      * @return
      */
     public List<String> analysis() {
-        return mapper.analysis();
+        return baseMapper.analysis();
     }
 }

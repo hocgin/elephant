@@ -252,7 +252,7 @@ CREATE TABLE `resource` (
   COMMENT '右侧',
   `name`        VARCHAR(10) NOT NULL
   COMMENT '菜单名称',
-  `description` VARCHAR(10) NOT NULL
+  `description` VARCHAR(10) NOT NULL                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                DEFAULT ''
   COMMENT '菜单描述',
   `type`        INT(1)      NOT NULL
   COMMENT '菜单类型 [菜单,按钮]',
@@ -286,7 +286,7 @@ CREATE TABLE `role` (
   COMMENT '角色标识',
   `name`        VARCHAR(10) NOT NULL
   COMMENT '角色名称',
-  `description` VARCHAR(10) NOT NULL
+  `description` VARCHAR(10) NOT NULL DEFAULT ''
   COMMENT '角色描述',
   --
   `created_at`  DATETIME(6) NOT NULL
