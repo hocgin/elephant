@@ -5,10 +5,16 @@ import in.hocg.manager.service.ResourceService;
 import in.hocg.mybatis.module.system.entity.Resource;
 import in.hocg.scaffold.lang.exception.NotRollbackException;
 import in.hocg.scaffold.support.basis.BaseController;
+import in.hocg.scaffold.support.basis.parameter.IDs;
 import in.hocg.scaffold.support.http.Result;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+
+import java.io.Serializable;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * Created by hocgin on 2018/12/16.
@@ -46,5 +52,31 @@ public class ResourceController extends BaseController {
         boolean result = resourceService.addChildNode(body.getParent(), entity);
         return Result.result(result).asResponseEntity();
     }
+    
+    
+    /**
+     * DELETE /resource
+     * 批量删除
+     * > 1: 删除指定节点, 并移动其子节点到该节点所在层级
+     * > 其他: 删除选中节点及其子节点
+     *
+     * @param parameter
+     * @return
+     */
+    @DeleteMapping
+    public ResponseEntity deletes(@Validated IDs parameter,
+                                  @RequestParam(value = "mode", required = false, defaultValue = "0") int mode) {
+        List<Serializable> ids = Arrays.asList(parameter.getId());
+        if (ids.contains("root")) {
+            return Result.error("根节点不能被删除").asResponseEntity();
+        }
+        if (mode == 1) {
+            resourceService.deleteNode(ids);
+        } else {
+            resourceService.deleteNodes(ids);
+        }
+        return Result.success().asResponseEntity();
+    }
+    
     
 }
