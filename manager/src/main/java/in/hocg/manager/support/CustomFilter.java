@@ -2,6 +2,8 @@ package in.hocg.manager.support;
 
 import in.hocg.scaffold.support.http.wrapper.RequestWrapper;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.core.Ordered;
+import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.*;
@@ -17,6 +19,7 @@ import java.io.IOException;
  * @author hocgin
  */
 @Slf4j
+@Order(Ordered.HIGHEST_PRECEDENCE)
 @Component
 @WebFilter(filterName = "CustomFilter", urlPatterns = "/*")
 public class CustomFilter implements Filter {
