@@ -129,6 +129,10 @@ public class ResourceController extends BaseController {
     @PutMapping("/{id}")
     public ResponseEntity updateOne(@PathVariable("id") String id,
                                     @RequestBody UResource parameter) throws RollbackException, NotRollbackException {
+        if (id.contains(DatabaseConstant.DEFAULT_ROOT_NODE_UUID)) {
+            return Result.error("根节点不能被修改")
+                    .asResponseEntity();
+        }
         boolean result = resourceService.updateOneById(id, parameter);
         return Result.success(result)
                 .asResponseEntity();
