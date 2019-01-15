@@ -43,3 +43,15 @@ how---------怎么做，是方法。
 - who --------谁来做
 - when --------什么时候做
 - how---------怎么做
+
+
+## 增删改查
+> 动词/多条/单条/所有/条件
+- insert -> insertMulti -> insertOne -> insertAll -> insertBy
+- update -> updateMulti -> updateOne -> updateAll -> updateBy
+- delete -> deleteMulti -> deleteOne -> deleteAll -> deleteBy
+- select -> selectMulti -> selectOne -> selectAll -> selectBy
+
+> Multi = Multiple
+
+## 参数类名

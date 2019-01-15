@@ -13,8 +13,7 @@ import lombok.ToString;
  */
 @Data
 @ToString
-@EqualsAndHashCode(callSuper = true)
-public class AddStaff extends BaseParameter {
+public class AddStaff implements BaseParameter {
     private String nickname;
     private String username;
     private String password;

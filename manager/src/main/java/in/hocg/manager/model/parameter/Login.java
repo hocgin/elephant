@@ -2,7 +2,6 @@ package in.hocg.manager.model.parameter;
 
 import in.hocg.scaffold.support.basis.parameter.BaseParameter;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
 import javax.validation.constraints.NotBlank;
@@ -15,8 +14,7 @@ import javax.validation.constraints.NotBlank;
  */
 @Data
 @ToString
-@EqualsAndHashCode(callSuper = true)
-public class Login extends BaseParameter {
+public class Login implements BaseParameter {
     @NotBlank(message = "请输入用户名")
     private String username;
     @NotBlank(message = "请输入密码")

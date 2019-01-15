@@ -2,20 +2,18 @@ package in.hocg.manager.model.parameter;
 
 import in.hocg.scaffold.support.basis.parameter.BaseParameter;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
 /**
- * Created by hocgin on 2019/1/1.
+ * Created by hocgin on 2019/1/15.
  * email: hocgin@gmail.com
  *
  * @author hocgin
  */
 @Data
 @ToString
-@EqualsAndHashCode(callSuper = true)
-public class AddResource extends BaseParameter {
-    private String parent;
+public class UResource implements BaseParameter {
+    
     /**
      * 菜单名称
      */
@@ -27,7 +25,7 @@ public class AddResource extends BaseParameter {
     /**
      * 菜单类型(0:菜单;1:按钮)
      */
-    private int type;
+    private Integer type;
     /**
      * 请求类型(GET,POST,DELETE,PUT)
      */
@@ -43,6 +41,5 @@ public class AddResource extends BaseParameter {
     /**
      * 是否开启显示(0:未启用; 1:启用)
      */
-    private boolean enabled = true;
-    
+    private Boolean enabled;
 }

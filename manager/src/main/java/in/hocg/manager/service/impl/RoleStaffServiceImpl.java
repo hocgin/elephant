@@ -23,6 +23,6 @@ public class RoleStaffServiceImpl extends BaseService<RoleStaffMapper, RoleStaff
     
     @Override
     public Collection<Role> findByAllRoleUseStaffId(String id) {
-        return baseMapper.findByAllRoleUseStaffId(id);
+        return baseMapper.selectMultiByStaffId(id);
     }
 }

@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="in.hocg.mybatis.module.system.mapper.ResourceMapper">
 
-    <select id="findAllByUsername"
+    <select id="selectMultiByUsername"
             resultType="in.hocg.mybatis.module.system.entity.Resource">
         SELECT node.*, (COUNT(parent.id) - 1) AS depth
         FROM resource node

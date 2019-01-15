@@ -1,9 +1,12 @@
 package in.hocg.manager.controller;
 
-import in.hocg.manager.model.parameter.AddResource;
+import in.hocg.manager.model.parameter.IResource;
+import in.hocg.manager.model.parameter.UResource;
 import in.hocg.manager.service.ResourceService;
+import in.hocg.mybatis.basic.constant.DatabaseConstant;
 import in.hocg.mybatis.module.system.entity.Resource;
 import in.hocg.scaffold.lang.exception.NotRollbackException;
+import in.hocg.scaffold.lang.exception.RollbackException;
 import in.hocg.scaffold.support.basis.BaseController;
 import in.hocg.scaffold.support.basis.parameter.IDs;
 import in.hocg.scaffold.support.http.Result;
@@ -30,27 +33,59 @@ public class ResourceController extends BaseController {
     
     /**
      * GET /resource
-     * 查找所有员工列表
+     * 查找所有菜单列表
      *
      * @return
      */
     @GetMapping
-    public ResponseEntity get() throws NotRollbackException {
-        Resource all = resourceService.findAll();
-        return Result.success(all).asResponseEntity();
+    public ResponseEntity selectAll() throws NotRollbackException {
+        Resource all = resourceService.selectAllAndBuildTree();
+        return Result.success(all)
+                .asResponseEntity();
+    }
+    
+    /**
+     * GET /resource/:id
+     * 查询详细信息
+     *
+     * @return
+     * @throws NotRollbackException
+     */
+    @GetMapping("/{id}")
+    public ResponseEntity selectOne(@PathVariable("id") String id) throws NotRollbackException {
+        Resource detail = resourceService.getById(id);
+        return Result.success(detail)
+                .asResponseEntity();
     }
     
     /**
      * POST /resource
      * 新增
+     * > 1: 添加兄弟节点
+     * > 0 or 其他: 添加子节点
      *
      * @return
      */
     @PostMapping
-    public ResponseEntity post(@RequestBody AddResource body) throws NotRollbackException {
-        Resource entity = body.cast(Resource.class);
-        boolean result = resourceService.addChildNode(body.getParent(), entity);
-        return Result.result(result).asResponseEntity();
+    public ResponseEntity insertOne(@RequestBody IResource body,
+                                    @RequestParam(value = "mode", required = false, defaultValue = "0") int mode) throws NotRollbackException {
+        
+        String refNode = body.getRefNode();
+        
+        // 添加兄弟节点,关联节点不能为根节点
+        if (mode == 1 && refNode.contains(DatabaseConstant.DEFAULT_ROOT_NODE_UUID)) {
+            return Result.error("仅能有一个根节点")
+                    .asResponseEntity();
+        }
+        Resource entity = body.copyTo(Resource.class);
+        boolean result;
+        if (mode == 1) {
+            result = resourceService.insertOneSiblingNode(refNode, entity);
+        } else {
+            result = resourceService.insertOneChildNode(refNode, entity);
+        }
+        return Result.result(result)
+                .asResponseEntity();
     }
     
     
@@ -58,25 +93,45 @@ public class ResourceController extends BaseController {
      * DELETE /resource
      * 批量删除
      * > 1: 删除指定节点, 并移动其子节点到该节点所在层级
-     * > 其他: 删除选中节点及其子节点
+     * > 0 or 其他: 删除选中节点及其子节点
      *
      * @param parameter
      * @return
      */
     @DeleteMapping
-    public ResponseEntity deletes(@Validated IDs parameter,
-                                  @RequestParam(value = "mode", required = false, defaultValue = "0") int mode) {
+    public ResponseEntity deleteMulti(@Validated IDs parameter,
+                                      @RequestParam(value = "mode", required = false, defaultValue = "0") int mode) {
         List<Serializable> ids = Arrays.asList(parameter.getId());
-        if (ids.contains("root")) {
-            return Result.error("根节点不能被删除").asResponseEntity();
+        if (ids.contains(DatabaseConstant.DEFAULT_ROOT_NODE_UUID)) {
+            return Result.error("根节点不能被删除")
+                    .asResponseEntity();
         }
+        boolean result;
         if (mode == 1) {
-            resourceService.deleteNode(ids);
+            result = resourceService.deleteMultiNode(ids);
         } else {
-            resourceService.deleteNodes(ids);
+            result = resourceService.deleteMultiNodes(ids);
         }
-        return Result.success().asResponseEntity();
+        return Result.success(result)
+                .asResponseEntity();
     }
     
+    /**
+     * PUT /resource
+     * 更新资源
+     *
+     * @param id        唯一
+     * @param parameter 参数
+     * @return
+     * @throws RollbackException
+     * @throws NotRollbackException
+     */
+    @PutMapping("/{id}")
+    public ResponseEntity updateOne(@PathVariable("id") String id,
+                                    @RequestBody UResource parameter) throws RollbackException, NotRollbackException {
+        boolean result = resourceService.updateOneById(id, parameter);
+        return Result.success(result)
+                .asResponseEntity();
+    }
     
 }

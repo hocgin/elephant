@@ -16,8 +16,7 @@ import java.io.Serializable;
  */
 @Data
 @ToString
-@EqualsAndHashCode(callSuper = true)
-public class IDs extends BaseParameter {
+public class IDs implements BaseParameter {
     @NotEmpty(message = "数据项不存在")
     private Serializable[] id;
 }

@@ -1,6 +1,5 @@
 package in.hocg.mybatis.module.system.mapper;
 
-import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import in.hocg.mybatis.basic.NodeMapper;
 import in.hocg.mybatis.module.system.entity.Resource;
 import org.apache.ibatis.annotations.Mapper;
@@ -23,6 +22,6 @@ public interface ResourceMapper extends NodeMapper<Resource> {
      * @param username
      * @return
      */
-    List<Resource> findAllByUsername(String username);
+    List<Resource> selectMultiByUsername(String username);
     
 }

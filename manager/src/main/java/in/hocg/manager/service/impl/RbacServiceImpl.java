@@ -38,7 +38,7 @@ public class RbacServiceImpl implements RbacService {
             return true;
         }
         // todo: 后续需从缓存中读取
-        return resourceService.findAllByUsername(username)
+        return resourceService.selectMultiByUsername(username)
                 .parallelStream()
                 .anyMatch(resource -> {
                     String method = resource.getMethod();

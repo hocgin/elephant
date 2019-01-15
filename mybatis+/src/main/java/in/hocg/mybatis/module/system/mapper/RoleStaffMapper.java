@@ -19,5 +19,11 @@ import java.util.Collection;
 @Mapper
 public interface RoleStaffMapper extends BaseMapper<RoleStaff> {
     
-    Collection<Role> findByAllRoleUseStaffId(@Param("id") String id);
+    /**
+     * 使用员工ID来查找其关联的角色
+     *
+     * @param id
+     * @return
+     */
+    Collection<Role> selectMultiByStaffId(@Param("id") String id);
 }

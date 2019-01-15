@@ -49,7 +49,7 @@ public class ResourceServiceImplTest {
                 .setPath("/baidu")
                 .setType(1)
         ;
-        resourceService.addChildNode("root", resource);
+        resourceService.insertOneChildNode("root", resource);
     }
     
     @Test

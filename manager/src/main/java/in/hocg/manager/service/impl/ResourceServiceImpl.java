@@ -1,5 +1,6 @@
 package in.hocg.manager.service.impl;
 
+import in.hocg.manager.model.parameter.UResource;
 import in.hocg.manager.service.ResourceService;
 import in.hocg.mybatis.basic.BaseService;
 import in.hocg.mybatis.basic.model.NodeModel;
@@ -29,8 +30,8 @@ public class ResourceServiceImpl extends BaseService<ResourceMapper, Resource>
         implements ResourceService {
     
     @Override
-    public Resource findResourceTreeByUsername(String username) throws NotRollbackException {
-        List<Resource> resources = baseMapper.findAllByUsername(username);
+    public Resource selectMultiByUsernameAndBuildTree(String username) throws NotRollbackException {
+        List<Resource> resources = baseMapper.selectMultiByUsername(username);
         if (resources.isEmpty()) {
             throw ResponseException.wrap(NotRollbackException.class, "未找到资源");
         }
@@ -39,13 +40,13 @@ public class ResourceServiceImpl extends BaseService<ResourceMapper, Resource>
     }
     
     @Override
-    public List<Resource> findAllByUsername(String username) {
-        return baseMapper.findAllByUsername(username);
+    public List<Resource> selectMultiByUsername(String username) {
+        return baseMapper.selectMultiByUsername(username);
     }
     
     
     @Override
-    public boolean deleteNode(Collection<Serializable> ids) {
+    public boolean deleteMultiNode(Collection<Serializable> ids) {
         for (Serializable id : ids) {
             baseMapper.deleteNode(id);
         }
@@ -53,7 +54,7 @@ public class ResourceServiceImpl extends BaseService<ResourceMapper, Resource>
     }
     
     @Override
-    public boolean deleteNodes(Collection<Serializable> ids) {
+    public boolean deleteMultiNodes(Collection<Serializable> ids) {
         for (Serializable id : ids) {
             baseMapper.deleteNodes(id);
         }
@@ -62,8 +63,8 @@ public class ResourceServiceImpl extends BaseService<ResourceMapper, Resource>
     
     @Override
     @Transactional
-    public boolean addChildNode(Serializable parentId,
-                                Resource resource) throws NotRollbackException {
+    public boolean insertOneChildNode(Serializable parentId,
+                                      Resource resource) throws NotRollbackException {
         Resource parent = baseMapper.selectById(parentId);
         if (Objects.isNull(parent)) {
             throw ResponseException.wrap(NotRollbackException.class, "请选择父节点");
@@ -74,20 +75,35 @@ public class ResourceServiceImpl extends BaseService<ResourceMapper, Resource>
     }
     
     @Override
-    public boolean addSiblingNode(Serializable id,
-                                  Resource resource) {
+    public boolean insertOneSiblingNode(Serializable id,
+                                        Resource resource) throws NotRollbackException {
+        Resource sibling = baseMapper.selectById(id);
+        if (Objects.isNull(sibling)) {
+            throw ResponseException.wrap(NotRollbackException.class, "请选择兄弟节点");
+        }
+        resource.setId(LangKit.uuid());
         baseMapper.addSiblingNode(id, resource);
         return true;
     }
     
     @Override
-    public Resource findAll() throws NotRollbackException {
+    public Resource selectAllAndBuildTree() throws NotRollbackException {
         List<Resource> resources = baseMapper.queryAllNodeDepth();
         if (resources.isEmpty()) {
             throw ResponseException.wrap(NotRollbackException.class, "未找到资源");
         }
         Resource root = resources.get(0);
         return NodeModel.buildTree(root, resources);
+    }
+    
+    @Override
+    public boolean updateOneById(String id, UResource parameter) throws NotRollbackException {
+        Resource resource = baseMapper.selectById(id);
+        if (resource == null) {
+            throw ResponseException.wrap(NotRollbackException.class, "未找到资源");
+        }
+        parameter.copyNotNullTo(resource);
+        return baseMapper.updateById(resource) > 0;
     }
     
 }

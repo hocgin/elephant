@@ -1,4 +1,4 @@
-package in.hocg.manager.util;
+package in.hocg.scaffold.util;
 
 import lombok.experimental.UtilityClass;
 import org.springframework.beans.BeanWrapper;
@@ -9,13 +9,13 @@ import java.util.Arrays;
 import java.util.Objects;
 
 /**
- * Created by hocgin on 2019/1/1.
+ * Created by hocgin on 2019/1/15.
  * email: hocgin@gmail.com
  *
  * @author hocgin
  */
 @UtilityClass
-public class LangKit {
+public class ClassKit {
     
     
     /**

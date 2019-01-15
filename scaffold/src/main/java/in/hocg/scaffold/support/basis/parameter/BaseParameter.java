@@ -8,10 +8,5 @@ import in.hocg.scaffold.support.basis.Bean;
  *
  * @author hocgin
  */
-public abstract class BaseParameter implements Bean {
-    
-    @Override
-    public <T extends Bean> T fill(Object object) {
-        throw new UnsupportedOperationException("请实现它");
-    }
+public interface BaseParameter extends Bean {
 }

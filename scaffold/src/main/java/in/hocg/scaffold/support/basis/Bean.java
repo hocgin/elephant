@@ -1,5 +1,6 @@
 package in.hocg.scaffold.support.basis;
 
+import in.hocg.scaffold.util.ClassKit;
 import lombok.SneakyThrows;
 import org.springframework.beans.BeanUtils;
 
@@ -16,13 +17,24 @@ public interface Bean extends Serializable {
     /**
      * Bean -转化成-> T
      *
-     * @param object
+     * @param target
      * @param <T>
      * @return
      */
-    default <T> T cast(T object) {
-        BeanUtils.copyProperties(this, object);
-        return object;
+    default <T> T copyTo(T target) {
+        BeanUtils.copyProperties(this, target);
+        return target;
+    }
+    
+    /**
+     * Bean 中非空属性 -拷贝-> T
+     * @param target
+     * @param <T>
+     * @return
+     */
+    default <T> T copyNotNullTo(T target) {
+        BeanUtils.copyProperties(this, target, ClassKit.getNullValueFields(target));
+        return target;
     }
     
     /**
@@ -32,9 +44,9 @@ public interface Bean extends Serializable {
      * @return
      */
     @SneakyThrows
-    default <T> T cast(Class<T> clazz) {
+    default <T> T copyTo(Class<T> clazz) {
         T target = clazz.newInstance();
-        return cast(target);
+        return copyTo(target);
     }
     
     /**

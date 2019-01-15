@@ -85,7 +85,7 @@ public class AccountController extends BaseController {
     @GetMapping("/menus")
     public ResponseEntity getMenu(Principal principal) throws NotRollbackException {
         String username = principal.getName();
-        Resource tree = resourceService.findResourceTreeByUsername(username);
+        Resource tree = resourceService.selectMultiByUsernameAndBuildTree(username);
         return Result.success(tree.getChildren()).asResponseEntity();
     }
 }

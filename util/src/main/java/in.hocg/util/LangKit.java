@@ -32,4 +32,6 @@ public class LangKit {
     public static String uuid() {
         return UUID.randomUUID().toString().replaceAll("-", "");
     }
+    
+    
 }

@@ -13,6 +13,5 @@ import lombok.ToString;
  */
 @Data
 @ToString
-@EqualsAndHashCode(callSuper = true)
-public class QueryOrganization extends BaseParameter {
+public class QueryOrganization implements BaseParameter {
 }

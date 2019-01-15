@@ -105,7 +105,7 @@ public class OrganizationController extends BaseController {
     @PutMapping("/{id:[a-zA-Z0-9_]+}")
     public ResponseEntity putOrganization(@PathVariable("id") String id,
                                           @RequestBody UpdateOrganization parameter) {
-        Organization entity = parameter.cast(Organization.class);
+        Organization entity = parameter.copyTo(Organization.class);
         entity.setId(id);
         boolean result = organizationService.updateById(entity);
         return Result.result(result).asResponseEntity();
@@ -124,7 +124,7 @@ public class OrganizationController extends BaseController {
     public ResponseEntity postOrganization(@RequestBody AddOrganization parameter,
                                     @PathVariable(value = "id") Serializable id,
                                     @RequestParam(value = "mode", required = false) int mode) {
-        Organization entity = parameter.cast(Organization.class);
+        Organization entity = parameter.copyTo(Organization.class);
         if (mode == 1) {
             organizationService.addChildNode(id, entity);
         } else {

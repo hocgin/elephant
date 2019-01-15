@@ -2,7 +2,6 @@ package in.hocg.manager.model.parameter;
 
 import in.hocg.scaffold.support.basis.parameter.BaseParameter;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
 /**
@@ -13,6 +12,5 @@ import lombok.ToString;
  */
 @Data
 @ToString
-@EqualsAndHashCode(callSuper = true)
-public class UpdateOrganization extends BaseParameter {
+public class UpdateOrganization implements BaseParameter {
 }

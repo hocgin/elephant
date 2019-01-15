@@ -100,7 +100,7 @@ public class StaffController extends BaseController {
     @PutMapping("/{id:[a-zA-Z0-9]{32}}")
     public ResponseEntity putStaff(@PathVariable("id") String id,
                                    @RequestBody UpdateStaff parameter) {
-        Staff staff = parameter.cast(Staff.class);
+        Staff staff = parameter.copyTo(Staff.class);
         staff.setId(id);
         boolean result = staffService.updateById(staff);
         return Result.result(result).asResponseEntity();
@@ -115,7 +115,7 @@ public class StaffController extends BaseController {
      */
     @PostMapping
     public ResponseEntity postStaff(@RequestBody AddStaff parameter) {
-        Staff staff = parameter.cast(Staff.class);
+        Staff staff = parameter.copyTo(Staff.class);
         boolean result = staffService.save(staff);
         return Result.result(result).asResponseEntity();
     }

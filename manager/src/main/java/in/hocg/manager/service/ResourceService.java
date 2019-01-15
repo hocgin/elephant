@@ -1,8 +1,10 @@
 package in.hocg.manager.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
+import in.hocg.manager.model.parameter.UResource;
 import in.hocg.mybatis.module.system.entity.Resource;
 import in.hocg.scaffold.lang.exception.NotRollbackException;
+import in.hocg.scaffold.lang.exception.RollbackException;
 import lombok.NonNull;
 
 import java.io.Serializable;
@@ -26,7 +28,7 @@ public interface ResourceService extends IService<Resource> {
      * @return
      * @throws NotRollbackException
      */
-    Resource findResourceTreeByUsername(String username) throws NotRollbackException;
+    Resource selectMultiByUsernameAndBuildTree(String username) throws NotRollbackException;
     
     /**
      * 查找用户具备的资源
@@ -34,7 +36,7 @@ public interface ResourceService extends IService<Resource> {
      * @param username
      * @return
      */
-    List<Resource> findAllByUsername(String username);
+    List<Resource> selectMultiByUsername(String username);
     
     
     /**
@@ -43,7 +45,7 @@ public interface ResourceService extends IService<Resource> {
      * @param ids
      * @return
      */
-    boolean deleteNode(@NonNull Collection<Serializable> ids);
+    boolean deleteMultiNode(@NonNull Collection<Serializable> ids);
     
     /**
      * 删除指定节点及其子节点
@@ -51,7 +53,7 @@ public interface ResourceService extends IService<Resource> {
      * @param ids
      * @return
      */
-    boolean deleteNodes(@NonNull Collection<Serializable> ids);
+    boolean deleteMultiNodes(@NonNull Collection<Serializable> ids);
     
     /**
      * 在指定节点下, 追加一个子节点
@@ -60,7 +62,7 @@ public interface ResourceService extends IService<Resource> {
      * @param resource
      * @return
      */
-    boolean addChildNode(@NonNull Serializable parentId, @NonNull Resource resource) throws NotRollbackException;
+    boolean insertOneChildNode(@NonNull Serializable parentId, @NonNull Resource resource) throws NotRollbackException;
     
     /**
      * 在同一级指定节点之后, 追加一个子节点
@@ -69,12 +71,21 @@ public interface ResourceService extends IService<Resource> {
      * @param resource
      * @return
      */
-    boolean addSiblingNode(@NonNull Serializable id, @NonNull Resource resource);
+    boolean insertOneSiblingNode(@NonNull Serializable id, @NonNull Resource resource) throws NotRollbackException;
 
     
     /**
      * 查找完整的树
      * @return
      */
-    Resource findAll() throws NotRollbackException;
+    Resource selectAllAndBuildTree() throws NotRollbackException;
+    
+    /**
+     * 更新
+     *
+     * @param id
+     * @param parameter
+     * @return
+     */
+    boolean updateOneById(String id, UResource parameter) throws NotRollbackException, RollbackException;
 }

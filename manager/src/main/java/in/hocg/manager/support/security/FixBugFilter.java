@@ -1,6 +1,5 @@
 package in.hocg.manager.support.security;
 
-import in.hocg.scaffold.support.http.Result;
 import in.hocg.scaffold.util.ResponseKit;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -27,8 +26,7 @@ public class FixBugFilter extends GenericFilterBean {
         } catch (BadCredentialsException e) {
             log.debug("用户 TOKEN 失效");
             // 处理 Token 失效问题
-            ResponseKit.utf8(response).getWriter()
-                    .write(Result.error(e.getLocalizedMessage()).json());
+            ResponseKit.utf8(response).setStatus(401);
         }
     }
 }
