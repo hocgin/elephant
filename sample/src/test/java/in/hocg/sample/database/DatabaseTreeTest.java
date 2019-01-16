@@ -1,6 +1,7 @@
 package in.hocg.sample.database;
 
 import in.hocg.mybatis.basic.model.NodeModel;
+import in.hocg.mybatis.basic.model.TreeUtils;
 import in.hocg.sample.mybatis.example.entity.Tree;
 import in.hocg.sample.mybatis.example.mapper.TreeMapper;
 import lombok.extern.slf4j.Slf4j;
@@ -86,7 +87,7 @@ public class DatabaseTreeTest {
         List<Tree> nodes = treeService.queryAllNodeDepth();
         System.out.println(nodes);
         
-        Tree root = NodeModel.buildTree(nodes.get(0), nodes);
+        Tree root = TreeUtils.buildTree(nodes.get(0), nodes);
         System.out.println(root);
     }
     

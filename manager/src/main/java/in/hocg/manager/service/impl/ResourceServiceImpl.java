@@ -10,8 +10,10 @@ import in.hocg.mybatis.module.system.entity.Resource;
 import in.hocg.mybatis.module.system.mapper.ResourceMapper;
 import in.hocg.scaffold.lang.exception.NotRollbackException;
 import in.hocg.scaffold.lang.exception.ResponseException;
+import in.hocg.scaffold.lang.exception.RollbackException;
 import in.hocg.util.LangKit;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.io.Serializable;
 import java.util.Collection;
@@ -110,20 +112,29 @@ public class ResourceServiceImpl extends BaseService<ResourceMapper, Resource>
     }
     
     @Override
-    public boolean updateOneById(String id, UResource parameter) throws NotRollbackException {
+    @Transactional
+    public boolean updateOneById(String id, UResource parameter) throws NotRollbackException, RollbackException {
+        parameter.setParent("resource2");
         Resource resource = baseMapper.selectById(id);
         if (resource == null) {
-            throw ResponseException.wrap(NotRollbackException.class, "未找到资源");
+            throw ResponseException.wrap(RollbackException.class, "未找到资源");
         }
         Resource parent = baseMapper.selectOneParentById(id);
         
         // 父节点发生变更, 父节点变更子树需跟随变更
         // - 目前方案: 删除该子树, 并按序重新进行插入
         if (parameter.getParent() != null
-                && StringUtils.equals(parent.getId(), parameter.getParent())) {
-            List<Resource> nodes = baseMapper.queryNodeAndChildren(id);
+                && !StringUtils.equals(parent.getId(), parameter.getParent())) {
+            if (baseMapper.selectById(parameter.getParent()) == null) {
+                throw ResponseException.wrap(NotRollbackException.class, "未找到目标父节点");
+            }
+            List<Resource> nodes = baseMapper.queryTreeNodeDepth(id);
+            
+            // 删除子树
             baseMapper.deleteNodes(id);
-            insertChildTree(parent.getId(), TreeUtils.buildTree(nodes));
+            
+            // 插入子树
+            insertChildTree(parameter.getParent(), TreeUtils.buildTree(nodes));
         }
         
         // 开关状态发生变更
@@ -132,7 +143,7 @@ public class ResourceServiceImpl extends BaseService<ResourceMapper, Resource>
             
             // 如果父节点为关闭状态, 且子节点欲切换为开启状态(拒绝)
             if (!parent.isEnabled() && parameter.getEnabled()) {
-                throw ResponseException.wrap(NotRollbackException.class, "请先启用父节点状态");
+                throw ResponseException.wrap(RollbackException.class, "请先启用父节点状态");
             }
             
         }
