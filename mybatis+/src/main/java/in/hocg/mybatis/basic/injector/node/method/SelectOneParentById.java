@@ -5,18 +5,24 @@ import com.baomidou.mybatisplus.core.metadata.TableInfo;
 import org.apache.ibatis.mapping.MappedStatement;
 import org.apache.ibatis.mapping.SqlSource;
 
-public class SelectOneParentNodeById extends AbstractMethod {
+/**
+ * 查找直属父节点
+ *
+ * @author hocgin
+ */
+public class SelectOneParentById extends AbstractMethod {
     private static StringBuilder SQL = new StringBuilder("<script>")
             .append("SELECT :columns\n" +
                     "        FROM :table AS node,\n" +
                     "             :table AS parent\n" +
                     "        WHERE node.lft BETWEEN parent.lft AND parent.rgt\n" +
                     "          AND node.:id = #{id}\n" +
-                    "        ORDER BY parent.lft;")
+                    "        ORDER BY parent.lft DESC" +
+                    "        LIMIT 1, 1;")
             .append("</script>");
     
     private String getMethodName() {
-        return "queryTreeNodeForLeaf";
+        return "selectOneParentById";
     }
     
     /**

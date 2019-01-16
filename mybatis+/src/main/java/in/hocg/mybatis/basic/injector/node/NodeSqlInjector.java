@@ -59,6 +59,7 @@ public class NodeSqlInjector extends DefaultSqlInjector {
                 new QueryTreeNodeDepth(),
                 new QueryAllNodeDepth(),
                 new QueryAllLeafNode(),
+                new SelectOneParentById(),
                 new Analysis()
         );
     }

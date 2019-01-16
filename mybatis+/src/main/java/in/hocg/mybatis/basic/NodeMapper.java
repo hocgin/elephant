@@ -99,4 +99,10 @@ public interface NodeMapper<M extends NodeModel> extends BaseMapper<M> {
      */
     void addSiblingNode(@Param("id") Serializable id, @Param("node") M node);
     
+    /**
+     * 查找直属父节点
+     * @param id
+     * @return
+     */
+    List<M> selectOneParentById(@Param("id") Serializable id);
 }

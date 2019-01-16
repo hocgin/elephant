@@ -69,6 +69,12 @@ public class ResourceServiceImpl extends BaseService<ResourceMapper, Resource>
         if (Objects.isNull(parent)) {
             throw ResponseException.wrap(NotRollbackException.class, "请选择父节点");
         }
+        /// 等待更好的设计思路
+// 父节点为禁用,子节点也会设置为禁用
+//        if (!parent.isEnabled()) {
+//            resource.setEnabled(false);
+//        }
+        
         resource.setId(LangKit.uuid());
         baseMapper.addChildNode(parent.getId(), resource);
         return true;
@@ -81,6 +87,7 @@ public class ResourceServiceImpl extends BaseService<ResourceMapper, Resource>
         if (Objects.isNull(sibling)) {
             throw ResponseException.wrap(NotRollbackException.class, "请选择兄弟节点");
         }
+        
         resource.setId(LangKit.uuid());
         baseMapper.addSiblingNode(id, resource);
         return true;
