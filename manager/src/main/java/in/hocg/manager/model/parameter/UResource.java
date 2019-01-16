@@ -15,6 +15,11 @@ import lombok.ToString;
 public class UResource implements BaseParameter {
     
     /**
+     * 父节点ID
+     */
+    private String parent;
+    
+    /**
      * 菜单名称
      */
     private String name;

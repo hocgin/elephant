@@ -104,5 +104,5 @@ public interface NodeMapper<M extends NodeModel> extends BaseMapper<M> {
      * @param id
      * @return
      */
-    List<M> selectOneParentById(@Param("id") Serializable id);
+    M selectOneParentById(@Param("id") Serializable id);
 }

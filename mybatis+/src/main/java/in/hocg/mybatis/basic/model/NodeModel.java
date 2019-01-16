@@ -36,29 +36,4 @@ public class NodeModel<T extends Model> extends SuperModel<T> {
     
     public static final String RGT = "rgt";
     
-    /**
-     * 构建树
-     *
-     * @param root
-     * @param nodes
-     * @return
-     */
-    public static <T extends NodeModel> T buildTree(T root, List<T> nodes) {
-        int rgt = root.getRgt();
-        int lft = root.getLft();
-        Integer depth = root.getDepth();
-        nodes.parallelStream()
-                .filter(node -> {
-                    int nodeRgt = node.getRgt();
-                    int nodeLft = node.getLft();
-                    return depth == (node.getDepth() - 1)
-                            && rgt > nodeRgt
-                            && lft < nodeLft;
-                })
-                .forEach(node -> {
-                    List<T> children = root.getChildren();
-                    children.add(buildTree(node, nodes));
-                });
-        return root;
-    }
 }
