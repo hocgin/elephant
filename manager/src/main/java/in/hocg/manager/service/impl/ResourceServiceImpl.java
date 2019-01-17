@@ -5,6 +5,7 @@ import in.hocg.manager.model.parameter.UResource;
 import in.hocg.manager.service.ResourceService;
 import in.hocg.mybatis.basic.BaseService;
 import in.hocg.mybatis.basic.model.NodeModel;
+import in.hocg.mybatis.basic.model.SuperModel;
 import in.hocg.mybatis.basic.model.TreeUtils;
 import in.hocg.mybatis.module.system.entity.Resource;
 import in.hocg.mybatis.module.system.mapper.ResourceMapper;
@@ -72,7 +73,7 @@ public class ResourceServiceImpl extends BaseService<ResourceMapper, Resource>
         }
         
         // 父节点为禁用,子节点也会设置为禁用
-        if (!parent.isEnabled()) {
+        if (!parent.getEnabled()) {
             resource.setEnabled(false);
         }
         
@@ -93,7 +94,7 @@ public class ResourceServiceImpl extends BaseService<ResourceMapper, Resource>
         Resource parent = baseMapper.selectOneParentById(sibling.getId());
         
         // 父节点为禁用,子节点也会设置为禁用
-        if (!parent.isEnabled()) {
+        if (!parent.getEnabled()) {
             resource.setEnabled(false);
         }
         
@@ -112,9 +113,8 @@ public class ResourceServiceImpl extends BaseService<ResourceMapper, Resource>
     }
     
     @Override
-    @Transactional
-    public boolean updateOneById(String id, UResource parameter) throws NotRollbackException, RollbackException {
-        parameter.setParent("resource2");
+    @Transactional(rollbackFor = Exception.class)
+    public boolean updateOneById(String id, UResource parameter) throws RollbackException {
         Resource resource = baseMapper.selectById(id);
         if (resource == null) {
             throw ResponseException.wrap(RollbackException.class, "未找到资源");
@@ -126,7 +126,7 @@ public class ResourceServiceImpl extends BaseService<ResourceMapper, Resource>
         if (parameter.getParent() != null
                 && !StringUtils.equals(parent.getId(), parameter.getParent())) {
             if (baseMapper.selectById(parameter.getParent()) == null) {
-                throw ResponseException.wrap(NotRollbackException.class, "未找到目标父节点");
+                throw ResponseException.wrap(RollbackException.class, "未找到目标父节点");
             }
             List<Resource> nodes = baseMapper.queryTreeNodeDepth(id);
             
@@ -138,15 +138,24 @@ public class ResourceServiceImpl extends BaseService<ResourceMapper, Resource>
         }
         
         // 开关状态发生变更
-        if (parameter.getEnabled() != null
-                && Objects.equals(resource.isEnabled(), parameter.getEnabled())) {
+        if (!Objects.equals(resource.getEnabled(), parameter.getEnabled())) {
             
             // 如果父节点为关闭状态, 且子节点欲切换为开启状态(拒绝)
-            if (!parent.isEnabled() && parameter.getEnabled()) {
+            if (!parent.getEnabled() && parameter.getEnabled()) {
                 throw ResponseException.wrap(RollbackException.class, "请先启用父节点状态");
             }
             
+            // 如果该节点是变更为关闭, 则会关闭其对应的子节点
+            if (!parameter.getEnabled()) {
+                String[] IDs = baseMapper.queryTreeNodeDepth(id).stream()
+                        .map(SuperModel::getId)
+                        .toArray(String[]::new);
+                baseMapper.updateMultiEnableById(false, IDs);
+            }
+            
         }
+        
+        // 常规更新
         parameter.copyNotNullTo(resource);
         return baseMapper.updateById(resource) > 0;
     }
@@ -160,15 +169,11 @@ public class ResourceServiceImpl extends BaseService<ResourceMapper, Resource>
      */
     public void insertChildTree(String parent, Resource resource) {
         List<NodeModel> children = resource.getChildren();
-        
         // 抹除节点位置信息
         TreeUtils.erase(resource);
-        String uuid = LangKit.uuid();
-        resource.setId(uuid);
         baseMapper.addChildNode(parent, resource);
         TreeUtils.traversing(resource, children, (p, node) -> {
             TreeUtils.erase(node);
-            node.setId(LangKit.uuid());
             baseMapper.addChildNode(p.getId(), (Resource) node);
         });
     }

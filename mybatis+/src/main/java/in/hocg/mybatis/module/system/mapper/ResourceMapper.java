@@ -3,6 +3,7 @@ package in.hocg.mybatis.module.system.mapper;
 import in.hocg.mybatis.basic.NodeMapper;
 import in.hocg.mybatis.module.system.entity.Resource;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -24,4 +25,11 @@ public interface ResourceMapper extends NodeMapper<Resource> {
      */
     List<Resource> selectMultiByUsername(String username);
     
+    
+    /**
+     * 更新节点的状态
+     * @param enabled
+     * @param id
+     */
+    void updateMultiEnableById(@Param("enabled") boolean enabled, @Param("IDs") String... id);
 }
