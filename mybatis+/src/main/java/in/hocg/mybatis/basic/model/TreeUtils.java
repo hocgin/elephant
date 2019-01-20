@@ -25,7 +25,7 @@ public class TreeUtils {
         int rgt = root.getRgt();
         int lft = root.getLft();
         Integer depth = root.getDepth();
-        nodes.parallelStream()
+        nodes.stream()
                 .filter(node -> {
                     int nodeRgt = node.getRgt();
                     int nodeLft = node.getLft();
@@ -42,6 +42,7 @@ public class TreeUtils {
     
     /**
      * 构建树
+     *
      * @param nodes
      * @param <T>
      * @return
@@ -72,6 +73,7 @@ public class TreeUtils {
     
     /**
      * 抹除节点位置信息
+     *
      * @param node
      * @param <T>
      * @return
