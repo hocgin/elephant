@@ -29,9 +29,9 @@ public class IResource implements BaseParameter {
      */
     private String description;
     /**
-     * 菜单类型(0:菜单;1:按钮)
+     * 菜单类型[目录,按钮,链接]
      */
-    private int type;
+    private Integer type;
     /**
      * 请求类型(GET,POST,DELETE,PUT)
      */

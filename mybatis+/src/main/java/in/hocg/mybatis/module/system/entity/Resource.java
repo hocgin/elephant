@@ -36,7 +36,7 @@ public class Resource extends NodeModel<Resource> {
      * 菜单类型(0:菜单;1:按钮)
      */
     @TableField(TYPE)
-    private int type;
+    private Integer type;
     /**
      * 请求类型(GET,POST,DELETE,PUT)
      */
