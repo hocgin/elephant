@@ -1,6 +1,7 @@
 package in.hocg.manager.service.impl;
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.Wrapper;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import in.hocg.manager.service.FileRecordService;
 import in.hocg.mybatis.basic.BaseService;
 import in.hocg.mybatis.module.basic.entity.FileRecord;
@@ -24,9 +25,9 @@ public class FileRecordServiceImpl extends BaseService<FileManagerMapper, FileRe
     
     @Override
     public Optional<FileRecord> fetchNotDeletedForId(Serializable id) {
-        QueryWrapper<FileRecord> wrapper = queryWrapper()
-                .eq(FileRecord.ID, id)
-                .eq(FileRecord.DELETED, 0);
-        return Optional.ofNullable(baseMapper.selectOne(wrapper));
+        Wrapper<FileRecord> queryWrapper = new LambdaQueryWrapper<FileRecord>()
+                .eq(FileRecord::getId, id)
+                .eq(FileRecord::isDeleted, 0);
+        return Optional.ofNullable(baseMapper.selectOne(queryWrapper));
     }
 }

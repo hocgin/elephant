@@ -1,5 +1,7 @@
 package in.hocg.manager.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.Wrapper;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -31,8 +33,9 @@ public class StaffServiceImpl extends BaseService<StaffMapper, Staff>
     
     @Override
     public Optional<Staff> findByUsername(String username) {
-        QueryWrapper<Staff> wrapper = queryWrapper().eq(Staff.USERNAME, username);
-        Staff userStaff = baseMapper.selectOne(wrapper);
+        Wrapper<Staff> queryWrapper = new LambdaQueryWrapper<Staff>()
+                .eq(Staff::getUsername, username);
+        Staff userStaff = baseMapper.selectOne(queryWrapper);
         return Optional.ofNullable(userStaff);
     }
     

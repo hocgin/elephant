@@ -1,9 +1,11 @@
 package in.hocg.mybatis.basic.condition;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.google.common.base.CaseFormat;
+import in.hocg.mybatis.module.system.entity.Resource;
 import in.hocg.scaffold.support.basis.condition.PostPageCondition;
 
 import java.util.Optional;

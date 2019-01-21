@@ -1,8 +1,6 @@
 package in.hocg.mybatis.basic;
 
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 
@@ -14,11 +12,5 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
  * @author hocgin
  */
 public abstract class BaseService<M extends BaseMapper<T>, T> extends ServiceImpl<M, T> {
-    protected QueryWrapper<T> queryWrapper() {
-        return new QueryWrapper<>();
-    }
-    
-    protected UpdateWrapper<T> updateWrapper() {
-        return new UpdateWrapper<>();
-    }
+
 }
