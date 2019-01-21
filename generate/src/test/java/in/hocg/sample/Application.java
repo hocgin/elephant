@@ -1,9 +1,9 @@
 package in.hocg.sample;
 
 
-import com.baomidou.mybatisplus.annotation.DbType;
 import com.baomidou.mybatisplus.generator.AutoGenerator;
 import com.baomidou.mybatisplus.generator.config.*;
+import com.baomidou.mybatisplus.generator.config.rules.DbType;
 import com.baomidou.mybatisplus.generator.config.rules.NamingStrategy;
 import in.hocg.mybatis.basic.BaseService;
 import in.hocg.mybatis.basic.model.DefaultModel;

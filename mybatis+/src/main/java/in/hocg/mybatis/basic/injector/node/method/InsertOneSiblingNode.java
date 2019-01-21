@@ -19,31 +19,30 @@ import org.apache.ibatis.mapping.SqlSource;
  * ```sql
  * LOCK TABLE nested_category WRITE;
  * <p>
- * SELECT @myLeft := lft FROM nested_category
+ * SELECT @myRight := rgt FROM nested_category
+ * WHERE name = 'TELEVISIONS';
  * <p>
- * WHERE name = '2 WAY RADIOS';
+ * UPDATE nested_category SET rgt = rgt + 2 WHERE rgt > @myRight;
+ * UPDATE nested_category SET lft = lft + 2 WHERE lft > @myRight;
  * <p>
- * UPDATE nested_category SET rgt = rgt + 2 WHERE rgt > @myLeft;
- * UPDATE nested_category SET lft = lft + 2 WHERE lft > @myLeft;
- * <p>
- * INSERT INTO nested_category(name, lft, rgt) VALUES('FRS', @myLeft + 1, @myLeft + 2);
+ * INSERT INTO nested_category(name, lft, rgt) VALUES('GAME CONSOLES', @myRight + 1, @myRight + 2);
  * <p>
  * UNLOCK TABLES;
  * ```
  *
  * @author hocgin
  */
-public class AddChildNode extends AbstractMethod {
+public class InsertOneSiblingNode extends AbstractMethod {
     
     private static StringBuilder SQL = new StringBuilder("<script>")
-            .append("SELECT @myLeft := lft FROM :table WHERE :id = #{id};\n")
-            .append("UPDATE :table SET rgt = rgt + 2 WHERE rgt > @myLeft;\n")
-            .append("UPDATE :table SET lft = lft + 2 WHERE lft > @myLeft;\n")
-            .append("INSERT INTO :table :columnScript VALUES :valuesScript;\n")
+            .append("SELECT @myRight := rgt FROM :table WHERE :id = #{id};")
+            .append("UPDATE :table SET rgt = rgt + 2 WHERE rgt > @myRight;")
+            .append("UPDATE :table SET lft = lft + 2 WHERE lft > @myRight;")
+            .append("INSERT INTO :table :columnScript VALUES :valuesScript;")
             .append("</script>");
     
     private String getMethodName() {
-        return "addChildNode";
+        return "insertOneSiblingNode";
     }
     
     /**
@@ -54,7 +53,7 @@ public class AddChildNode extends AbstractMethod {
      */
     @Override
     public MappedStatement injectMappedStatement(Class<?> mapperClass, Class<?> modelClass, TableInfo tableInfo) {
-        String columnScript = SqlScriptUtils.convertTrim(tableInfo.getAllInsertSqlColumn(false),
+        String columnScript = SqlScriptUtils.convertTrim(tableInfo.getAllInsertSqlColumnMaybeIf(),
                 LEFT_BRACKET, RIGHT_BRACKET, null, COMMA)
                 // fixed: mybatis plus bug
                 // 添加前缀不生效。。
@@ -63,16 +62,15 @@ public class AddChildNode extends AbstractMethod {
                 // ---
                 .replace("<if test=\"node.lft != null\">lft,</if>", "lft,")
                 .replace("<if test=\"node.rgt != null\">rgt,</if>", "rgt,");
-        String valuesScript = SqlScriptUtils.convertTrim(tableInfo.getAllInsertSqlProperty(false, "node."),
+        String valuesScript = SqlScriptUtils.convertTrim(tableInfo.getAllInsertSqlPropertyMaybeIf("node."),
                 LEFT_BRACKET, RIGHT_BRACKET, null, COMMA)
                 // fixed: mybatis plus bug
                 // 添加前缀不生效。。
                 .replaceAll("<if test=\"", "<if test=\"node.")
                 .replaceAll(" != null and ", " != null and node.")
                 // ---
-                .replace("<if test=\"node.lft != null\">#{node.lft},</if>", "@myLeft + 1,")
-                .replace("<if test=\"node.rgt != null\">#{node.rgt},</if>", "@myLeft + 2,");
-        
+                .replace("<if test=\"node.lft != null\">#{node.lft},</if>", "@myRight + 1,")
+                .replace("<if test=\"node.rgt != null\">#{node.rgt},</if>", "@myRight + 2,");
         
         String sql = SQL.toString().replaceAll(":table", tableInfo.getTableName())
                 .replaceAll(":id", tableInfo.getKeyColumn())
@@ -83,6 +81,7 @@ public class AddChildNode extends AbstractMethod {
         KeyGenerator keyGenerator = new NoKeyGenerator();
         String keyProperty = null;
         String keyColumn = null;
+        
         // 表包含主键处理逻辑,如果不包含主键当普通字段处理
         if (StringUtils.isNotEmpty(tableInfo.getKeyProperty())) {
             if (tableInfo.getIdType() == IdType.AUTO) {

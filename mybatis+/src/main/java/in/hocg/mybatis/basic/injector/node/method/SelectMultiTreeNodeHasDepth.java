@@ -11,18 +11,28 @@ import org.apache.ibatis.mapping.SqlSource;
  *
  * @author hocgin
  */
-public class QueryTreeNodeForLeaf extends AbstractMethod {
+public class SelectMultiTreeNodeHasDepth extends AbstractMethod {
     private static StringBuilder SQL = new StringBuilder("<script>")
-            .append("SELECT :columns\n" +
+            .append("SELECT :columns, (COUNT(parent.:id) - (sub_tree.depth + 1)) AS depth\n" +
                     "        FROM :table AS node,\n" +
-                    "             :table AS parent\n" +
+                    "             :table AS parent,\n" +
+                    "             :table AS sub_parent,\n" +
+                    "             (SELECT node.:id, (COUNT(parent.:id) - 1) AS depth\n" +
+                    "              FROM :table AS node,\n" +
+                    "                   :table AS parent\n" +
+                    "              WHERE node.lft BETWEEN parent.lft AND parent.rgt\n" +
+                    "                AND node.:id = #{id}\n" +
+                    "              GROUP BY node.:id\n" +
+                    "              ORDER BY node.lft) AS sub_tree\n" +
                     "        WHERE node.lft BETWEEN parent.lft AND parent.rgt\n" +
-                    "          AND node.:id = #{id}\n" +
-                    "        ORDER BY parent.lft;")
+                    "          AND node.lft BETWEEN sub_parent.lft AND sub_parent.rgt\n" +
+                    "          AND sub_parent.:id = sub_tree.:id\n" +
+                    "        GROUP BY node.:id\n" +
+                    "        ORDER BY node.lft;")
             .append("</script>");
     
     private String getMethodName() {
-        return "queryTreeNodeForLeaf";
+        return "selectMultiTreeNodeHasDepth";
     }
     /**
      * @param mapperClass

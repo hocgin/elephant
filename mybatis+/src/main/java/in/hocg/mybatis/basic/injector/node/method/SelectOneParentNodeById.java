@@ -6,24 +6,23 @@ import org.apache.ibatis.mapping.MappedStatement;
 import org.apache.ibatis.mapping.SqlSource;
 
 /**
- * Created by hocgin on 2018/12/9.
- * email: hocgin@gmail.com
+ * 查找直属父节点
  *
  * @author hocgin
- * 查询所有节点及其深度
  */
-public class QueryAllNodeDepth extends AbstractMethod {
+public class SelectOneParentNodeById extends AbstractMethod {
     private static StringBuilder SQL = new StringBuilder("<script>")
-            .append("SELECT :columns, (COUNT(parent.:id) - 1) AS depth\n" +
+            .append("SELECT :columns\n" +
                     "        FROM :table AS node,\n" +
                     "             :table AS parent\n" +
                     "        WHERE node.lft BETWEEN parent.lft AND parent.rgt\n" +
-                    "        GROUP BY node.:id\n" +
-                    "        ORDER BY node.lft;")
+                    "          AND node.:id = #{id}\n" +
+                    "        ORDER BY parent.lft DESC" +
+                    "        LIMIT 1, 1;")
             .append("</script>");
     
     private String getMethodName() {
-        return "queryAllNodeDepth";
+        return "selectOneParentNodeById";
     }
     
     /**
@@ -36,7 +35,7 @@ public class QueryAllNodeDepth extends AbstractMethod {
     public MappedStatement injectMappedStatement(Class<?> mapperClass, Class<?> modelClass, TableInfo tableInfo) {
         String sql = SQL.toString().replaceAll(":table", tableInfo.getTableName())
                 .replaceAll(":id", tableInfo.getKeyColumn())
-                .replaceAll(":columns", "node.*");
+                .replaceAll(":columns", "parent.*");
         SqlSource sqlSource = languageDriver.createSqlSource(configuration, sql, modelClass);
         return this.addSelectMappedStatement(mapperClass, getMethodName(), sqlSource, modelClass, tableInfo);
     }

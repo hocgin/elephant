@@ -10,18 +10,22 @@ import org.apache.ibatis.mapping.SqlSource;
  * email: hocgin@gmail.com
  *
  * @author hocgin
+ *
+ *
  */
-public class QueryAllLeafNode extends AbstractMethod {
+public class SelectAllChildren extends AbstractMethod {
     private static StringBuilder SQL = new StringBuilder("<script>")
             .append("SELECT :columns\n" +
-                    "        FROM :table AS node\n" +
-                    "        WHERE rgt = lft + 1;")
+                    "        FROM :table AS node,\n" +
+                    "             :table AS parent\n" +
+                    "        WHERE node.lft BETWEEN parent.lft AND parent.rgt\n" +
+                    "          AND parent.:id = #{id}\n" +
+                    "        ORDER BY node.lft;")
             .append("</script>");
     
     private String getMethodName() {
-        return "queryAllLeafNode";
+        return "selectAllChildren";
     }
-    
     /**
      * @param mapperClass
      * @param modelClass

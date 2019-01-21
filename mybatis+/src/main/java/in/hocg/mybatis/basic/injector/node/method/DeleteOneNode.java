@@ -27,7 +27,7 @@ import org.apache.ibatis.mapping.SqlSource;
  * 删除父节点，且子节点会升为父节点级别
  * @author hocgin
  */
-public class DeleteNode extends AbstractMethod {
+public class DeleteOneNode extends AbstractMethod {
     
     private static StringBuilder SQL = new StringBuilder("<script>")
             .append("SELECT @myLeft := lft, @myRight := rgt, @myWidth := rgt - lft + 1 FROM :table WHERE :id = #{id};")
@@ -38,7 +38,7 @@ public class DeleteNode extends AbstractMethod {
             .append("</script>");
     
     private String getMethodName() {
-        return "deleteNode";
+        return "deleteOneNode";
     }
     
     /**

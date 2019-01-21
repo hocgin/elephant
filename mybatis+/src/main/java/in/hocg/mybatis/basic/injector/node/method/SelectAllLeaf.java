@@ -6,23 +6,20 @@ import org.apache.ibatis.mapping.MappedStatement;
 import org.apache.ibatis.mapping.SqlSource;
 
 /**
- * 查找直属父节点
+ * Created by hocgin on 2018/12/9.
+ * email: hocgin@gmail.com
  *
  * @author hocgin
  */
-public class SelectOneParentById extends AbstractMethod {
+public class SelectAllLeaf extends AbstractMethod {
     private static StringBuilder SQL = new StringBuilder("<script>")
             .append("SELECT :columns\n" +
-                    "        FROM :table AS node,\n" +
-                    "             :table AS parent\n" +
-                    "        WHERE node.lft BETWEEN parent.lft AND parent.rgt\n" +
-                    "          AND node.:id = #{id}\n" +
-                    "        ORDER BY parent.lft DESC" +
-                    "        LIMIT 1, 1;")
+                    "        FROM :table AS node\n" +
+                    "        WHERE rgt = lft + 1;")
             .append("</script>");
     
     private String getMethodName() {
-        return "selectOneParentById";
+        return "selectAllLeaf";
     }
     
     /**
@@ -35,7 +32,7 @@ public class SelectOneParentById extends AbstractMethod {
     public MappedStatement injectMappedStatement(Class<?> mapperClass, Class<?> modelClass, TableInfo tableInfo) {
         String sql = SQL.toString().replaceAll(":table", tableInfo.getTableName())
                 .replaceAll(":id", tableInfo.getKeyColumn())
-                .replaceAll(":columns", "parent.*");
+                .replaceAll(":columns", "node.*");
         SqlSource sqlSource = languageDriver.createSqlSource(configuration, sql, modelClass);
         return this.addSelectMappedStatement(mapperClass, getMethodName(), sqlSource, modelClass, tableInfo);
     }

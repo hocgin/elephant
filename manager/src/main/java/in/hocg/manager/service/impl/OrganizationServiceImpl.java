@@ -27,7 +27,7 @@ public class OrganizationServiceImpl extends BaseService<OrganizationMapper, Org
     @Override
     public boolean deleteNode(Collection<Serializable> ids) {
         for (Serializable id : ids) {
-            baseMapper.deleteNode(id);
+            baseMapper.deleteOneNode(id);
         }
         return true;
     }
@@ -35,7 +35,7 @@ public class OrganizationServiceImpl extends BaseService<OrganizationMapper, Org
     @Override
     public boolean deleteNodes(Collection<Serializable> ids) {
         for (Serializable id : ids) {
-            baseMapper.deleteNodes(id);
+            baseMapper.deleteMultiNode(id);
         }
         return true;
     }
@@ -43,14 +43,14 @@ public class OrganizationServiceImpl extends BaseService<OrganizationMapper, Org
     @Override
     public boolean addChildNode(Serializable parentId,
                                 Organization organization) {
-        baseMapper.addChildNode(parentId, organization);
+        baseMapper.insertOneChildNode(parentId, organization);
         return true;
     }
     
     @Override
     public boolean addSiblingNode(Serializable id,
                                   Organization organization) {
-        baseMapper.addSiblingNode(id, organization);
+        baseMapper.insertOneSiblingNode(id, organization);
         return true;
     }
     

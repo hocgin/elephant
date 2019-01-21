@@ -51,7 +51,7 @@ public class ResourceServiceImpl extends BaseService<ResourceMapper, Resource>
     @Override
     public boolean deleteMultiNode(Collection<Serializable> ids) {
         for (Serializable id : ids) {
-            baseMapper.deleteNode(id);
+            baseMapper.deleteOneNode(id);
         }
         return true;
     }
@@ -59,7 +59,7 @@ public class ResourceServiceImpl extends BaseService<ResourceMapper, Resource>
     @Override
     public boolean deleteMultiNodes(Collection<Serializable> ids) {
         for (Serializable id : ids) {
-            baseMapper.deleteNodes(id);
+            baseMapper.deleteMultiNode(id);
         }
         return true;
     }
@@ -78,7 +78,7 @@ public class ResourceServiceImpl extends BaseService<ResourceMapper, Resource>
         }
         
         resource.setId(LangKit.uuid());
-        baseMapper.addChildNode(parent.getId(), resource);
+        baseMapper.insertOneChildNode(parent.getId(), resource);
         return true;
     }
     
@@ -91,7 +91,7 @@ public class ResourceServiceImpl extends BaseService<ResourceMapper, Resource>
         }
         
         // 兄弟节点的父节点, 即该节点的父节点
-        Resource parent = baseMapper.selectOneParentById(sibling.getId());
+        Resource parent = baseMapper.selectOneParentNodeById(sibling.getId());
         
         // 父节点为禁用,子节点也会设置为禁用
         if (!parent.getEnabled()) {
@@ -99,13 +99,13 @@ public class ResourceServiceImpl extends BaseService<ResourceMapper, Resource>
         }
         
         resource.setId(LangKit.uuid());
-        baseMapper.addSiblingNode(id, resource);
+        baseMapper.insertOneSiblingNode(id, resource);
         return true;
     }
     
     @Override
     public Resource selectAllAndBuildTree() throws NotRollbackException {
-        List<Resource> resources = baseMapper.queryAllNodeDepth();
+        List<Resource> resources = baseMapper.selectAllNodeHasDepth();
         if (resources.isEmpty()) {
             throw ResponseException.wrap(NotRollbackException.class, "未找到资源");
         }
@@ -119,7 +119,7 @@ public class ResourceServiceImpl extends BaseService<ResourceMapper, Resource>
         if (resource == null) {
             throw ResponseException.wrap(RollbackException.class, "未找到资源");
         }
-        Resource parent = baseMapper.selectOneParentById(id);
+        Resource parent = baseMapper.selectOneParentNodeById(id);
         
         // 父节点发生变更, 父节点变更子树需跟随变更
         // - 目前方案: 删除该子树, 并按序重新进行插入
@@ -128,10 +128,10 @@ public class ResourceServiceImpl extends BaseService<ResourceMapper, Resource>
             if (baseMapper.selectById(parameter.getParent()) == null) {
                 throw ResponseException.wrap(RollbackException.class, "未找到目标父节点");
             }
-            List<Resource> nodes = baseMapper.queryTreeNodeDepth(id);
+            List<Resource> nodes = baseMapper.selectMultiTreeNodeHasDepth(id);
             
             // 删除子树
-            baseMapper.deleteNodes(id);
+            baseMapper.deleteMultiNode(id);
             
             // 插入子树
             insertChildTree(parameter.getParent(), TreeUtils.buildTree(nodes));
@@ -147,7 +147,7 @@ public class ResourceServiceImpl extends BaseService<ResourceMapper, Resource>
             
             // 如果该节点是变更为关闭, 则会关闭其对应的子节点
             if (!parameter.getEnabled()) {
-                String[] IDs = baseMapper.queryTreeNodeDepth(id).stream()
+                String[] IDs = baseMapper.selectMultiTreeNodeHasDepth(id).stream()
                         .map(SuperModel::getId)
                         .toArray(String[]::new);
                 baseMapper.updateMultiEnableById(false, IDs);
@@ -171,10 +171,10 @@ public class ResourceServiceImpl extends BaseService<ResourceMapper, Resource>
         List<NodeModel> children = resource.getChildren();
         // 抹除节点位置信息
         TreeUtils.erase(resource);
-        baseMapper.addChildNode(parent, resource);
+        baseMapper.insertOneChildNode(parent, resource);
         TreeUtils.traversing(resource, children, (p, node) -> {
             TreeUtils.erase(node);
-            baseMapper.addChildNode(p.getId(), (Resource) node);
+            baseMapper.insertOneChildNode(p.getId(), (Resource) node);
         });
     }
 }

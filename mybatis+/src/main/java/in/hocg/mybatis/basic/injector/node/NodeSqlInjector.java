@@ -33,7 +33,8 @@ public class NodeSqlInjector extends DefaultSqlInjector {
                 methodList.addAll(this.getNodeMethod());
                 Assert.notEmpty(methodList, "No effective injection method was found.");
                 // 循环注入自定义方法
-                methodList.forEach(m -> m.inject(builderAssistant, mapperClass));
+                Class<?> modelClass = extractModelClass(mapperClass);
+                methodList.forEach(m -> m.inject(builderAssistant, mapperClass, modelClass));
                 mapperRegistryCache.add(className);
                 /*
                   初始化 AntiSQL 解析
@@ -49,17 +50,17 @@ public class NodeSqlInjector extends DefaultSqlInjector {
     
     public List<AbstractMethod> getNodeMethod() {
         return Arrays.asList(
-                new AddChildNode(),
-                new AddSiblingNode(),
+                new InsertOneChildNode(),
+                new InsertOneSiblingNode(),
                 new DeleteNodes(),
-                new DeleteNode(),
-                new QueryNodeAndChildren(),
-                new QueryAllChildren(),
-                new QueryTreeNodeForLeaf(),
-                new QueryTreeNodeDepth(),
-                new QueryAllNodeDepth(),
-                new QueryAllLeafNode(),
-                new SelectOneParentById(),
+                new DeleteOneNode(),
+                new SelectMultiFullTree(),
+                new SelectAllChildren(),
+                new SelectMultiTreePathByLeafId(),
+                new SelectMultiTreeNodeHasDepth(),
+                new SelectAllNodeHasDepth(),
+                new SelectAllLeaf(),
+                new SelectOneParentNodeById(),
                 new Analysis()
         );
     }

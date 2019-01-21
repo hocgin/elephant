@@ -38,7 +38,7 @@ public class DeleteNodes extends AbstractMethod {
             .append("</script>");
     
     private String getMethodName() {
-        return "deleteNodes";
+        return "deleteMultiNode";
     }
     
     /**

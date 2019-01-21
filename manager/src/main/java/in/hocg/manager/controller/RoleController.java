@@ -26,7 +26,7 @@ public class RoleController extends BaseController {
     
     /**
      * GET /role
-     * 查找所有员工列表
+     * 查找所有角色列表
      *
      * @param condition
      * @return

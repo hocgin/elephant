@@ -11,8 +11,8 @@ import org.apache.ibatis.mapping.SqlSource;
  *
  * @author hocgin
  */
-public class QueryTreeNodeDepth extends AbstractMethod {
-    private static StringBuilder SQL = new StringBuilder("<script>")
+public class SelectMultiFullTree extends AbstractMethod {
+    private static StringBuilder SQL = new StringBuilder("<script><![CDATA[")
             .append("SELECT :columns, (COUNT(parent.:id) - (sub_tree.depth + 1)) AS depth\n" +
                     "        FROM :table AS node,\n" +
                     "             :table AS parent,\n" +
@@ -28,12 +28,14 @@ public class QueryTreeNodeDepth extends AbstractMethod {
                     "          AND node.lft BETWEEN sub_parent.lft AND sub_parent.rgt\n" +
                     "          AND sub_parent.:id = sub_tree.:id\n" +
                     "        GROUP BY node.:id\n" +
+                    "        HAVING depth = 1\n" +
                     "        ORDER BY node.lft;")
-            .append("</script>");
+            .append("]]></script>");
     
     private String getMethodName() {
-        return "queryTreeNodeDepth";
+        return "selectMultiFullTree";
     }
+    
     /**
      * @param mapperClass
      * @param modelClass

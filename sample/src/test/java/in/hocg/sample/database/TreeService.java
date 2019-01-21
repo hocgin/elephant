@@ -23,7 +23,7 @@ public class TreeService extends BaseService<TreeMapper, Tree> {
      * @param newNode
      */
     public void addChildNode(String parentId, Tree newNode) {
-        baseMapper.addChildNode(parentId, newNode);
+        baseMapper.insertOneChildNode(parentId, newNode);
     }
     
     /**
@@ -33,7 +33,7 @@ public class TreeService extends BaseService<TreeMapper, Tree> {
      * @param newNode
      */
     public void addSiblingNode(String id, Tree newNode) {
-        baseMapper.addSiblingNode(id, newNode);
+        baseMapper.insertOneSiblingNode(id, newNode);
     }
     
     /**
@@ -43,7 +43,7 @@ public class TreeService extends BaseService<TreeMapper, Tree> {
      * @return
      */
     public List<Tree> queryNodeAndChildren(String id) {
-        return baseMapper.queryNodeAndChildren(id);
+        return baseMapper.selectMultiFullTree(id);
     }
     
     /**
@@ -53,7 +53,7 @@ public class TreeService extends BaseService<TreeMapper, Tree> {
      * @return
      */
     public List<Tree> queryAllChildren(String id) {
-        return baseMapper.queryAllChildren(id);
+        return baseMapper.selectAllChildren(id);
     }
     
     /**
@@ -62,7 +62,7 @@ public class TreeService extends BaseService<TreeMapper, Tree> {
      * @return
      */
     public List<Tree> queryAllLeafNode() {
-        return baseMapper.queryAllLeafNode();
+        return baseMapper.selectAllLeaf();
     }
     
     /**
@@ -71,7 +71,7 @@ public class TreeService extends BaseService<TreeMapper, Tree> {
      * @return
      */
     public List<Tree> queryTreeNodeForLeaf(String leafNodeId) {
-        return baseMapper.queryTreeNodeForLeaf(leafNodeId);
+        return baseMapper.selectMultiTreePathByLeafId(leafNodeId);
     }
     
     /**
@@ -80,7 +80,7 @@ public class TreeService extends BaseService<TreeMapper, Tree> {
      * @return
      */
     public List<Tree> queryAllNodeDepth() {
-        return baseMapper.queryAllNodeDepth();
+        return baseMapper.selectAllNodeHasDepth();
     }
     
     /**
@@ -90,14 +90,14 @@ public class TreeService extends BaseService<TreeMapper, Tree> {
      * @return
      */
     public List<Tree> queryTreeNodeDepth(String id) {
-        return baseMapper.queryTreeNodeDepth(id);
+        return baseMapper.selectMultiTreeNodeHasDepth(id);
     }
     
     /**
      * 删除节点及其子节点
      */
     public void deleteNodes(String id) {
-        baseMapper.deleteNodes(id);
+        baseMapper.deleteMultiNode(id);
     }
     
     /**
@@ -106,7 +106,7 @@ public class TreeService extends BaseService<TreeMapper, Tree> {
      * @param id
      */
     public void deleteNode(String id) {
-        baseMapper.deleteNode(id);
+        baseMapper.deleteOneNode(id);
     }
     
     /**

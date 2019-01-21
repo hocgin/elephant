@@ -19,16 +19,17 @@ public interface NodeMapper<M extends NodeModel> extends BaseMapper<M> {
      * 删除节点及其所有子节点
      *
      * @param id
-     * @return
+     * @return 变动的行数
      */
-    int deleteNodes(@Param("id") Serializable id);
+    int deleteMultiNode(@Param("id") Serializable id);
     
     /**
      * 删除指定节点, 并移动其子节点到该节点所在层级
      *
      * @param id
+     * @return 变动的行数
      */
-    void deleteNode(@Param("id") Serializable id);
+    int deleteOneNode(@Param("id") Serializable id);
     
     /**
      * 获取当前节点及其一级子节点
@@ -36,7 +37,7 @@ public interface NodeMapper<M extends NodeModel> extends BaseMapper<M> {
      * @param id
      * @return
      */
-    List<M> queryNodeAndChildren(@Param("id") Serializable id);
+    List<M> selectMultiFullTree(@Param("id") Serializable id);
     
     /**
      * 获取当前节点及其所有子节点(检索完整的树)
@@ -44,14 +45,14 @@ public interface NodeMapper<M extends NodeModel> extends BaseMapper<M> {
      * @param id
      * @return
      */
-    List<M> queryAllChildren(@Param("id") Serializable id);
+    List<M> selectAllChildren(@Param("id") Serializable id);
     
     /**
      * 检索所有叶子节点
      *
      * @return
      */
-    List<M> queryAllLeafNode();
+    List<M> selectAllLeaf();
     
     /**
      * 根据叶子节点回溯路径
@@ -59,14 +60,14 @@ public interface NodeMapper<M extends NodeModel> extends BaseMapper<M> {
      * @param id
      * @return
      */
-    List<M> queryTreeNodeForLeaf(@Param("id") Serializable id);
+    List<M> selectMultiTreePathByLeafId(@Param("id") Serializable id);
     
     /**
      * 检索所有节点的深度
      *
      * @return
      */
-    List<M> queryAllNodeDepth();
+    List<M> selectAllNodeHasDepth();
     
     /**
      * 检索子树深度
@@ -74,7 +75,7 @@ public interface NodeMapper<M extends NodeModel> extends BaseMapper<M> {
      * @param id
      * @return
      */
-    List<M> queryTreeNodeDepth(@Param("id") Serializable id);
+    List<M> selectMultiTreeNodeHasDepth(@Param("id") Serializable id);
     
     /**
      * 分析节点
@@ -88,21 +89,24 @@ public interface NodeMapper<M extends NodeModel> extends BaseMapper<M> {
      *
      * @param id
      * @param node
+     * @return 变动的行数
      */
-    void addChildNode(@Param("id") Serializable id, @Param("node") M node);
+    int insertOneChildNode(@Param("id") Serializable id, @Param("node") M node);
     
     /**
      * 添加兄弟节点(在该节点之后)
      *
      * @param id
      * @param node
+     * @return 变动的行数
      */
-    void addSiblingNode(@Param("id") Serializable id, @Param("node") M node);
+    int insertOneSiblingNode(@Param("id") Serializable id, @Param("node") M node);
     
     /**
      * 查找直属父节点
+     *
      * @param id
      * @return
      */
-    M selectOneParentById(@Param("id") Serializable id);
+    M selectOneParentNodeById(@Param("id") Serializable id);
 }

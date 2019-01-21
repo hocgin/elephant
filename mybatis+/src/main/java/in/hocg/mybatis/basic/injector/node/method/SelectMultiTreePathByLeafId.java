@@ -10,21 +10,19 @@ import org.apache.ibatis.mapping.SqlSource;
  * email: hocgin@gmail.com
  *
  * @author hocgin
- *
- *
  */
-public class QueryAllChildren extends AbstractMethod {
+public class SelectMultiTreePathByLeafId extends AbstractMethod {
     private static StringBuilder SQL = new StringBuilder("<script>")
             .append("SELECT :columns\n" +
                     "        FROM :table AS node,\n" +
                     "             :table AS parent\n" +
                     "        WHERE node.lft BETWEEN parent.lft AND parent.rgt\n" +
-                    "          AND parent.:id = #{id}\n" +
-                    "        ORDER BY node.lft;")
+                    "          AND node.:id = #{id}\n" +
+                    "        ORDER BY parent.lft;")
             .append("</script>");
     
     private String getMethodName() {
-        return "queryAllChildren";
+        return "SelectMultiTreePathByLeafId";
     }
     /**
      * @param mapperClass

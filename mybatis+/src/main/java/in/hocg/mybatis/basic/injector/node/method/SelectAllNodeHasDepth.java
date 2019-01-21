@@ -10,30 +10,20 @@ import org.apache.ibatis.mapping.SqlSource;
  * email: hocgin@gmail.com
  *
  * @author hocgin
+ * 查询所有节点及其深度
  */
-public class QueryNodeAndChildren extends AbstractMethod {
-    private static StringBuilder SQL = new StringBuilder("<script><![CDATA[")
-            .append("SELECT :columns, (COUNT(parent.:id) - (sub_tree.depth + 1)) AS depth\n" +
+public class SelectAllNodeHasDepth extends AbstractMethod {
+    private static StringBuilder SQL = new StringBuilder("<script>")
+            .append("SELECT :columns, (COUNT(parent.:id) - 1) AS depth\n" +
                     "        FROM :table AS node,\n" +
-                    "             :table AS parent,\n" +
-                    "             :table AS sub_parent,\n" +
-                    "             (SELECT node.:id, (COUNT(parent.:id) - 1) AS depth\n" +
-                    "              FROM :table AS node,\n" +
-                    "                   :table AS parent\n" +
-                    "              WHERE node.lft BETWEEN parent.lft AND parent.rgt\n" +
-                    "                AND node.:id = #{id}\n" +
-                    "              GROUP BY node.:id\n" +
-                    "              ORDER BY node.lft) AS sub_tree\n" +
+                    "             :table AS parent\n" +
                     "        WHERE node.lft BETWEEN parent.lft AND parent.rgt\n" +
-                    "          AND node.lft BETWEEN sub_parent.lft AND sub_parent.rgt\n" +
-                    "          AND sub_parent.:id = sub_tree.:id\n" +
                     "        GROUP BY node.:id\n" +
-                    "        HAVING depth = 1\n" +
                     "        ORDER BY node.lft;")
-            .append("]]></script>");
+            .append("</script>");
     
     private String getMethodName() {
-        return "queryNodeAndChildren";
+        return "selectAllNodeHasDepth";
     }
     
     /**
