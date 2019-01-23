@@ -1,6 +1,8 @@
 package in.hocg.manager.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
+import in.hocg.manager.model.po.Login;
+import in.hocg.manager.support.security.body.JwtToken;
 import in.hocg.mybatis.module.user.entity.Account;
 
 /**
@@ -10,4 +12,11 @@ import in.hocg.mybatis.module.user.entity.Account;
  * @author hocgin
  */
 public interface AccountService extends IService<Account> {
+    
+    /**
+     * 登陆
+     * @param login
+     * @return
+     */
+    JwtToken login(Login login);
 }

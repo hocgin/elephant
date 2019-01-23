@@ -1,11 +1,10 @@
-package in.hocg.manager.service.impl;
+package in.hocg.manager.manager.impl;
 
 import com.google.common.hash.HashCode;
 import in.hocg.manager.constant.CacheKey;
 import in.hocg.manager.service.FileRecordService;
 import in.hocg.manager.service.FileUploadExtService;
 import in.hocg.mybatis.module.basic.entity.FileRecord;
-import in.hocg.scaffold.lang.exception.ResponseException;
 import in.hocg.scaffold.sdk.oss.OssService;
 import in.hocg.scaffold.sdk.oss.result.QueryResult;
 import in.hocg.scaffold.support.cache.CacheService;
@@ -50,13 +49,11 @@ public class FileUploadExtServiceImpl implements FileUploadExtService {
     }
     
     @Override
-    public InputStream fetchFile(String storageName) throws Exception {
+    public Optional<InputStream> fetchFile(String storageName) {
         String space = space();
         Optional<QueryResult> result = ossService.fetch(space, storageName);
-        if (result.isPresent()) {
-            return result.get().getInputStream();
-        }
-        throw ResponseException.wrap(ResponseException.class, "文件不存在");
+        return result.map(QueryResult::getInputStream);
+    
     }
     
     /**

@@ -1,6 +1,8 @@
-package in.hocg.manager.service;
+package in.hocg.manager.service.impl;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import in.hocg.manager.service.AccessLogService;
+import in.hocg.manager.service.StaffService;
 import in.hocg.mybatis.module.basic.entity.AccessLog;
 import in.hocg.mybatis.module.user.entity.Staff;
 import in.hocg.scaffold.support.aspect.log.Level;
@@ -22,7 +24,7 @@ import java.util.Optional;
  */
 @Service
 @AllArgsConstructor
-public class ILogRepository implements LogRepository {
+public class LogRepositoryImpl implements LogRepository {
     private final ObjectMapper objectMapper;
     private final StaffService staffService;
     private final AccessLogService accessLogService;

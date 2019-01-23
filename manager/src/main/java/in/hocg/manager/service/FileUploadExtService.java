@@ -4,6 +4,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Optional;
 
 /**
  * Created by hocgin on 2018/12/23.
@@ -30,5 +31,5 @@ public interface FileUploadExtService {
      * @return 流
      * @throws Exception
      */
-    InputStream fetchFile(String storageName) throws Exception;
+    Optional<InputStream> fetchFile(String storageName);
 }

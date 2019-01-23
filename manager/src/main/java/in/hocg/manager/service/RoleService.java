@@ -3,6 +3,7 @@ package in.hocg.manager.service;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
 import in.hocg.mybatis.basic.condition.GetCondition;
+import in.hocg.mybatis.basic.condition.PostCondition;
 import in.hocg.mybatis.module.system.entity.Role;
 
 /**
@@ -22,4 +23,12 @@ public interface RoleService extends IService<Role> {
      * @return
      */
     IPage<Role> page(GetCondition condition);
+    
+    /**
+     * POST 方式分页查询所有角色
+     *
+     * @param condition
+     * @return
+     */
+    IPage<Role> page(PostCondition condition);
 }

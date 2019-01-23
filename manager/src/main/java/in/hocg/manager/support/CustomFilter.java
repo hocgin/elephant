@@ -33,7 +33,7 @@ public class CustomFilter implements Filter {
         // TODO: API 调试开启，临时处理 CORS
         HttpServletResponse servletResponse = (HttpServletResponse) response;
         servletResponse.setCharacterEncoding("UTF-8");
-        servletResponse.setContentType("application/json; charset=utf-8");
+        servletResponse.setContentType("application/toJson; charset=utf-8");
         servletResponse.setHeader("Access-Control-Allow-Origin", "http://localhost:8000");
         servletResponse.setHeader("Access-Control-Allow-Credentials", "true");
         servletResponse.setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, DELETE, PUT");

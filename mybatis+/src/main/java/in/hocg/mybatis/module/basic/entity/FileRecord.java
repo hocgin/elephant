@@ -40,7 +40,7 @@ public class FileRecord extends DeletedModel<FileRecord> {
      * 文件大小
      */
     @TableField(SIZE)
-    private long size;
+    private Long size;
     /**
      * 文件的MD5校验码
      */
@@ -60,7 +60,7 @@ public class FileRecord extends DeletedModel<FileRecord> {
      * 是否公开 [私有, 公开]
      */
     @TableField(PUBLICITY)
-    private boolean publicity;
+    private Boolean publicity;
     
     
     public static final String ORIGIN_NAME = "origin_name";

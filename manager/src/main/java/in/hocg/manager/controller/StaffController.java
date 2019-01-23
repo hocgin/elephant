@@ -8,9 +8,9 @@ package in.hocg.manager.controller;
  */
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import in.hocg.manager.model.parameter.AddStaff;
-import in.hocg.manager.model.parameter.QueryStaff;
-import in.hocg.manager.model.parameter.UpdateStaff;
+import in.hocg.manager.model.po.AddStaff;
+import in.hocg.manager.model.po.QueryStaff;
+import in.hocg.manager.model.po.UpdateStaff;
 import in.hocg.manager.service.ResourceService;
 import in.hocg.manager.service.StaffService;
 import in.hocg.mybatis.basic.condition.GetCondition;
@@ -50,13 +50,13 @@ public class StaffController extends BaseController {
     }
     
     /**
-     * POST /staff/s
+     * POST /staff/_search
      * 查找所有员工列表
      *
      * @param condition
      * @return
      */
-    @PostMapping("/s")
+    @PostMapping("/_search")
     public ResponseEntity post(@RequestBody PostCondition<QueryStaff> condition) {
         IPage<Staff> all = staffService.page(condition);
         return Result.success(all).asResponseEntity();

@@ -1,7 +1,7 @@
 package in.hocg.manager.controller;
 
-import in.hocg.manager.model.parameter.IResource;
-import in.hocg.manager.model.parameter.UResource;
+import in.hocg.manager.model.po.IResource;
+import in.hocg.manager.model.po.UResource;
 import in.hocg.manager.service.ResourceService;
 import in.hocg.mybatis.basic.constant.DatabaseConstant;
 import in.hocg.mybatis.module.system.entity.Resource;
@@ -67,8 +67,8 @@ public class ResourceController extends BaseController {
      * @return
      */
     @PostMapping
-    public ResponseEntity insertOne(@RequestBody IResource body,
-                                    @RequestParam(value = "mode", required = false, defaultValue = "0") int mode) throws NotRollbackException {
+    public ResponseEntity insertOneNode(@RequestBody IResource body,
+                                        @RequestParam(value = "mode", required = false, defaultValue = "0") int mode) throws NotRollbackException {
         
         String refNode = body.getRefNode();
         
@@ -77,13 +77,7 @@ public class ResourceController extends BaseController {
             return Result.error("仅能有一个根节点")
                     .asResponseEntity();
         }
-        Resource entity = body.copyTo(Resource.class);
-        boolean result;
-        if (mode == 1) {
-            result = resourceService.insertOneSiblingNode(refNode, entity);
-        } else {
-            result = resourceService.insertOneChildNode(refNode, entity);
-        }
+        boolean result = resourceService.insertOneNode(body, mode, refNode);
         return Result.result(result)
                 .asResponseEntity();
     }
@@ -99,19 +93,14 @@ public class ResourceController extends BaseController {
      * @return
      */
     @DeleteMapping
-    public ResponseEntity deleteMulti(@Validated IDs parameter,
-                                      @RequestParam(value = "mode", required = false, defaultValue = "0") int mode) {
+    public ResponseEntity deleteMultiNode(@Validated IDs parameter,
+                                          @RequestParam(value = "mode", required = false, defaultValue = "0") int mode) throws NotRollbackException {
         List<Serializable> ids = Arrays.asList(parameter.getId());
         if (ids.contains(DatabaseConstant.DEFAULT_ROOT_NODE_UUID)) {
             return Result.error("根节点不能被删除")
                     .asResponseEntity();
         }
-        boolean result;
-        if (mode == 1) {
-            result = resourceService.deleteMultiNode(ids);
-        } else {
-            result = resourceService.deleteMultiNodes(ids);
-        }
+        boolean result = resourceService.deleteMultiNode(mode, ids);
         return Result.success(result)
                 .asResponseEntity();
     }

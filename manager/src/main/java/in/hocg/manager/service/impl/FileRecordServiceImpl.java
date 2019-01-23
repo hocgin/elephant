@@ -6,6 +6,7 @@ import in.hocg.manager.service.FileRecordService;
 import in.hocg.mybatis.basic.BaseService;
 import in.hocg.mybatis.module.basic.entity.FileRecord;
 import in.hocg.mybatis.module.basic.mapper.FileManagerMapper;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.io.Serializable;
@@ -20,6 +21,7 @@ import java.util.Optional;
  * @since 2018-12-23
  */
 @Service
+@AllArgsConstructor
 public class FileRecordServiceImpl extends BaseService<FileManagerMapper, FileRecord>
         implements FileRecordService {
     
@@ -30,4 +32,5 @@ public class FileRecordServiceImpl extends BaseService<FileManagerMapper, FileRe
                 .eq(FileRecord::isDeleted, 0);
         return Optional.ofNullable(baseMapper.selectOne(queryWrapper));
     }
+    
 }

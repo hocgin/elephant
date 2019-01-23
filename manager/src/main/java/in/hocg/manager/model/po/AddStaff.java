@@ -1,8 +1,7 @@
-package in.hocg.manager.model.parameter;
+package in.hocg.manager.model.po;
 
 import in.hocg.scaffold.support.basis.parameter.BaseParameter;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
 /**

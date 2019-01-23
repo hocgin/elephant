@@ -6,7 +6,6 @@ import in.hocg.mybatis.basic.condition.GetCondition;
 import in.hocg.mybatis.basic.condition.PostCondition;
 import in.hocg.mybatis.module.user.entity.Staff;
 
-import java.security.Principal;
 import java.util.Optional;
 
 /**
@@ -46,11 +45,11 @@ public interface StaffService extends IService<Staff> {
     /**
      * 返回员工的账号ID
      *
-     * @param principal
+     * @param username
      * @return ID
      * - 是员工, 返回账号id
      * - 非员工, 返回 null
      * @throws Exception 未登陆
      */
-    String getAccountIdOfStaff(Principal principal) throws Exception;
+    String getAccountIdOfStaff(String username);
 }

@@ -31,7 +31,7 @@ public abstract class SimpleHandlerFilter extends OncePerRequestFilter {
                 filterChain.doFilter(request, response);
             }
         } catch (Exception e) {
-            String result = Result.error(e.getMessage()).json();
+            String result = Result.error(e.getMessage()).toJson();
             response.getWriter().write(result);
         }
     }

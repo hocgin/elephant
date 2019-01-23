@@ -1,12 +1,8 @@
 package in.hocg.manager.controller;
 
-import com.alibaba.druid.util.StringUtils;
-import com.google.common.collect.Maps;
+import in.hocg.manager.model.vo.FileDownload;
 import in.hocg.manager.service.FileRecordService;
-import in.hocg.manager.service.FileUploadExtService;
-import in.hocg.manager.service.StaffService;
-import in.hocg.mybatis.module.basic.entity.FileRecord;
-import in.hocg.scaffold.lang.exception.ResponseException;
+import in.hocg.manager.service.FileService;
 import in.hocg.scaffold.support.aspect.log.ILog;
 import in.hocg.scaffold.support.basis.BaseController;
 import in.hocg.scaffold.support.http.Result;
@@ -22,7 +18,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.InputStream;
 import java.net.URI;
 import java.security.Principal;
 import java.util.Map;
@@ -39,9 +34,7 @@ import java.util.Optional;
 @RequestMapping
 @AllArgsConstructor
 public class FileController extends BaseController {
-    private final FileUploadExtService fileUploadExtService;
-    private final StaffService staffService;
-    private final FileRecordService fileRecordService;
+    private final FileService fileService;
     
     /**
      * 文件上传接口
@@ -55,17 +48,14 @@ public class FileController extends BaseController {
     @PostMapping("/upload")
     public ResponseEntity upload(@RequestParam("file") MultipartFile[] files,
                                  Principal principal) throws Exception {
-        String accountId = staffService.getAccountIdOfStaff(principal);
-        if (Strings.isBlank(accountId)) {
-            throw ResponseException.wrap(ResponseException.class, "失效用户");
+        String username = principal.getName();
+        if (Strings.isBlank(username)) {
+            return Result.error("请先进行登陆")
+                    .asResponseEntity();
         }
-        
-        Map<String, String> ids = Maps.newHashMap();
-        for (MultipartFile file : files) {
-            String id = fileUploadExtService.upload(file, true, accountId);
-            ids.put(file.getOriginalFilename(), id);
-        }
-        return ResponseEntity.ok(Result.success(ids));
+        Map<String, String> ids = fileService.upload(files, username);
+        return Result.success(Result.success(ids))
+                .asResponseEntity();
     }
     
     /**
@@ -76,41 +66,32 @@ public class FileController extends BaseController {
      * @param rename    可选, 重命名
      * @param principal 可选, 访问私有文件需要登陆
      * @return
-     * @throws Exception
      */
     @GetMapping("/download/{id}")
     public ResponseEntity download(@PathVariable String id,
                                    @RequestParam(value = "rename", required = false) String rename,
                                    Principal principal) {
-        InputStream inputStream;
-        Optional<FileRecord> optionalFileRecord = fileRecordService.fetchNotDeletedForId(id);
-        if (!optionalFileRecord.isPresent()) {
+        String username = principal.getName();
+        
+        if (Strings.isBlank(username)) {
             return ResponseEntity.notFound().build();
         }
-        FileRecord fileRecord = optionalFileRecord.get();
-        try {
-            if (!fileRecord.isPublicity()) {
-                String accountId = staffService.getAccountIdOfStaff(principal);
-                if (Strings.isBlank(accountId) || !StringUtils.equals(accountId, fileRecord.getUploader())) {
-                    return ResponseEntity.notFound().build();
-                }
-            }
-            inputStream = fileUploadExtService.fetchFile(fileRecord.getStorageName());
-            
-        } catch (Exception e) {
+        Optional<FileDownload> fileDownload = fileService.download(id, username);
+        if (!fileDownload.isPresent()) {
             return ResponseEntity.notFound().build();
         }
+        FileDownload download = fileDownload.get();
         return ResponseEntity
                 .ok()
                 .headers(new HttpHeaders() {{
                     add(HttpHeaders.CACHE_CONTROL, "no-cache, no-store, must-revalidate");
-                    add(HttpHeaders.CONTENT_DISPOSITION, String.format("attachment; filename=\"%s\"", StringUtils.isEmpty(rename) ? fileRecord.getOriginName() : rename));
+                    add(HttpHeaders.CONTENT_DISPOSITION, String.format("attachment; filename=\"%s\"", Optional.of(rename).orElse(download.getOriginName())));
                     add(HttpHeaders.PRAGMA, "no-cache");
                     add(HttpHeaders.EXPIRES, "0");
                 }})
-                .contentLength(fileRecord.getSize())
+                .contentLength(download.getSize())
                 .contentType(MediaType.parseMediaType("application/octet-stream"))
-                .body(new InputStreamResource(inputStream));
+                .body(new InputStreamResource(download.getStream()));
     }
     
     /**
@@ -128,24 +109,15 @@ public class FileController extends BaseController {
                                 @RequestParam(value = "width", required = false) Integer width,
                                 @RequestParam(value = "height", required = false) Integer height,
                                 Principal principal) {
-        Optional<FileRecord> optionalFileRecord = fileRecordService.fetchNotDeletedForId(id);
-        if (!optionalFileRecord.isPresent()) {
+        String username = principal.getName();
+        if (Strings.isBlank(username)) {
             return ResponseEntity.notFound().build();
         }
-        FileRecord fileRecord = optionalFileRecord.get();
-        
-        if (!fileRecord.isPublicity()) {
-            try {
-                String accountId = staffService.getAccountIdOfStaff(principal);
-                if (Strings.isBlank(accountId) || !StringUtils.equals(accountId, fileRecord.getUploader())) {
-                    return ResponseEntity.notFound().build();
-                }
-            } catch (Exception e) {
-                return ResponseEntity.notFound().build();
-            }
+        Optional<String> optionalStorageName = fileService.preview(id, username);
+        if (!optionalStorageName.isPresent()) {
+            return ResponseEntity.notFound().build();
         }
-        
-        String url = buildImageURL(fileRecord.getStorageName(), width, height);
+        String url = buildImageURL(optionalStorageName.get(), width, height);
         return ResponseEntity.status(HttpStatus.FOUND)
                 .location(URI.create(url))
                 .build();

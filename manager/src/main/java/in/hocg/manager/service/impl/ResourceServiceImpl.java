@@ -1,7 +1,8 @@
 package in.hocg.manager.service.impl;
 
 import com.alibaba.druid.util.StringUtils;
-import in.hocg.manager.model.parameter.UResource;
+import in.hocg.manager.model.po.IResource;
+import in.hocg.manager.model.po.UResource;
 import in.hocg.manager.service.ResourceService;
 import in.hocg.mybatis.basic.BaseService;
 import in.hocg.mybatis.basic.model.NodeModel;
@@ -49,6 +50,7 @@ public class ResourceServiceImpl extends BaseService<ResourceMapper, Resource>
     
     
     @Override
+    @Transactional(rollbackFor = Exception.class, noRollbackFor = NotRollbackException.class)
     public boolean deleteMultiNode(Collection<Serializable> ids) {
         for (Serializable id : ids) {
             baseMapper.deleteOneNode(id);
@@ -57,6 +59,7 @@ public class ResourceServiceImpl extends BaseService<ResourceMapper, Resource>
     }
     
     @Override
+    @Transactional(rollbackFor = Exception.class, noRollbackFor = NotRollbackException.class)
     public boolean deleteMultiNodes(Collection<Serializable> ids) {
         for (Serializable id : ids) {
             baseMapper.deleteMultiNode(id);
@@ -64,7 +67,41 @@ public class ResourceServiceImpl extends BaseService<ResourceMapper, Resource>
         return true;
     }
     
+    
     @Override
+    @Transactional(rollbackFor = Exception.class, noRollbackFor = NotRollbackException.class)
+    public boolean insertOneNode(IResource body,
+                                 int mode,
+                                 String refNode) throws NotRollbackException {
+        Resource entity = body.copyTo(Resource.class);
+        boolean result;
+        if (mode == 1) {
+            result = insertOneSiblingNode(refNode, entity);
+        } else if (mode == 0) {
+            result = insertOneChildNode(refNode, entity);
+        } else {
+            throw ResponseException.wrap(NotRollbackException.class, "参数 mode 错误");
+        }
+        return result;
+    }
+    
+    
+    @Override
+    @Transactional(rollbackFor = Exception.class, noRollbackFor = NotRollbackException.class)
+    public boolean deleteMultiNode(int mode, List<Serializable> ids) throws NotRollbackException {
+        boolean result;
+        if (mode == 1) {
+            result = deleteMultiNode(ids);
+        } else if (mode == 0) {
+            result = deleteMultiNodes(ids);
+        } else {
+            throw ResponseException.wrap(NotRollbackException.class, "参数 mode 错误");
+        }
+        return result;
+    }
+    
+    @Override
+    @Transactional(rollbackFor = Exception.class, noRollbackFor = NotRollbackException.class)
     public boolean insertOneChildNode(Serializable parentId,
                                       Resource resource) throws NotRollbackException {
         Resource parent = baseMapper.selectById(parentId);
@@ -83,6 +120,7 @@ public class ResourceServiceImpl extends BaseService<ResourceMapper, Resource>
     }
     
     @Override
+    @Transactional(rollbackFor = Exception.class, noRollbackFor = NotRollbackException.class)
     public boolean insertOneSiblingNode(Serializable id,
                                         Resource resource) throws NotRollbackException {
         Resource sibling = baseMapper.selectById(id);
@@ -113,7 +151,7 @@ public class ResourceServiceImpl extends BaseService<ResourceMapper, Resource>
     }
     
     @Override
-    @Transactional(rollbackFor = Exception.class)
+    @Transactional(rollbackFor = Exception.class, noRollbackFor = NotRollbackException.class)
     public boolean updateOneById(String id, UResource parameter) throws RollbackException {
         Resource resource = baseMapper.selectById(id);
         if (resource == null) {
@@ -147,10 +185,10 @@ public class ResourceServiceImpl extends BaseService<ResourceMapper, Resource>
             
             // 如果该节点是变更为关闭, 则会关闭其对应的子节点
             if (!parameter.getEnabled()) {
-                String[] IDs = baseMapper.selectMultiTreeNodeHasDepth(id).stream()
+                String[] ids = baseMapper.selectMultiTreeNodeHasDepth(id).stream()
                         .map(SuperModel::getId)
                         .toArray(String[]::new);
-                baseMapper.updateMultiEnableById(false, IDs);
+                baseMapper.updateMultiEnableById(false, ids);
             }
             
         }
@@ -167,6 +205,7 @@ public class ResourceServiceImpl extends BaseService<ResourceMapper, Resource>
      * @param parent
      * @param resource
      */
+    @Transactional(rollbackFor = Exception.class, noRollbackFor = NotRollbackException.class)
     public void insertChildTree(String parent, Resource resource) {
         List<NodeModel> children = resource.getChildren();
         // 抹除节点位置信息

@@ -2,7 +2,7 @@ package in.hocg.manager.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
-import in.hocg.manager.model.parameter.QueryOrganization;
+import in.hocg.manager.model.po.QueryOrganization;
 import in.hocg.mybatis.basic.condition.GetCondition;
 import in.hocg.mybatis.basic.condition.PostCondition;
 import in.hocg.mybatis.module.basic.entity.Organization;

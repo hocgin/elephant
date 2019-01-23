@@ -12,7 +12,7 @@ import java.util.Map;
  * email: hocgin@gmail.com
  * <p>
  * 请求方式: POST
- * 内容: application/json
+ * 内容: application/toJson
  *
  * @author hocgin
  */

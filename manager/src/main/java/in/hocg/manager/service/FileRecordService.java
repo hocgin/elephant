@@ -19,8 +19,11 @@ public interface FileRecordService extends IService<FileRecord> {
     
     /**
      * 查找未删除的文件
+     *
      * @param id
      * @return
      */
     Optional<FileRecord> fetchNotDeletedForId(Serializable id);
+    
+    
 }

@@ -56,38 +56,38 @@ public class Result<T> implements Serializable {
     }
     
     
-    public static Result success(Object data) {
+    public static <T> Result<T> success(T data) {
         return Result.result(Code.SUCCESS.code, Code.SUCCESS.message, data);
     }
     
-    public static Result success() {
+    public static <T> Result<T> success() {
         return Result.success(null);
     }
     
-    public static Result result(Integer code, String message) {
+    public static <T> Result<T> result(Integer code, String message) {
         return Result.result(code, message, null);
     }
     
-    public static Result error(String message) {
+    public static <T> Result<T> error(String message) {
         return Result.result(Code.ERROR.code, message, null);
     }
     
-    public static Result error() {
+    public static <T> Result<T> error() {
         return Result.result(Code.ERROR.code, Code.ERROR.message, null);
     }
     
-    public static Result result(Integer code, String message, Object data) {
-        Result result = new Result<>();
+    public static <T> Result<T> result(Integer code, String message, T data) {
+        Result<T> result = new Result<>();
         return result.setCode(code)
                 .setMessage(message)
                 .setData(data);
     }
     
-    public ResponseEntity<Result> asResponseEntity() {
+    public ResponseEntity<Result<T>> asResponseEntity() {
         return ResponseEntity.ok(this);
     }
     
-    public String json() {
+    public String toJson() {
         try {
             return new ObjectMapper().writeValueAsString(this);
         } catch (JsonProcessingException e) {
