@@ -4,6 +4,7 @@ import com.google.common.collect.HashMultimap;
 import com.google.common.collect.SetMultimap;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
+import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.Collection;
@@ -16,6 +17,7 @@ import java.util.Map;
  * @author hocgin
  */
 @Slf4j
+@UtilityClass
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class AntiSQL {
     private static final String[] keyWords = {";", "\"", "\'", "/*", "*/", "--", "exec",

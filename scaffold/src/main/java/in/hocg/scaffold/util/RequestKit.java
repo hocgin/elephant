@@ -3,6 +3,7 @@ package in.hocg.scaffold.util;
 import com.google.common.base.Strings;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
+import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
@@ -17,6 +18,7 @@ import java.util.Arrays;
  * @author hocgin
  */
 @Slf4j
+@UtilityClass
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class RequestKit {
     /**
