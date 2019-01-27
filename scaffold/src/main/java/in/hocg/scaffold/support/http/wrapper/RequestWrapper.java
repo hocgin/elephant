@@ -129,10 +129,4 @@ public class RequestWrapper extends HttpServletRequestWrapper {
         return HtmlUtils.htmlEscape(str);
     }
     
-    
-    public static void main(String[] args) {
-        System.out.println(HtmlUtils.htmlEscape("{\"username\":\"admin\",\"password\":\"888888\"}\n"));
-        
-    }
-    
 }
