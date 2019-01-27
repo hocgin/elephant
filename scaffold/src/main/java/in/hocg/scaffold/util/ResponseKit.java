@@ -1,8 +1,6 @@
 package in.hocg.scaffold.util;
 
 import in.hocg.scaffold.constant.Charset;
-import lombok.AccessLevel;
-import lombok.NoArgsConstructor;
 import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.context.request.RequestContextHolder;
@@ -19,7 +17,6 @@ import javax.servlet.http.HttpServletResponse;
  */
 @Slf4j
 @UtilityClass
-@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class ResponseKit {
     public static HttpServletResponse get() {
         return ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getResponse();

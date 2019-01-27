@@ -2,9 +2,14 @@ package in.hocg.manager.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
+import in.hocg.manager.model.po.AddRole;
+import in.hocg.manager.model.po.UpdateRole;
 import in.hocg.mybatis.basic.condition.GetCondition;
 import in.hocg.mybatis.basic.condition.PostCondition;
 import in.hocg.mybatis.module.system.entity.Role;
+
+import java.io.Serializable;
+import java.util.Set;
 
 /**
  * <p>
@@ -31,4 +36,27 @@ public interface RoleService extends IService<Role> {
      * @return
      */
     IPage<Role> page(PostCondition condition);
+    
+    /**
+     * 删除角色
+     *
+     * @param asSet
+     * @return
+     */
+    boolean removeMultiByIds(Set<Serializable> asSet);
+    
+    /**
+     * 添加角色
+     * @param parameter
+     * @return
+     */
+    boolean insertOneRole(AddRole parameter);
+    
+    /**
+     * 更新角色
+     * @param id
+     * @param parameter
+     * @return
+     */
+    boolean updateOneById(String id, UpdateRole parameter);
 }

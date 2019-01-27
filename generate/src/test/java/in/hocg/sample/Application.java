@@ -39,8 +39,9 @@ public class Application {
     
     @Test
     public void main() {
+        String javaPath = "src/main/java";
         OUTPUT_DIR = Paths.get(System.getProperty("user.dir"),
-                "src/main/java").toString();
+                javaPath).toString();
         generateByTables(PACKAGE_NAME, (String[]) TABLES.toArray());
     }
     

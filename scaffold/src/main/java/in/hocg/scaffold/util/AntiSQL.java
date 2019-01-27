@@ -2,8 +2,6 @@ package in.hocg.scaffold.util;
 
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.SetMultimap;
-import lombok.AccessLevel;
-import lombok.NoArgsConstructor;
 import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
 
@@ -18,7 +16,6 @@ import java.util.Map;
  */
 @Slf4j
 @UtilityClass
-@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class AntiSQL {
     private static final String[] keyWords = {";", "\"", "\'", "/*", "*/", "--", "exec",
             "select", "update", "delete", "insert",
@@ -26,10 +23,10 @@ public class AntiSQL {
     
     public static Map<String, Collection<String[]>> getSafeParameterMap(Map<String, String[]> parameterMap) {
         SetMultimap<String, String[]> builder = HashMultimap.create();
-        for (String key : parameterMap.keySet()) {
+        parameterMap.keySet().forEach((key)->{
             String[] oldValues = parameterMap.get(key);
             builder.put(key, getSafeValues(oldValues));
-        }
+        });
         return builder.asMap();
     }
     

@@ -19,7 +19,6 @@ import java.util.Arrays;
  */
 @Slf4j
 @UtilityClass
-@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class RequestKit {
     /**
      * 获取客户端真实IP

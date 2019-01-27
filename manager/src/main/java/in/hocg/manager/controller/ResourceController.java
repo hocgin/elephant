@@ -49,10 +49,9 @@ public class ResourceController extends BaseController {
      * 查询详细信息
      *
      * @return
-     * @throws NotRollbackException
      */
     @GetMapping("/{id}")
-    public ResponseEntity selectOne(@PathVariable("id") String id) throws NotRollbackException {
+    public ResponseEntity selectOne(@PathVariable("id") String id) {
         Resource detail = resourceService.getById(id);
         return Result.success(detail)
                 .asResponseEntity();
@@ -69,7 +68,6 @@ public class ResourceController extends BaseController {
     @PostMapping
     public ResponseEntity insertOneNode(@RequestBody IResource body,
                                         @RequestParam(value = "mode", required = false, defaultValue = "0") int mode) throws NotRollbackException {
-        
         String refNode = body.getRefNode();
         
         // 添加兄弟节点,关联节点不能为根节点
