@@ -88,7 +88,7 @@ public class RoleController extends BaseController {
     }
     
     /**
-     * PUT /roles
+     * PUT /roles/:id
      * 更新角色
      *
      * @param parameter
@@ -97,6 +97,20 @@ public class RoleController extends BaseController {
     @PostMapping("/{id}")
     public ResponseEntity update(@PathVariable("id") String id, @Validated UpdateRole parameter) {
         boolean result = roleService.updateOneById(id, parameter);
+        return Result.success(result)
+                .asResponseEntity();
+    }
+    
+    /**
+     * GET /roles/:id
+     * 查询详情
+     *
+     * @param id
+     * @return
+     */
+    @PostMapping("/{id}")
+    public ResponseEntity get(@PathVariable("id") String id) {
+        Role result = roleService.getById(id);
         return Result.success(result)
                 .asResponseEntity();
     }
