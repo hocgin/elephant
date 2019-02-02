@@ -30,7 +30,8 @@ public class LangKit {
      * @return
      */
     public static String uuid() {
-        return UUID.randomUUID().toString().replaceAll("-", "");
+        return UUID.randomUUID().toString()
+                .replaceAll("-", "");
     }
     
     

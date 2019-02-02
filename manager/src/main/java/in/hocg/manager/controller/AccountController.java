@@ -54,7 +54,7 @@ public class AccountController extends BaseController {
     }
     
     /**
-     * POST /account/token
+     * POST /account/login
      * 登陆
      *
      * @param parameter
