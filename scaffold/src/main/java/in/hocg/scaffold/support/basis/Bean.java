@@ -55,10 +55,9 @@ public interface Bean extends Serializable {
      * object 对象填充 T
      *
      * @param object
-     * @param <T>
      * @return
      */
-    default <T extends Bean> T fill(Object object) {
+    default Object fill(Object object) {
         throw new UnsupportedOperationException("请实现它");
     }
     
