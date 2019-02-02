@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
 import in.hocg.manager.model.po.AddRole;
 import in.hocg.manager.model.po.UpdateRole;
+import in.hocg.manager.model.vo.RoleDetail;
 import in.hocg.mybatis.basic.condition.GetCondition;
 import in.hocg.mybatis.basic.condition.PostCondition;
 import in.hocg.mybatis.module.system.entity.Role;
@@ -59,4 +60,11 @@ public interface RoleService extends IService<Role> {
      * @return
      */
     boolean updateOneById(String id, UpdateRole parameter);
+    
+    /**
+     * 查看详情
+     * @param id
+     * @return
+     */
+    RoleDetail getDetail(String id);
 }

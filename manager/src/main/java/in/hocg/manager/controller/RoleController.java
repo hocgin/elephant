@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import in.hocg.manager.model.po.AddRole;
 import in.hocg.manager.model.po.RolePageQuery;
 import in.hocg.manager.model.po.UpdateRole;
+import in.hocg.manager.model.vo.RoleDetail;
 import in.hocg.manager.service.RoleService;
 import in.hocg.mybatis.basic.condition.GetCondition;
 import in.hocg.mybatis.basic.condition.PostCondition;
@@ -52,7 +53,7 @@ public class RoleController extends BaseController {
      */
     @PostMapping("/{id}")
     public ResponseEntity detail(@PathVariable("id") String id) {
-        Role result = roleService.getById(id);
+        RoleDetail result = roleService.getDetail(id);
         return Result.success(result)
                 .asResponseEntity();
     }

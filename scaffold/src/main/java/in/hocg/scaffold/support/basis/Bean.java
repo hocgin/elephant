@@ -28,6 +28,7 @@ public interface Bean extends Serializable {
     
     /**
      * Bean 中非空属性 -拷贝-> T
+     *
      * @param target
      * @param <T>
      * @return
@@ -45,7 +46,8 @@ public interface Bean extends Serializable {
      */
     @SneakyThrows
     default <T> T copyTo(Class<T> clazz) {
-        T target = clazz.newInstance();
+        T target = clazz.getDeclaredConstructor()
+                .newInstance();
         return copyTo(target);
     }
     
@@ -59,7 +61,6 @@ public interface Bean extends Serializable {
     default <T extends Bean> T fill(Object object) {
         throw new UnsupportedOperationException("请实现它");
     }
-    
     
     
 }

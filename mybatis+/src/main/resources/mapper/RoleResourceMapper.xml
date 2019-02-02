@@ -2,4 +2,13 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="in.hocg.mybatis.module.system.mapper.RoleResourceMapper">
 
+    <select id="selectMultiByRoleId" resultType="in.hocg.mybatis.module.system.entity.Resource">
+        SELECT * FROM role_resource rr
+        LEFT JOIN resource r ON rr.resource_id = r.id
+        <where>
+            AND rr.role_id = #{id}
+            AND r.enabled = 1
+        </where>
+        ORDER BY r.lft
+    </select>
 </mapper>

@@ -4,6 +4,7 @@ import lombok.Data;
 import lombok.experimental.Accessors;
 
 import java.io.InputStream;
+import java.io.Serializable;
 
 /**
  * Created by hocgin on 2019/1/23.
@@ -13,7 +14,7 @@ import java.io.InputStream;
  */
 @Data
 @Accessors(chain = true)
-public class FileDownload {
+public class FileDownload implements Serializable {
     private InputStream stream;
     private Long size;
     private String originName;

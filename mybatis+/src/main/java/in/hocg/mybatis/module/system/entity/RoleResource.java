@@ -31,12 +31,12 @@ public class RoleResource extends SuperModel<RoleResource> {
     /**
      * 员工 ID
      */
-    @TableField(STAFF_ID)
-    private String staffId;
+    @TableField(RESOURCE_ID)
+    private String resourceId;
 
 
     public static final String ROLE_ID = "role_id";
 
-    public static final String STAFF_ID = "staff_id";
+    public static final String RESOURCE_ID = "resource_id";
 
 }

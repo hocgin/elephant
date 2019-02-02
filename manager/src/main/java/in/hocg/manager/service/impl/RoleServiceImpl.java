@@ -5,16 +5,21 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import in.hocg.manager.model.po.AddRole;
 import in.hocg.manager.model.po.UpdateRole;
+import in.hocg.manager.model.vo.RoleDetail;
+import in.hocg.manager.service.RoleResourceService;
 import in.hocg.manager.service.RoleService;
 import in.hocg.mybatis.basic.BaseService;
 import in.hocg.mybatis.basic.condition.GetCondition;
 import in.hocg.mybatis.basic.condition.PostCondition;
+import in.hocg.mybatis.basic.model.TreeUtils;
+import in.hocg.mybatis.module.system.entity.Resource;
 import in.hocg.mybatis.module.system.entity.Role;
 import in.hocg.mybatis.module.system.mapper.RoleMapper;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.io.Serializable;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -29,6 +34,7 @@ import java.util.Set;
 @AllArgsConstructor
 public class RoleServiceImpl extends BaseService<RoleMapper, Role>
         implements RoleService {
+    private RoleResourceService roleResourceService;
     
     @Override
     public IPage<Role> page(GetCondition condition) {
@@ -63,5 +69,18 @@ public class RoleServiceImpl extends BaseService<RoleMapper, Role>
     @Override
     public boolean updateOneById(String id, UpdateRole parameter) {
         return false;
+    }
+    
+    @Override
+    public RoleDetail getDetail(String id) {
+        Role role = baseMapper.selectById(id);
+        // 关联资源列表
+        List<Resource> resources = roleResourceService.selectMultiByRoleId(id);
+        // 渲染树
+        Resource tree = TreeUtils.buildTree(resources);
+        // 填充到 VO
+        return new RoleDetail()
+                .setResources(tree)
+                .fill(role);
     }
 }
