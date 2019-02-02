@@ -38,7 +38,7 @@ public class ResourceController extends BaseController {
      * @return
      */
     @GetMapping
-    public ResponseEntity selectAll() throws NotRollbackException {
+    public ResponseEntity page() throws NotRollbackException {
         Resource all = resourceService.selectAllAndBuildTree();
         return Result.success(all)
                 .asResponseEntity();
@@ -51,7 +51,7 @@ public class ResourceController extends BaseController {
      * @return
      */
     @GetMapping("/{id}")
-    public ResponseEntity selectOne(@PathVariable("id") String id) {
+    public ResponseEntity detail(@PathVariable("id") String id) {
         Resource detail = resourceService.getById(id);
         return Result.success(detail)
                 .asResponseEntity();
@@ -66,8 +66,8 @@ public class ResourceController extends BaseController {
      * @return
      */
     @PostMapping
-    public ResponseEntity insertOneNode(@RequestBody IResource body,
-                                        @RequestParam(value = "mode", required = false, defaultValue = "0") int mode) throws NotRollbackException {
+    public ResponseEntity insert(@RequestBody IResource body,
+                                 @RequestParam(value = "mode", required = false, defaultValue = "0") int mode) throws NotRollbackException {
         String refNode = body.getRefNode();
         
         // 添加兄弟节点,关联节点不能为根节点
@@ -91,8 +91,8 @@ public class ResourceController extends BaseController {
      * @return
      */
     @DeleteMapping
-    public ResponseEntity deleteMultiNode(@Validated IDs parameter,
-                                          @RequestParam(value = "mode", required = false, defaultValue = "0") int mode) throws NotRollbackException {
+    public ResponseEntity delete(@Validated IDs parameter,
+                                 @RequestParam(value = "mode", required = false, defaultValue = "0") int mode) throws NotRollbackException {
         List<Serializable> ids = Arrays.asList(parameter.getId());
         if (ids.contains(DatabaseConstant.DEFAULT_ROOT_NODE_UUID)) {
             return Result.error("根节点不能被删除")
@@ -114,7 +114,7 @@ public class ResourceController extends BaseController {
      * @throws NotRollbackException
      */
     @PutMapping("/{id}")
-    public ResponseEntity updateOne(@PathVariable("id") String id,
+    public ResponseEntity update(@PathVariable("id") String id,
                                     @RequestBody UResource parameter) throws RollbackException, NotRollbackException {
         if (id.contains(DatabaseConstant.DEFAULT_ROOT_NODE_UUID)) {
             return Result.error("根节点不能被修改")
