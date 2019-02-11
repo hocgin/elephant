@@ -1,26 +1,36 @@
 package in.hocg.manager.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import in.hocg.manager.model.po.AddRole;
 import in.hocg.manager.model.po.UpdateRole;
-import in.hocg.manager.model.vo.RoleDetail;
+import in.hocg.manager.model.vo.RoleDetailVO;
+import in.hocg.manager.service.ResourceService;
 import in.hocg.manager.service.RoleResourceService;
 import in.hocg.manager.service.RoleService;
+import in.hocg.manager.service.RoleStaffService;
 import in.hocg.mybatis.basic.BaseService;
 import in.hocg.mybatis.basic.condition.GetCondition;
 import in.hocg.mybatis.basic.condition.PostCondition;
-import in.hocg.mybatis.basic.model.TreeUtils;
 import in.hocg.mybatis.module.system.entity.Resource;
 import in.hocg.mybatis.module.system.entity.Role;
+import in.hocg.mybatis.module.system.entity.RoleResource;
+import in.hocg.mybatis.module.system.entity.RoleStaff;
 import in.hocg.mybatis.module.system.mapper.RoleMapper;
+import in.hocg.scaffold.lang.exception.NotRollbackException;
+import in.hocg.scaffold.lang.exception.ResponseException;
+import in.hocg.scaffold.lang.exception.RollbackException;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * <p>
@@ -34,7 +44,10 @@ import java.util.Set;
 @AllArgsConstructor
 public class RoleServiceImpl extends BaseService<RoleMapper, Role>
         implements RoleService {
-    private RoleResourceService roleResourceService;
+    
+    private final ResourceService resourceService;
+    private final RoleResourceService roleResourceService;
+    private final RoleStaffService roleStaffService;
     
     @Override
     public IPage<Role> page(GetCondition condition) {
@@ -51,36 +64,88 @@ public class RoleServiceImpl extends BaseService<RoleMapper, Role>
     }
     
     @Override
-    public boolean removeMultiByIds(Set<Serializable> asSet) {
-        // 判断是否拥有资源权限
-        
-        // 否 删除角色
-        
-        // 有 提示信息
-        
-        return false;
+    @Transactional(rollbackFor = Exception.class, noRollbackFor = NotRollbackException.class)
+    public boolean removeMultiByIds(Set<Serializable> ids) throws RollbackException {
+        for (Serializable id : ids) {
+            LambdaQueryWrapper<RoleStaff> wrapper = new LambdaQueryWrapper<RoleStaff>().eq(RoleStaff::getRoleId, id);
+            // 判断是否有用户分配到该角色
+            if (roleStaffService.count(wrapper) != 0) {
+                // 有 删除失败, 提示信息
+                throw ResponseException.wrap(RollbackException.class, "删除失败, 含有已分配到员工的角色");
+            }
+            // 否 删除角色
+            roleStaffService.remove(wrapper);
+            baseMapper.deleteById(id);
+        }
+        return true;
     }
     
     @Override
-    public boolean insertOneRole(AddRole parameter) {
-        return false;
+    @Transactional(rollbackFor = Exception.class, noRollbackFor = NotRollbackException.class)
+    public boolean insertOneRole(AddRole parameter) throws NotRollbackException {
+        // 检查 名称 or 标识 是否存在
+        Integer count = lambdaQuery().eq(Role::getMark, parameter.getMark())
+                .or().eq(Role::getName, parameter.getName()).count();
+        if (count != 0) {
+            throw ResponseException.wrap(NotRollbackException.class, "该角色已经存在");
+        }
+        Role role = parameter.copyTo(new Role());
+    
+        baseMapper.insert(role);
+        
+        // 回溯路径
+        List<RoleResource> roleResources = parameter.getResources().stream()
+                .map(resourceService::selectMultiTreePathByLeafId)
+                .flatMap(Collection::stream)
+                .map(Resource::getId)
+                .distinct()
+                .map((resourceId) -> new RoleResource()
+                        .setRoleId(role.getId())
+                        .setResourceId(resourceId))
+                .collect(Collectors.toList());
+        
+        roleResourceService.saveBatch(roleResources);
+        
+        return true;
     }
     
     @Override
-    public boolean updateOneById(String id, UpdateRole parameter) {
-        return false;
+    @Transactional(rollbackFor = Exception.class, noRollbackFor = NotRollbackException.class)
+    public boolean updateOneById(Serializable id, UpdateRole parameter) throws NotRollbackException {
+        Role role = getById(id);
+        if (role == null) {
+            throw ResponseException.wrap(NotRollbackException.class, "角色不存在");
+        }
+        parameter.copyNotNullTo(role);
+        
+        // 回溯路径
+        List<RoleResource> roleResources = parameter.getResources().stream()
+                .map(resourceService::selectMultiTreePathByLeafId)
+                .flatMap(Collection::stream)
+                .map(Resource::getId)
+                .distinct()
+                .map((resourceId) -> new RoleResource()
+                        .setRoleId(role.getId())
+                        .setResourceId(resourceId))
+                .collect(Collectors.toList());
+        baseMapper.updateById(role);
+    
+        LambdaQueryWrapper<RoleResource> queryWrapper = new LambdaQueryWrapper<RoleResource>()
+                .eq(RoleResource::getRoleId, id);
+        roleResourceService.remove(queryWrapper);
+        roleResourceService.saveBatch(roleResources);
+        return true;
     }
     
+    
     @Override
-    public RoleDetail getDetail(String id) {
+    public RoleDetailVO selectOneById(Serializable id) {
         Role role = baseMapper.selectById(id);
         // 关联资源列表
-        List<Resource> resources = roleResourceService.selectMultiByRoleId(id);
-        // 渲染树
-        Resource tree = TreeUtils.buildTree(resources);
+        List<Resource> resources = roleResourceService.selectMultiResourceByRoleId(id);
         // 填充到 VO
-        return new RoleDetail()
-                .setResources(tree)
+        return (RoleDetailVO) new RoleDetailVO()
+                .setResources(resources)
                 .fill(role);
     }
 }

@@ -35,6 +35,11 @@ public class ResourceServiceImpl extends BaseService<ResourceMapper, Resource>
         implements ResourceService {
     
     @Override
+    public Collection<Resource> selectMultiTreePathByLeafId(Serializable id) {
+        return baseMapper.selectMultiTreePathByLeafId(id);
+    }
+    
+    @Override
     public Resource selectMultiByUsernameAndBuildTree(String username) throws NotRollbackException {
         List<Resource> resources = baseMapper.selectMultiByUsername(username);
         if (resources.isEmpty()) {
@@ -148,6 +153,15 @@ public class ResourceServiceImpl extends BaseService<ResourceMapper, Resource>
             throw ResponseException.wrap(NotRollbackException.class, "未找到资源");
         }
         return TreeUtils.buildTree(resources);
+    }
+    
+    @Override
+    public Collection<Resource> selectAll() throws NotRollbackException {
+        List<Resource> resources = baseMapper.selectAllNodeHasDepth();
+        if (resources.isEmpty()) {
+            throw ResponseException.wrap(NotRollbackException.class, "未找到资源");
+        }
+        return resources;
     }
     
     @Override

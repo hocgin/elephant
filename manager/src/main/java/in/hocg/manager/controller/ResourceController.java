@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.io.Serializable;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -38,8 +39,8 @@ public class ResourceController extends BaseController {
      * @return
      */
     @GetMapping
-    public ResponseEntity page() throws NotRollbackException {
-        Resource all = resourceService.selectAllAndBuildTree();
+    public ResponseEntity selectAll() throws NotRollbackException {
+        Collection<Resource> all = resourceService.selectAll();
         return Result.success(all)
                 .asResponseEntity();
     }
@@ -51,7 +52,7 @@ public class ResourceController extends BaseController {
      * @return
      */
     @GetMapping("/{id}")
-    public ResponseEntity detail(@PathVariable("id") String id) {
+    public ResponseEntity selectOne(@PathVariable("id") String id) {
         Resource detail = resourceService.getById(id);
         return Result.success(detail)
                 .asResponseEntity();
@@ -114,7 +115,7 @@ public class ResourceController extends BaseController {
      * @throws NotRollbackException
      */
     @PutMapping("/{id}")
-    public ResponseEntity update(@PathVariable("id") String id,
+    public ResponseEntity updateOne(@PathVariable("id") String id,
                                     @RequestBody UResource parameter) throws RollbackException, NotRollbackException {
         if (id.contains(DatabaseConstant.DEFAULT_ROOT_NODE_UUID)) {
             return Result.error("根节点不能被修改")

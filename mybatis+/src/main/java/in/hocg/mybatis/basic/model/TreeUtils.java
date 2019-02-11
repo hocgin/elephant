@@ -3,7 +3,12 @@ package in.hocg.mybatis.basic.model;
 import com.google.common.collect.Lists;
 import lombok.experimental.UtilityClass;
 
+import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
+import java.util.stream.Collectors;
+
+import static java.util.Comparator.comparingInt;
 
 /**
  * Created by hocgin on 2019/1/16.
@@ -50,6 +55,32 @@ public class TreeUtils {
     public static <T extends NodeModel> T buildTree(List<T> nodes) {
         T root = nodes.get(0);
         return buildTree(root, nodes);
+    }
+    
+    /**
+     * 只使用 lft rgt 来构建树
+     *
+     * @param nodes
+     * @param <T>
+     * @return
+     */
+    public static <T extends NodeModel> T _buildTree(List<T> nodes) {
+        List<T> list = nodes.stream()
+                .sorted(comparingInt(NodeModel::getLft))
+                .collect(Collectors.toList());
+        Collections.reverse(list);
+        Iterator<T> iterator = list.iterator();
+        while (iterator.hasNext()) {
+            T t = iterator.next();
+            for (T node : list) {
+                if (t.getLft() > node.getLft() && t.getRgt() < node.getRgt()) {
+                    node.getChildren().add(t);
+                    iterator.remove();
+                    break;
+                }
+            }
+        }
+        return list.get(0);
     }
     
     /**

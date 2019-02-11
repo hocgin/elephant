@@ -25,6 +25,14 @@ import java.util.List;
 public interface ResourceService extends IService<Resource> {
     
     /**
+     * 查找到达该节点的路径
+     *
+     * @param id
+     * @return
+     */
+    Collection<Resource> selectMultiTreePathByLeafId(Serializable id);
+    
+    /**
      * 查找对应用户的资源树
      *
      * @param username
@@ -60,8 +68,9 @@ public interface ResourceService extends IService<Resource> {
     
     /**
      * 按指定模式添加一个节点
-     * @param body 节点
-     * @param mode 模式[子节点, 兄弟节点]
+     *
+     * @param body    节点
+     * @param mode    模式[子节点, 兄弟节点]
      * @param refNode
      * @return
      * @throws NotRollbackException
@@ -85,13 +94,16 @@ public interface ResourceService extends IService<Resource> {
      * @return
      */
     boolean insertOneSiblingNode(@NonNull Serializable id, @NonNull Resource resource) throws NotRollbackException;
-
+    
     
     /**
      * 查找完整的树
+     *
      * @return
      */
     Resource selectAllAndBuildTree() throws NotRollbackException;
+    
+    Collection<Resource> selectAll() throws NotRollbackException;
     
     /**
      * 更新
@@ -104,10 +116,11 @@ public interface ResourceService extends IService<Resource> {
     
     /**
      * 根据模式删除节点
+     *
      * @param mode 模式
      *             1. 删除指定节点, 并移动其子节点到该节点所在层级
      *             0. 删除指定节点及其子节点
-     * @param ids 节点 ID
+     * @param ids  节点 ID
      * @return
      * @throws NotRollbackException
      */

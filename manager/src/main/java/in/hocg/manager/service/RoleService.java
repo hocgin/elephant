@@ -4,10 +4,12 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
 import in.hocg.manager.model.po.AddRole;
 import in.hocg.manager.model.po.UpdateRole;
-import in.hocg.manager.model.vo.RoleDetail;
+import in.hocg.manager.model.vo.RoleDetailVO;
 import in.hocg.mybatis.basic.condition.GetCondition;
 import in.hocg.mybatis.basic.condition.PostCondition;
 import in.hocg.mybatis.module.system.entity.Role;
+import in.hocg.scaffold.lang.exception.NotRollbackException;
+import in.hocg.scaffold.lang.exception.RollbackException;
 
 import java.io.Serializable;
 import java.util.Set;
@@ -44,14 +46,14 @@ public interface RoleService extends IService<Role> {
      * @param asSet
      * @return
      */
-    boolean removeMultiByIds(Set<Serializable> asSet);
+    boolean removeMultiByIds(Set<Serializable> asSet) throws RollbackException;
     
     /**
      * 添加角色
      * @param parameter
      * @return
      */
-    boolean insertOneRole(AddRole parameter);
+    boolean insertOneRole(AddRole parameter) throws NotRollbackException;
     
     /**
      * 更新角色
@@ -59,12 +61,12 @@ public interface RoleService extends IService<Role> {
      * @param parameter
      * @return
      */
-    boolean updateOneById(String id, UpdateRole parameter);
+    boolean updateOneById(Serializable id, UpdateRole parameter) throws NotRollbackException;
     
     /**
      * 查看详情
      * @param id
      * @return
      */
-    RoleDetail getDetail(String id);
+    RoleDetailVO selectOneById(Serializable id);
 }

@@ -1,6 +1,5 @@
 package in.hocg.manager.service.impl;
 
-import com.baomidou.mybatisplus.extension.service.additional.query.impl.LambdaQueryChainWrapper;
 import in.hocg.manager.service.RoleResourceService;
 import in.hocg.mybatis.basic.BaseService;
 import in.hocg.mybatis.module.system.entity.Resource;
@@ -24,7 +23,7 @@ public class RoleResourceServiceImpl extends BaseService<RoleResourceMapper, Rol
         implements RoleResourceService {
     
     @Override
-    public List<Resource> selectMultiByRoleId(Serializable id) {
-        return baseMapper.selectMultiByRoleId(id);
+    public List<Resource> selectMultiResourceByRoleId(Serializable id) {
+        return baseMapper.selectMultiResourceByRoleId(id);
     }
 }

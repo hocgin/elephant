@@ -23,5 +23,5 @@ public interface RoleResourceService extends IService<RoleResource> {
      * @param id
      * @return
      */
-    List<Resource> selectMultiByRoleId(Serializable id);
+    List<Resource> selectMultiResourceByRoleId(Serializable id);
 }

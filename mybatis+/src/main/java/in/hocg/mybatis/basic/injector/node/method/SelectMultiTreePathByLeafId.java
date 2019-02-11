@@ -22,7 +22,7 @@ public class SelectMultiTreePathByLeafId extends AbstractMethod {
             .append("</script>");
     
     private String getMethodName() {
-        return "SelectMultiTreePathByLeafId";
+        return "selectMultiTreePathByLeafId";
     }
     /**
      * @param mapperClass
@@ -34,7 +34,7 @@ public class SelectMultiTreePathByLeafId extends AbstractMethod {
     public MappedStatement injectMappedStatement(Class<?> mapperClass, Class<?> modelClass, TableInfo tableInfo) {
         String sql = SQL.toString().replaceAll(":table", tableInfo.getTableName())
                 .replaceAll(":id", tableInfo.getKeyColumn())
-                .replaceAll(":columns", "node.*");
+                .replaceAll(":columns", "parent.*");
         SqlSource sqlSource = languageDriver.createSqlSource(configuration, sql, modelClass);
         return this.addSelectMappedStatement(mapperClass, getMethodName(), sqlSource, modelClass, tableInfo);
     }

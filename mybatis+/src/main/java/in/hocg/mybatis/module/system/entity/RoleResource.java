@@ -29,7 +29,7 @@ public class RoleResource extends SuperModel<RoleResource> {
     @TableField(ROLE_ID)
     private String roleId;
     /**
-     * 员工 ID
+     * 资源 ID
      */
     @TableField(RESOURCE_ID)
     private String resourceId;

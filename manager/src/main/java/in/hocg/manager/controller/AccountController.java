@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.security.Principal;
+import java.util.Collection;
 import java.util.Optional;
 
 /**
@@ -79,8 +80,8 @@ public class AccountController extends BaseController {
     @GetMapping("/menus")
     public ResponseEntity getMenu(Principal principal) throws NotRollbackException {
         String username = principal.getName();
-        Resource tree = resourceService.selectMultiByUsernameAndBuildTree(username);
-        return Result.success(tree.getChildren())
+        Collection<Resource> tree = resourceService.selectMultiByUsername(username);
+        return Result.success(tree)
                 .asResponseEntity();
     }
 }

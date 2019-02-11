@@ -25,5 +25,5 @@ public interface RoleResourceMapper extends BaseMapper<RoleResource> {
      * @param id
      * @return
      */
-    List<Resource> selectMultiByRoleId(@Param("id") Serializable id);
+    List<Resource> selectMultiResourceByRoleId(@Param("id") Serializable id);
 }

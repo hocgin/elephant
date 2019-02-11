@@ -1,11 +1,9 @@
 package in.hocg.scaffold.support.basis.parameter;
 
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
 import javax.validation.constraints.NotEmpty;
-import java.io.Serializable;
 
 
 /**
@@ -18,5 +16,5 @@ import java.io.Serializable;
 @ToString
 public class IDs implements BaseParameter {
     @NotEmpty(message = "数据项不存在")
-    private Serializable[] id;
+    private String[] id;
 }
