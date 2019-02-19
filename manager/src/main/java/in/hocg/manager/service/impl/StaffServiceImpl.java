@@ -19,11 +19,14 @@ import in.hocg.mybatis.module.user.entity.Staff;
 import in.hocg.mybatis.module.user.mapper.StaffMapper;
 import in.hocg.scaffold.lang.exception.NotRollbackException;
 import in.hocg.scaffold.lang.exception.ResponseException;
+import in.hocg.scaffold.support.basis.parameter.IDs;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.io.Serializable;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -75,7 +78,7 @@ public class StaffServiceImpl extends BaseService<StaffMapper, Staff>
     @Override
     public String getAccountIdOfStaff(String username) {
         Optional<Staff> staff = findByUsername(username);
-        return staff.map(Staff::getAccount)
+        return staff.map(Staff::getId)
                 .orElse(null);
     }
     
@@ -105,8 +108,17 @@ public class StaffServiceImpl extends BaseService<StaffMapper, Staff>
         account.setType(ModelConstant.ACCOUNT_TYPE_STAFF);
         accountService.save(account);
         Staff staff = parameter.copyTo(Staff.class);
-        staff.setAccount(account.getId());
+        staff.setId(account.getId());
         int change = baseMapper.insert(staff);
         return change > 0;
+    }
+    
+    @Override
+    public boolean deletes(IDs parameter) {
+        List<Serializable> ids = Arrays.asList(parameter.getId());
+        // 删除账号表信息
+        accountService.removeByIds(ids);
+        // 删除员工表信息
+        return baseMapper.deleteBatchIds(ids) > 0;
     }
 }

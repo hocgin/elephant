@@ -198,11 +198,8 @@ DROP TABLE IF EXISTS `staff`;
 CREATE TABLE `staff`
 (
   `id`          CHAR(32)
-  COMMENT 'UUID',
+  COMMENT 'UUID, 关联账号ID',
   --
-  `account`     VARCHAR(32)  NOT NULL
-    UNIQUE
-  COMMENT '关联账号ID',
   `nickname`    VARCHAR(10)  NOT NULL
   COMMENT '昵称',
   `username`    VARCHAR(20)  NOT NULL

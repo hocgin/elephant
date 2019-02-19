@@ -9,6 +9,7 @@ import in.hocg.mybatis.basic.condition.GetCondition;
 import in.hocg.mybatis.basic.condition.PostCondition;
 import in.hocg.mybatis.module.user.entity.Staff;
 import in.hocg.scaffold.lang.exception.NotRollbackException;
+import in.hocg.scaffold.support.basis.parameter.IDs;
 
 import java.io.Serializable;
 import java.util.Optional;
@@ -72,4 +73,11 @@ public interface StaffService extends IService<Staff> {
      * @return
      */
     boolean insert(AddStaff parameter) throws NotRollbackException;
+    
+    /**
+     * 删除
+     * @param parameter
+     * @return
+     */
+    boolean deletes(IDs parameter);
 }

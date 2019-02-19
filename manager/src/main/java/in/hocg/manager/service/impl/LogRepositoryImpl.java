@@ -60,7 +60,7 @@ public class LogRepositoryImpl implements LogRepository {
                 .usageTime(timeMillis)
                 .method(request.getMethod())
                 .parameters(objectMapper.writeValueAsString(request.getParameterMap()))
-                .visitor(staff.map(Staff::getAccount).orElse("Unknown"))
+                .visitor(staff.map(Staff::getId).orElse("Unknown"))
                 .mapping(mapping)
                 .response(objectMapper.writeValueAsString(result))
                 .message(message)

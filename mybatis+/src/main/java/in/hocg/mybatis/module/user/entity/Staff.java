@@ -23,11 +23,6 @@ public class Staff extends DefaultModel<Staff> {
     private static final long serialVersionUID = 1L;
     
     /**
-     * 关联账号ID
-     */
-    @TableField(ACCOUNT)
-    private String account;
-    /**
      * 昵称
      */
     @TableField(NICKNAME)

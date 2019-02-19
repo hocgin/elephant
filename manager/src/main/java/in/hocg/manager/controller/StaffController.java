@@ -23,10 +23,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.Serializable;
-import java.util.Arrays;
-import java.util.List;
-
 @RestController
 @RequestMapping("/staff")
 @AllArgsConstructor
@@ -69,9 +65,8 @@ public class StaffController extends BaseController {
      * @return
      */
     @DeleteMapping
-    public ResponseEntity delete(@Validated IDs parameter) {
-        List<Serializable> ids = Arrays.asList(parameter.getId());
-        boolean result = staffService.removeByIds(ids);
+    public ResponseEntity delete(@Validated @RequestBody IDs parameter) {
+        boolean result = staffService.deletes(parameter);
         return Result.result(result).asResponseEntity();
     }
     

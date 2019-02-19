@@ -1,8 +1,8 @@
 -- ADMIN
 INSERT INTO `account` (`id`, `type`)
 VALUE ('id0admin', '1');
-INSERT INTO `staff` (`id`, `account`, `username`, `nickname`, `password`, `created_at`)
-VALUE ('id0admin', 'id0admin', 'admin', 'admin', '{noop}admin', NOW());
+INSERT INTO `staff` (`id`, `username`, `nickname`, `password`, `created_at`)
+VALUE ('id0admin', 'admin', 'admin', '{noop}admin', NOW());
 
 -- 权限 & 角色
 /**
