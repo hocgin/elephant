@@ -55,7 +55,7 @@ public class OrganizationController extends BaseController {
      * @return
      */
     @PostMapping("/s")
-    public ResponseEntity post(@RequestBody PostCondition<QueryOrganization> condition) {
+    public ResponseEntity post(@RequestBody PostCondition<Organization, QueryOrganization> condition) {
         IPage<Organization> all = organizationService.page(condition);
         return Result.success(all).asResponseEntity();
     }

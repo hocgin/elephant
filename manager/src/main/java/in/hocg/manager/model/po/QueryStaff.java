@@ -13,4 +13,7 @@ import lombok.ToString;
 @Data
 @ToString
 public class QueryStaff implements BaseParameter {
+    private String username;
+    private String nickname;
+    private Integer gender;
 }

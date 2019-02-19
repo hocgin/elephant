@@ -11,13 +11,11 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import in.hocg.manager.model.po.AddStaff;
 import in.hocg.manager.model.po.QueryStaff;
 import in.hocg.manager.model.po.UpdateStaff;
-import in.hocg.manager.service.ResourceService;
 import in.hocg.manager.service.StaffService;
-import in.hocg.mybatis.basic.condition.GetCondition;
 import in.hocg.mybatis.basic.condition.PostCondition;
 import in.hocg.mybatis.module.user.entity.Staff;
+import in.hocg.scaffold.lang.exception.NotRollbackException;
 import in.hocg.scaffold.support.basis.BaseController;
-import in.hocg.scaffold.support.basis.parameter.ID;
 import in.hocg.scaffold.support.basis.parameter.IDs;
 import in.hocg.scaffold.support.http.Result;
 import lombok.AllArgsConstructor;
@@ -34,20 +32,6 @@ import java.util.List;
 @AllArgsConstructor
 public class StaffController extends BaseController {
     private final StaffService staffService;
-    private final ResourceService resourceService;
-    
-    /**
-     * GET /staff
-     * 查找所有员工列表
-     *
-     * @param condition
-     * @return
-     */
-    @GetMapping
-    public ResponseEntity get(GetCondition condition) {
-        IPage<Staff> all = staffService.page(condition);
-        return Result.success(all).asResponseEntity();
-    }
     
     /**
      * POST /staff/_search
@@ -56,8 +40,8 @@ public class StaffController extends BaseController {
      * @param condition
      * @return
      */
-    @PostMapping("/_search")
-    public ResponseEntity post(@RequestBody PostCondition<QueryStaff> condition) {
+    @PostMapping("/_paging")
+    public ResponseEntity paging(@RequestBody PostCondition<QueryStaff, Staff> condition) {
         IPage<Staff> all = staffService.page(condition);
         return Result.success(all).asResponseEntity();
     }
@@ -66,13 +50,13 @@ public class StaffController extends BaseController {
      * GET /staff/{id}
      * 查找员工详情
      *
-     * @param parameter
+     * @param id
      * @return
      */
-    @GetMapping("/{id:[a-zA-Z0-9]{32}}")
-    public ResponseEntity detail(@PathVariable("id") ID parameter) {
-        Serializable id = parameter.getId();
+    @GetMapping("/{id}")
+    public ResponseEntity detail(@PathVariable("id") String id) {
         Staff result = staffService.getById(id);
+        result.setPassword(null);
         return Result.success(result).asResponseEntity();
     }
     
@@ -97,12 +81,10 @@ public class StaffController extends BaseController {
      *
      * @return
      */
-    @PutMapping("/{id:[a-zA-Z0-9]{32}}")
-    public ResponseEntity putStaff(@PathVariable("id") String id,
-                                   @RequestBody UpdateStaff parameter) {
-        Staff staff = parameter.copyTo(Staff.class);
-        staff.setId(id);
-        boolean result = staffService.updateById(staff);
+    @PutMapping("/{id}")
+    public ResponseEntity update(@PathVariable("id") String id,
+                                 @RequestBody UpdateStaff parameter) throws NotRollbackException {
+        boolean result = staffService.updateOneById(id, parameter);
         return Result.result(result).asResponseEntity();
     }
     
@@ -114,9 +96,8 @@ public class StaffController extends BaseController {
      * @return
      */
     @PostMapping
-    public ResponseEntity postStaff(@RequestBody AddStaff parameter) {
-        Staff staff = parameter.copyTo(Staff.class);
-        boolean result = staffService.save(staff);
+    public ResponseEntity insert(@RequestBody AddStaff parameter) throws NotRollbackException {
+        boolean result = staffService.insert(parameter);
         return Result.result(result).asResponseEntity();
     }
     

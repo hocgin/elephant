@@ -48,7 +48,7 @@ public class IndexController extends BaseController {
     
     @RequestMapping("post-page")
     @ResponseBody
-    public ResponseEntity<PostCondition> post(@RequestBody PostCondition<User> condition) {
+    public ResponseEntity<PostCondition> post(@RequestBody PostCondition<User, User> condition) {
         return ResponseEntity.ok(condition);
     }
     

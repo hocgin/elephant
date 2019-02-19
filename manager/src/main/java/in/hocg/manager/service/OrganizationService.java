@@ -67,5 +67,5 @@ public interface OrganizationService extends IService<Organization> {
      * @param condition
      * @return
      */
-    IPage<Organization> page(PostCondition<QueryOrganization> condition);
+    IPage<Organization> page(PostCondition<Organization, QueryOrganization> condition);
 }

@@ -200,7 +200,7 @@ CREATE TABLE `staff`
   `id`          CHAR(32)
   COMMENT 'UUID',
   --
-  `account`     VARCHAR(10)  NOT NULL
+  `account`     VARCHAR(32)  NOT NULL
     UNIQUE
   COMMENT '关联账号ID',
   `nickname`    VARCHAR(10)  NOT NULL

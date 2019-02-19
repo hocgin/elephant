@@ -39,7 +39,7 @@ public class RoleController extends BaseController {
      * @return
      */
     @PostMapping("/_paging")
-    public ResponseEntity paging(@RequestBody PostCondition<RolePageQuery> condition) {
+    public ResponseEntity paging(@RequestBody PostCondition<Role, RolePageQuery> condition) {
         IPage<Role> all = roleService.page(condition);
         return Result.success(all)
                 .asResponseEntity();

@@ -5,14 +5,26 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import in.hocg.manager.model.po.AddStaff;
+import in.hocg.manager.model.po.QueryStaff;
+import in.hocg.manager.model.po.UpdateStaff;
+import in.hocg.manager.service.AccountService;
 import in.hocg.manager.service.StaffService;
 import in.hocg.mybatis.basic.BaseService;
 import in.hocg.mybatis.basic.condition.GetCondition;
 import in.hocg.mybatis.basic.condition.PostCondition;
+import in.hocg.mybatis.module.ModelConstant;
+import in.hocg.mybatis.module.user.entity.Account;
 import in.hocg.mybatis.module.user.entity.Staff;
 import in.hocg.mybatis.module.user.mapper.StaffMapper;
+import in.hocg.scaffold.lang.exception.NotRollbackException;
+import in.hocg.scaffold.lang.exception.ResponseException;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.io.Serializable;
+import java.util.Objects;
 import java.util.Optional;
 
 /**
@@ -24,8 +36,10 @@ import java.util.Optional;
  * @since 2018-10-19
  */
 @Service
+@AllArgsConstructor
 public class StaffServiceImpl extends BaseService<StaffMapper, Staff>
         implements StaffService {
+    private final AccountService accountService;
     
     @Override
     public Optional<Staff> findByUsername(String username) {
@@ -43,10 +57,19 @@ public class StaffServiceImpl extends BaseService<StaffMapper, Staff>
     }
     
     @Override
-    public IPage<Staff> page(PostCondition condition) {
+    public IPage<Staff> page(PostCondition<QueryStaff, Staff> condition) {
         Page<Staff> page = condition.page();
-        QueryWrapper<Staff> wrapper = condition.wrapper();
-        return baseMapper.selectPage(page, wrapper);
+        QueryStaff values = condition.getCondition();
+        LambdaQueryWrapper<Staff> queryWrapper = condition.wrapper().lambda();
+        if (Objects.nonNull(values)) {
+            Optional<String> username = Optional.ofNullable(values.getUsername());
+            Optional<String> nickname = Optional.ofNullable(values.getNickname());
+            Optional<Integer> gender = Optional.ofNullable(values.getGender());
+            queryWrapper.eq(gender.isPresent(), Staff::getGender, gender.orElse(null))
+                    .like(username.isPresent(), Staff::getUsername, username.orElse(null))
+                    .like(nickname.isPresent(), Staff::getNickname, nickname.orElse(null));
+        }
+        return baseMapper.selectPage(page, queryWrapper);
     }
     
     @Override
@@ -54,5 +77,36 @@ public class StaffServiceImpl extends BaseService<StaffMapper, Staff>
         Optional<Staff> staff = findByUsername(username);
         return staff.map(Staff::getAccount)
                 .orElse(null);
+    }
+    
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public boolean updateOneById(Serializable id, UpdateStaff parameter) throws NotRollbackException {
+        Staff staff = baseMapper.selectById(id);
+        if (Objects.isNull(staff)) {
+            throw ResponseException.wrap(NotRollbackException.class, "员工不存在");
+        }
+        parameter.copyNotNullTo(staff);
+        baseMapper.updateById(staff);
+        return true;
+    }
+    
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public boolean insert(AddStaff parameter) throws NotRollbackException {
+        String username = parameter.getUsername();
+        LambdaQueryWrapper<Staff> wrapper = new LambdaQueryWrapper<Staff>()
+                .eq(Staff::getUsername, username);
+        if (baseMapper.selectCount(wrapper) > 0) {
+            throw ResponseException.wrap(NotRollbackException.class, "用户名已经存在");
+        }
+        
+        Account account = new Account();
+        account.setType(ModelConstant.ACCOUNT_TYPE_STAFF);
+        accountService.save(account);
+        Staff staff = parameter.copyTo(Staff.class);
+        staff.setAccount(account.getId());
+        int change = baseMapper.insert(staff);
+        return change > 0;
     }
 }
