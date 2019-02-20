@@ -27,7 +27,7 @@ import java.util.List;
  * @author hocgin
  */
 @RestController
-@RequestMapping("/resource")
+@RequestMapping("/api/v1/resource")
 @AllArgsConstructor
 public class ResourceController extends BaseController {
     private final ResourceService resourceService;

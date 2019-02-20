@@ -24,7 +24,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/staff")
+@RequestMapping("/api/v1/staff")
 @AllArgsConstructor
 public class StaffController extends BaseController {
     private final StaffService staffService;

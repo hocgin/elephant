@@ -26,7 +26,7 @@ import org.springframework.web.bind.annotation.*;
  * @author hocgin
  */
 @RestController
-@RequestMapping("/roles")
+@RequestMapping("/api/v1/roles")
 @AllArgsConstructor
 public class RoleController extends BaseController {
     private final RoleService roleService;
