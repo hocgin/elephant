@@ -11,7 +11,6 @@ import in.hocg.scaffold.lang.exception.NotRollbackException;
 import in.hocg.scaffold.support.aspect.log.ILog;
 import in.hocg.scaffold.support.basis.BaseController;
 import in.hocg.scaffold.support.http.Result;
-import in.hocg.scaffold.support.json.annotation.JSON;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -40,14 +39,13 @@ public class AccountController extends BaseController {
     private final AccountService accountService;
     private final ResourceService resourceService;
     
-    @ILog("获取账号信息")
+    @ILog("获取当前账号信息")
     @GetMapping
-    @JSON(className = Staff.class, exclude = "password")
-    public ResponseEntity current(Principal principal) {
+    public ResponseEntity getCurrentAccount(Principal principal) {
         String username = principal.getName();
         Optional<Staff> staff = staffService.findByUsername(username);
         if (staff.isPresent()) {
-            return Result.success(staff.get())
+            return Result.success(staff.get().setPassword(null))
                     .asResponseEntity();
         }
         return Result.error("未找到该用户")
