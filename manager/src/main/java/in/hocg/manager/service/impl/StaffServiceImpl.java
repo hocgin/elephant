@@ -9,6 +9,7 @@ import in.hocg.manager.model.po.AddStaff;
 import in.hocg.manager.model.po.QueryStaff;
 import in.hocg.manager.model.po.UpdateStaff;
 import in.hocg.manager.service.AccountService;
+import in.hocg.manager.service.RoleStaffService;
 import in.hocg.manager.service.StaffService;
 import in.hocg.mybatis.basic.BaseService;
 import in.hocg.mybatis.basic.condition.GetCondition;
@@ -43,6 +44,7 @@ import java.util.Optional;
 public class StaffServiceImpl extends BaseService<StaffMapper, Staff>
         implements StaffService {
     private final AccountService accountService;
+    private final RoleStaffService roleStaffService;
     
     @Override
     public Optional<Staff> findByUsername(String username) {
@@ -84,13 +86,21 @@ public class StaffServiceImpl extends BaseService<StaffMapper, Staff>
     
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public boolean updateOneById(Serializable id, UpdateStaff parameter) throws NotRollbackException {
+    public boolean updateOneById(String id, UpdateStaff parameter) throws NotRollbackException {
         Staff staff = baseMapper.selectById(id);
         if (Objects.isNull(staff)) {
             throw ResponseException.wrap(NotRollbackException.class, "员工不存在");
         }
         parameter.copyNotNullTo(staff);
         baseMapper.updateById(staff);
+    
+        String[] rolesId = parameter.getRoles();
+        if (Objects.nonNull(rolesId)) {
+            // 清除旧角色
+            roleStaffService.deleteAllWithStaffId(id);
+            // 设置新角色
+            roleStaffService.insertRoles(id, rolesId);
+        }
         return true;
     }
     

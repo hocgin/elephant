@@ -1,5 +1,6 @@
 package in.hocg.scaffold.support;
 
+import in.hocg.scaffold.annotation.ProdAndTest;
 import in.hocg.scaffold.support.http.Result;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.Ordered;
@@ -22,7 +23,7 @@ import javax.servlet.http.HttpServletRequest;
  * email: hocgin@gmail.com
  * 全局异常处理
  */
-//@ProdAndTest
+@ProdAndTest
 @Slf4j
 @ControllerAdvice
 @Order(Ordered.HIGHEST_PRECEDENCE)

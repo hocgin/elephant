@@ -51,17 +51,17 @@ public class Staff extends DefaultModel<Staff> {
      * 过期状态 [过期状态,正常状态]
      */
     @TableField(NON_EXPIRED)
-    private boolean nonExpired;
+    private Boolean nonExpired;
     /**
      * 锁定状态 [过期状态,正常状态]
      */
     @TableField(NON_LOCKED)
-    private boolean nonLocked;
+    private Boolean nonLocked;
     /**
      * 启用状态 [关闭状态,开启状态]
      */
     @TableField(ENABLED)
-    private boolean enabled;
+    private Boolean enabled;
     
     
     public static final String ACCOUNT = "account";

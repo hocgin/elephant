@@ -22,5 +22,5 @@ public class Account extends SuperModel<Account> {
     /**
      * 账号类型 [用户, 员工]
      */
-    private int type;
+    private Integer type;
 }

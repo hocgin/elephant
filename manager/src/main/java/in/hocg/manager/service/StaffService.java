@@ -11,7 +11,6 @@ import in.hocg.mybatis.module.user.entity.Staff;
 import in.hocg.scaffold.lang.exception.NotRollbackException;
 import in.hocg.scaffold.support.basis.parameter.IDs;
 
-import java.io.Serializable;
 import java.util.Optional;
 
 /**
@@ -65,7 +64,7 @@ public interface StaffService extends IService<Staff> {
      * @param parameter
      * @return
      */
-    boolean updateOneById(Serializable id, UpdateStaff parameter) throws NotRollbackException;
+    boolean updateOneById(String id, UpdateStaff parameter) throws NotRollbackException;
     
     /**
      * 新增

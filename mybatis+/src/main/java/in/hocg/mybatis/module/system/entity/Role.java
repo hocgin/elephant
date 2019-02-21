@@ -38,6 +38,12 @@ public class Role extends DefaultModel<Role> {
      */
     @TableField(DESCRIPTION)
     private String description;
+    
+    /**
+     * 开启状态 (0:未启用; 1:启用)
+     */
+    @TableField(ENABLED)
+    private Boolean enabled = true;
 
 
     public static final String MARK = "mark";
@@ -45,5 +51,7 @@ public class Role extends DefaultModel<Role> {
     public static final String NAME = "name";
 
     public static final String DESCRIPTION = "description";
+    
+    public static final String ENABLED = "enabled";
 
 }

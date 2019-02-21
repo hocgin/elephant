@@ -17,5 +17,9 @@ public class UpdateStaff implements BaseParameter {
     private String username;
     private String password;
     private String avatarUri;
-    private int gender;
+    private Integer gender;
+    private String[] roles;
+    private Boolean enabled;
+    private Boolean nonExpired;
+    private Boolean nonLocked;
 }

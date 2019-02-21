@@ -33,7 +33,7 @@ import java.util.Optional;
  */
 @Slf4j
 @Controller
-@RequestMapping("/account")
+@RequestMapping("/api/v1/account")
 @AllArgsConstructor
 public class AccountController extends BaseController {
     private final StaffService staffService;

@@ -3,7 +3,9 @@ package in.hocg.manager.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 import in.hocg.mybatis.module.system.entity.Role;
 import in.hocg.mybatis.module.system.entity.RoleStaff;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.io.Serializable;
 import java.util.Collection;
 
 /**
@@ -22,4 +24,17 @@ public interface RoleStaffService extends IService<RoleStaff> {
      * @return
      */
     Collection<Role> findByAllRoleUseStaffId(String id);
+    
+    /**
+     * 移除该员工所有角色关联
+     * @param id
+     */
+    int deleteAllWithStaffId(Serializable id);
+    
+    /**
+     * 对该员工新增角色
+     * @param staffId
+     * @param rolesId
+     */
+    void insertRoles(String staffId, String[] rolesId);
 }
