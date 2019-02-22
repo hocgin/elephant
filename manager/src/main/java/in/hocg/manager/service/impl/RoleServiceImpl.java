@@ -148,4 +148,9 @@ public class RoleServiceImpl extends BaseService<RoleMapper, Role>
                 .setResources(resources)
                 .fill(role);
     }
+    
+    @Override
+    public Collection<Role> findAll() {
+        return baseMapper.selectList(new QueryWrapper<>());
+    }
 }

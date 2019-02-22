@@ -12,15 +12,21 @@ VALUE ('id0admin', 'admin', 'admin', '{noop}admin', NOW());
   |  |-资源管理
   |-系统配置
   |  |-数据字典
+  |-账号管理
+  |  |-员工管理
+  |  |-用户管理
  */
 -- @formatter:off
 INSERT INTO `resource` (`id`, `lft`, `rgt`, `name`, `description`, `type`, `method`, `path`, `icon`, `enabled`)
-VALUE ('root', 1, 12, '根', '描述信息', 0, 'GET', '/', 'warning', 1),
+VALUE ('root', 1, 18, '根', '描述信息', 0, 'GET', '/', 'warning', 1),
         ('resource2', 2, 7, '访问控制', '描述信息', 0, 'GET', '/access', 'warning', 1),
           ('resource3', 3, 4, '资源管理', '描述信息', 1, 'GET', '/access/resource', 'warning', 1),
           ('resource4', 5, 6, '角色管理', '描述信息', 1, 'GET', '/access/role', 'warning', 1),
         ('resource5', 8, 11, '系统配置', '描述信息', 0, 'GET', '/system', 'warning', 1),
-          ('resource6', 9, 10, '数据字典', '描述信息', 1, 'GET', '/system/dictionary', 'warning', 1)
+          ('resource6', 9, 10, '数据字典', '描述信息', 1, 'GET', '/system/dictionary', 'warning', 1),
+        ('resource7', 12, 17, '账号管理', '描述信息', 0, 'GET', '/account', 'warning', 1),
+          ('resource8', 13, 14, '员工管理', '描述信息', 1, 'GET', '/account/staff', 'warning', 1),
+          ('resource9', 15, 16, '用户管理', '描述信息', 1, 'GET', '/account/user', 'warning', 1)
 ;
 -- @formatter:on
 
@@ -28,12 +34,16 @@ INSERT INTO `role` (`id`, `mark`, `name`, `description`, `created_at`)
 VALUE ('role1', 'ADMIN', '管理员', '系统管理员角色', now());
 
 INSERT INTO `role_resource` (`id`, `role_id`, `resource_id`)
-VALUE ('role_resource6', 'role1', 'root'),
-      ('role_resource1', 'role1', 'resource2'),
-      ('role_resource2', 'role1', 'resource3'),
-      ('role_resource3', 'role1', 'resource4'),
-      ('role_resource4', 'role1', 'resource5'),
-      ('role_resource5', 'role1', 'resource6');
+VALUE ('role_resource1', 'role1', 'root'),
+      ('role_resource2', 'role1', 'resource2'),
+      ('role_resource3', 'role1', 'resource3'),
+      ('role_resource4', 'role1', 'resource4'),
+      ('role_resource5', 'role1', 'resource5'),
+      ('role_resource6', 'role1', 'resource6'),
+      ('role_resource7', 'role1', 'resource7'),
+      ('role_resource8', 'role1', 'resource8'),
+      ('role_resource9', 'role1', 'resource9')
+;
 
 INSERT INTO `role_staff` (`id`, `role_id`, `staff_id`)
 VALUE ('id0admin', 'role1', 'id0admin');

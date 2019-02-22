@@ -2,6 +2,7 @@ package in.hocg.manager.support.security;
 
 import in.hocg.scaffold.util.ResponseKit;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.web.filter.GenericFilterBean;
 
 import javax.servlet.FilterChain;
@@ -22,10 +23,12 @@ public class FixBugFilter extends GenericFilterBean {
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
         try {
             chain.doFilter(request, response);
-        } catch (Exception e) {
+        } catch (BadCredentialsException e) {
             log.debug("用户 TOKEN 失效");
             // 处理 Token 失效问题
             ResponseKit.utf8(response).setStatus(401);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 }

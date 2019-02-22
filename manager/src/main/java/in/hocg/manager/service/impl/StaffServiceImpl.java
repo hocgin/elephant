@@ -138,7 +138,7 @@ public class StaffServiceImpl extends BaseService<StaffMapper, Staff>
         Collection<Role> roles = roleStaffService.findByAllRoleUseStaffId(id);
         return (StaffDetailVO) new StaffDetailVO()
                 .setRoles(roles)
-                .fill(roles);
+                .fill(result);
     }
     
 }

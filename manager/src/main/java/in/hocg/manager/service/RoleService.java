@@ -12,6 +12,7 @@ import in.hocg.scaffold.lang.exception.NotRollbackException;
 import in.hocg.scaffold.lang.exception.RollbackException;
 
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.Set;
 
 /**
@@ -69,4 +70,10 @@ public interface RoleService extends IService<Role> {
      * @return
      */
     RoleDetailVO selectOneById(Serializable id);
+    
+    /**
+     * 查询所有
+     * @return
+     */
+    Collection<Role> findAll();
 }

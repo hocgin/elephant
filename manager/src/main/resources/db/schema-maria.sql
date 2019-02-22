@@ -298,6 +298,9 @@ CREATE TABLE `role`
   COMMENT '角色名称',
   `description` VARCHAR(10) NOT NULL DEFAULT ''
   COMMENT '角色描述',
+  `enabled`     TINYINT(1) UNSIGNED
+    DEFAULT '1'
+  COMMENT '启用状态 [关闭状态,开启状态]',
   --
   `created_at`  DATETIME(6) NOT NULL
   COMMENT '创建时间',

@@ -19,6 +19,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Collection;
+
 /**
  * Created by hocgin on 2018/12/16.
  * email: hocgin@gmail.com
@@ -41,6 +43,13 @@ public class RoleController extends BaseController {
     @PostMapping("/_paging")
     public ResponseEntity paging(@RequestBody PostCondition<Role, RolePageQuery> condition) {
         IPage<Role> all = roleService.page(condition);
+        return Result.success(all)
+                .asResponseEntity();
+    }
+    
+    @GetMapping
+    public ResponseEntity findAll() {
+        Collection<Role> all = roleService.findAll();
         return Result.success(all)
                 .asResponseEntity();
     }
