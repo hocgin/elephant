@@ -8,6 +8,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import in.hocg.manager.model.po.AddStaff;
 import in.hocg.manager.model.po.QueryStaff;
 import in.hocg.manager.model.po.UpdateStaff;
+import in.hocg.manager.model.vo.StaffDetailVO;
 import in.hocg.manager.service.AccountService;
 import in.hocg.manager.service.RoleStaffService;
 import in.hocg.manager.service.StaffService;
@@ -15,6 +16,7 @@ import in.hocg.mybatis.basic.BaseService;
 import in.hocg.mybatis.basic.condition.GetCondition;
 import in.hocg.mybatis.basic.condition.PostCondition;
 import in.hocg.mybatis.module.ModelConstant;
+import in.hocg.mybatis.module.system.entity.Role;
 import in.hocg.mybatis.module.user.entity.Account;
 import in.hocg.mybatis.module.user.entity.Staff;
 import in.hocg.mybatis.module.user.mapper.StaffMapper;
@@ -26,10 +28,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.io.Serializable;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
 
 /**
  * <p>
@@ -131,4 +130,15 @@ public class StaffServiceImpl extends BaseService<StaffMapper, Staff>
         // 删除员工表信息
         return baseMapper.deleteBatchIds(ids) > 0;
     }
+    
+    @Override
+    public StaffDetailVO selectById(String id) {
+        Staff result = baseMapper.selectById(id);
+        result.setPassword(null);
+        Collection<Role> roles = roleStaffService.findByAllRoleUseStaffId(id);
+        return (StaffDetailVO) new StaffDetailVO()
+                .setRoles(roles)
+                .fill(roles);
+    }
+    
 }

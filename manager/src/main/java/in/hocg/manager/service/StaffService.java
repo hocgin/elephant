@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import in.hocg.manager.model.po.AddStaff;
 import in.hocg.manager.model.po.QueryStaff;
 import in.hocg.manager.model.po.UpdateStaff;
+import in.hocg.manager.model.vo.StaffDetailVO;
 import in.hocg.mybatis.basic.condition.GetCondition;
 import in.hocg.mybatis.basic.condition.PostCondition;
 import in.hocg.mybatis.module.user.entity.Staff;
@@ -79,4 +80,11 @@ public interface StaffService extends IService<Staff> {
      * @return
      */
     boolean deletes(IDs parameter);
+    
+    /**
+     * 查看详情
+     * @param id
+     * @return
+     */
+    StaffDetailVO selectById(String id);
 }

@@ -11,6 +11,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import in.hocg.manager.model.po.AddStaff;
 import in.hocg.manager.model.po.QueryStaff;
 import in.hocg.manager.model.po.UpdateStaff;
+import in.hocg.manager.model.vo.StaffDetailVO;
 import in.hocg.manager.service.StaffService;
 import in.hocg.mybatis.basic.condition.PostCondition;
 import in.hocg.mybatis.module.user.entity.Staff;
@@ -51,8 +52,7 @@ public class StaffController extends BaseController {
      */
     @GetMapping("/{id}")
     public ResponseEntity detail(@PathVariable("id") String id) {
-        Staff result = staffService.getById(id);
-        result.setPassword(null);
+        StaffDetailVO result = staffService.selectById(id);
         return Result.success(result).asResponseEntity();
     }
     
