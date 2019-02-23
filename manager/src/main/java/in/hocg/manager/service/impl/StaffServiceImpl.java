@@ -7,6 +7,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import in.hocg.manager.model.po.AddStaff;
 import in.hocg.manager.model.po.QueryStaff;
+import in.hocg.manager.model.po.UpdateCurrentAccountBody;
 import in.hocg.manager.model.po.UpdateStaff;
 import in.hocg.manager.model.vo.StaffDetailVO;
 import in.hocg.manager.service.AccountService;
@@ -139,6 +140,19 @@ public class StaffServiceImpl extends BaseService<StaffMapper, Staff>
         return (StaffDetailVO) new StaffDetailVO()
                 .setRoles(roles)
                 .fill(result);
+    }
+    
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void updateCurrentAccount(String username,
+                                     UpdateCurrentAccountBody body) throws NotRollbackException {
+        Optional<Staff> staff = findByUsername(username);
+        if (!staff.isPresent()) {
+            throw ResponseException.wrap(NotRollbackException.class, "账号不存在");
+        }
+        Staff target = staff.get();
+        body.copyNotNullTo(target);
+        baseMapper.updateById(target);
     }
     
 }

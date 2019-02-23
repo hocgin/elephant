@@ -26,7 +26,7 @@ public class FileControllerTest extends SupperControllerTest {
     
     @Test
     public void upload() {
-        log.debug("upload");
+        log.debug("uploads");
     }
     
     @Test

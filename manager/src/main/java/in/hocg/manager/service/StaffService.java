@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
 import in.hocg.manager.model.po.AddStaff;
 import in.hocg.manager.model.po.QueryStaff;
+import in.hocg.manager.model.po.UpdateCurrentAccountBody;
 import in.hocg.manager.model.po.UpdateStaff;
 import in.hocg.manager.model.vo.StaffDetailVO;
 import in.hocg.mybatis.basic.condition.GetCondition;
@@ -87,4 +88,11 @@ public interface StaffService extends IService<Staff> {
      * @return
      */
     StaffDetailVO selectById(String id);
+    
+    /**
+     * 更新当前账号信息
+     * @param name
+     * @return
+     */
+    void updateCurrentAccount(String name, UpdateCurrentAccountBody body) throws NotRollbackException;
 }

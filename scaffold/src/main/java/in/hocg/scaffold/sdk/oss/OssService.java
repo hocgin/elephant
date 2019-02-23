@@ -5,8 +5,8 @@ import com.google.common.io.Files;
 import in.hocg.scaffold.sdk.oss.result.QueryResult;
 import in.hocg.util.LangKit;
 import lombok.SneakyThrows;
-import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.Optional;
 
@@ -26,9 +26,9 @@ public interface OssService {
      * @return
      */
     @SneakyThrows
-    default String filename(MultipartFile file) {
-        String prefix = Files.getFileExtension(file.getOriginalFilename());
-        HashCode hashCode = LangKit.md5(file.getBytes());
+    default String filename(File file) {
+        String prefix = Files.getFileExtension(file.getName());
+        HashCode hashCode = LangKit.md5(Files.toByteArray(file));
         return String.format("%s.%s", hashCode.toString(), prefix);
     }
     
@@ -40,7 +40,7 @@ public interface OssService {
      * @return 保存的文件名
      * @throws IOException
      */
-    String checkIfNoUpload(MultipartFile file, String space) throws IOException;
+    String checkIfNoUpload(File file, String space) throws IOException;
     
     /**
      * 上传文件
@@ -50,7 +50,7 @@ public interface OssService {
      * @return 保存的文件名
      * @throws IOException
      */
-    String upload(MultipartFile file, String space) throws IOException;
+    String upload(File file, String space) throws IOException;
     
     
     /**

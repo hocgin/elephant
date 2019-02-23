@@ -1,6 +1,7 @@
 package in.hocg.manager.controller;
 
 import in.hocg.manager.model.po.Login;
+import in.hocg.manager.model.po.UpdateCurrentAccountBody;
 import in.hocg.manager.service.AccountService;
 import in.hocg.manager.service.ResourceService;
 import in.hocg.manager.service.StaffService;
@@ -15,10 +16,7 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 import java.util.Collection;
@@ -49,6 +47,16 @@ public class AccountController extends BaseController {
                     .asResponseEntity();
         }
         return Result.error("未找到该用户")
+                .asResponseEntity();
+    }
+    
+    @ILog("更新个人信息")
+    @PutMapping
+    public ResponseEntity updateCurrentAccount(@RequestBody UpdateCurrentAccountBody body,
+                                               Principal principal) throws NotRollbackException {
+        String name = principal.getName();
+        staffService.updateCurrentAccount(name, body);
+        return Result.success()
                 .asResponseEntity();
     }
     

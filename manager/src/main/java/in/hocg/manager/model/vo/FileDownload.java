@@ -18,4 +18,5 @@ public class FileDownload implements Serializable {
     private InputStream stream;
     private Long size;
     private String originName;
+    private String storageName;
 }

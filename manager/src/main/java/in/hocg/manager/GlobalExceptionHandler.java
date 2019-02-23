@@ -1,5 +1,6 @@
-package in.hocg.scaffold.support;
+package in.hocg.manager;
 
+import in.hocg.manager.exception.StorageFileNotFoundException;
 import in.hocg.scaffold.annotation.ProdAndTest;
 import in.hocg.scaffold.support.http.Result;
 import lombok.extern.slf4j.Slf4j;
@@ -40,6 +41,8 @@ public class GlobalExceptionHandler {
         if (e instanceof BindException) {
             FieldError fieldError = ((BindException) e).getFieldError();
             message = fieldError.getDefaultMessage();
+        } else if (e instanceof StorageFileNotFoundException) {
+            return ResponseEntity.notFound().build();
         } else {
             message = e.getLocalizedMessage();
         }

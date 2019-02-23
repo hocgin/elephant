@@ -1,18 +1,10 @@
 package in.hocg.scaffold.support.http.wrapper;
 
 import lombok.SneakyThrows;
-import org.springframework.util.ObjectUtils;
-import org.springframework.util.StreamUtils;
 import org.springframework.web.util.HtmlUtils;
 
-import javax.servlet.ReadListener;
-import javax.servlet.ServletInputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletRequestWrapper;
-import java.io.BufferedReader;
-import java.io.ByteArrayInputStream;
-import java.io.InputStreamReader;
-import java.util.Objects;
 
 /**
  * Created by hocgin on 2018/12/27.
@@ -29,45 +21,8 @@ public class RequestWrapper extends HttpServletRequestWrapper {
     @SneakyThrows
     public RequestWrapper(HttpServletRequest request) {
         super(request);
-        this.body = StreamUtils.copyToByteArray(request.getInputStream());
     }
     
-    @Override
-    public BufferedReader getReader() {
-        ServletInputStream inputStream = getInputStream();
-        return Objects.isNull(inputStream) ? null : new BufferedReader(new InputStreamReader(inputStream));
-    }
-    
-    @Override
-    public ServletInputStream getInputStream() {
-        if (ObjectUtils.isEmpty(body)) {
-            return null;
-        }
-        final ByteArrayInputStream bais = new ByteArrayInputStream(body);
-        return new ServletInputStream() {
-            
-            @Override
-            public boolean isFinished() {
-                return false;
-            }
-            
-            @Override
-            public boolean isReady() {
-                return false;
-            }
-            
-            @Override
-            @SuppressWarnings("EmptyMethod")
-            public void setReadListener(ReadListener readListener) {
-            
-            }
-            
-            @Override
-            public int read() {
-                return bais.read();
-            }
-        };
-    }
     
     @Override
     public String[] getParameterValues(String name) {

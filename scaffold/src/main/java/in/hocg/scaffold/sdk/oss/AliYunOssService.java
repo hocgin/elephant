@@ -5,9 +5,10 @@ import com.aliyun.oss.model.OSSObject;
 import in.hocg.scaffold.sdk.oss.result.QueryResult;
 import lombok.AllArgsConstructor;
 import lombok.NonNull;
-import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.util.Optional;
 
 /**
@@ -22,7 +23,7 @@ public class AliYunOssService implements OssService {
     private final OSSClient ossClient;
     
     @Override
-    public String checkIfNoUpload(@NonNull MultipartFile file, String space) throws IOException {
+    public String checkIfNoUpload(@NonNull File file, String space) throws IOException {
         String filename = filename(file);
         if (!isExist(space, filename)) {
             return upload(file, space);
@@ -31,9 +32,9 @@ public class AliYunOssService implements OssService {
     }
     
     @Override
-    public String upload(@NonNull MultipartFile file, String space) throws IOException {
+    public String upload(@NonNull File file, String space) throws IOException {
         String filename = filename(file);
-        ossClient.putObject(space, filename, file.getInputStream());
+        ossClient.putObject(space, filename, Files.newInputStream(file.toPath()));
         return filename;
     }
     

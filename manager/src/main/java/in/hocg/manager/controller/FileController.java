@@ -1,8 +1,9 @@
 package in.hocg.manager.controller;
 
+import in.hocg.manager.exception.StorageFileNotFoundException;
+import in.hocg.manager.model.po.UploadBase64Body;
 import in.hocg.manager.model.vo.FileDownload;
-import in.hocg.manager.service.FileRecordService;
-import in.hocg.manager.service.FileService;
+import in.hocg.manager.service.StorageService;
 import in.hocg.scaffold.support.aspect.log.ILog;
 import in.hocg.scaffold.support.basis.BaseController;
 import in.hocg.scaffold.support.http.Result;
@@ -20,6 +21,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.net.URI;
 import java.security.Principal;
+import java.util.Collection;
 import java.util.Map;
 import java.util.Optional;
 
@@ -31,30 +33,61 @@ import java.util.Optional;
  */
 @Slf4j
 @Controller
-@RequestMapping
+@RequestMapping("/api/v1/files")
 @AllArgsConstructor
 public class FileController extends BaseController {
-    private final FileService fileService;
+    private final StorageService storageService;
     
     /**
      * 文件上传接口
-     * POST /upload
+     * POST /uploads
      *
-     * @param files     上传文件[]
+     * @param files     请求Body
      * @param principal 需要登陆
      * @return
      */
     @ILog
-    @PostMapping("/upload")
-    public ResponseEntity upload(@RequestParam("file") MultipartFile[] files,
-                                 Principal principal) throws Exception {
+    @PostMapping("/uploads")
+    public ResponseEntity uploads(@RequestParam("file") MultipartFile[] files,
+                                  Principal principal) throws Exception {
         String username = principal.getName();
         if (Strings.isBlank(username)) {
             return Result.error("请先进行登陆")
                     .asResponseEntity();
         }
-        Map<String, String> ids = fileService.upload(files, username);
-        return Result.success(Result.success(ids))
+        Map<String, String> ids = storageService.uploads(files, username);
+        return Result.success(ids)
+                .asResponseEntity();
+    }
+    
+    
+    @PostMapping("/upload")
+    public ResponseEntity upload(@RequestParam("file") MultipartFile file,
+                                 Principal principal) throws Exception {
+        String id = storageService.upload(file, principal);
+        return Result.success(id)
+                .asResponseEntity();
+    }
+    
+    /**
+     * base 64 编码 上传文件
+     *
+     * @param body      请求体
+     * @param principal
+     * @return
+     * @throws Exception
+     */
+    @ILog
+    @PostMapping("/upload/base64")
+    public ResponseEntity uploadBase64(@RequestBody UploadBase64Body body,
+                                       Principal principal) throws Exception {
+        String username = principal.getName();
+        if (Strings.isBlank(username)) {
+            return Result.error("请先进行登陆")
+                    .asResponseEntity();
+        }
+        Collection<String> ids = storageService.uploadBase64(body.getBase64s(), username);
+        return Result.success(ids)
                 .asResponseEntity();
     }
     
@@ -70,17 +103,13 @@ public class FileController extends BaseController {
     @GetMapping("/download/{id}")
     public ResponseEntity download(@PathVariable String id,
                                    @RequestParam(value = "rename", required = false) String rename,
-                                   Principal principal) {
+                                   Principal principal) throws StorageFileNotFoundException {
         String username = principal.getName();
         
         if (Strings.isBlank(username)) {
             return ResponseEntity.notFound().build();
         }
-        Optional<FileDownload> fileDownload = fileService.download(id, username);
-        if (!fileDownload.isPresent()) {
-            return ResponseEntity.notFound().build();
-        }
-        FileDownload download = fileDownload.get();
+        FileDownload download = storageService.download(id, principal);
         return ResponseEntity
                 .ok()
                 .headers(new HttpHeaders() {{
@@ -108,16 +137,9 @@ public class FileController extends BaseController {
     public ResponseEntity image(@PathVariable String id,
                                 @RequestParam(value = "width", required = false) Integer width,
                                 @RequestParam(value = "height", required = false) Integer height,
-                                Principal principal) {
-        String username = principal.getName();
-        if (Strings.isBlank(username)) {
-            return ResponseEntity.notFound().build();
-        }
-        Optional<String> optionalStorageName = fileService.preview(id, username);
-        if (!optionalStorageName.isPresent()) {
-            return ResponseEntity.notFound().build();
-        }
-        String url = buildImageURL(optionalStorageName.get(), width, height);
+                                Principal principal) throws StorageFileNotFoundException {
+        String optionalStorageName = storageService.preview(id, principal);
+        String url = buildImageURL(optionalStorageName, width, height);
         return ResponseEntity.status(HttpStatus.FOUND)
                 .location(URI.create(url))
                 .build();
@@ -142,6 +164,5 @@ public class FileController extends BaseController {
         
         return String.format("%s/%s%s%s%s", HOST, uri, w.isEmpty() && h.isEmpty() ? "" : "?x-oss-process=image/resize", w, h);
     }
-    
     
 }

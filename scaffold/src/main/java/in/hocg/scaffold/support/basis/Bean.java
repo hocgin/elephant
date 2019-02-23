@@ -34,7 +34,7 @@ public interface Bean extends Serializable {
      * @return
      */
     default <T> T copyNotNullTo(T target) {
-        BeanUtils.copyProperties(this, target, ClassKit.getNullValueFields(target));
+        BeanUtils.copyProperties(this, target, ClassKit.getNullValueFields(this));
         return target;
     }
     
