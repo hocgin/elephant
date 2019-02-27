@@ -1,10 +1,12 @@
 package in.hocg.manager.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import in.hocg.manager.model.po.AddRole;
+import in.hocg.manager.model.po.RolePageQuery;
 import in.hocg.manager.model.po.UpdateRole;
 import in.hocg.manager.model.vo.RoleDetailVO;
 import in.hocg.manager.service.ResourceService;
@@ -23,12 +25,15 @@ import in.hocg.scaffold.lang.exception.NotRollbackException;
 import in.hocg.scaffold.lang.exception.ResponseException;
 import in.hocg.scaffold.lang.exception.RollbackException;
 import lombok.AllArgsConstructor;
+import org.apache.logging.log4j.util.Strings;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.validation.Valid;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -57,10 +62,12 @@ public class RoleServiceImpl extends BaseService<RoleMapper, Role>
     }
     
     @Override
-    public IPage<Role> page(PostCondition condition) {
-        Page<Role> page = condition.page();
-        QueryWrapper<Role> wrapper = condition.wrapper();
-        return baseMapper.selectPage(page, wrapper);
+    public IPage<Role> page(PostCondition<RolePageQuery, Role> condition) {
+        @Valid RolePageQuery conditions = condition.getCondition();
+        Wrapper<Role> wrapper = condition.wrapper().lambda()
+                .like(!Strings.isBlank(conditions.getName()), Role::getName, conditions.getName())
+                .eq(Objects.nonNull(conditions.getStatus()), Role::getEnabled, conditions.getStatus());
+        return baseMapper.selectPage(condition.page(), wrapper);
     }
     
     @Override

@@ -13,5 +13,6 @@ import lombok.ToString;
 @Data
 @ToString
 public class RolePageQuery implements BaseParameter {
-
+    private String name;
+    private Boolean status;
 }

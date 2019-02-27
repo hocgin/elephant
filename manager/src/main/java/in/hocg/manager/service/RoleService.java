@@ -3,6 +3,7 @@ package in.hocg.manager.service;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
 import in.hocg.manager.model.po.AddRole;
+import in.hocg.manager.model.po.RolePageQuery;
 import in.hocg.manager.model.po.UpdateRole;
 import in.hocg.manager.model.vo.RoleDetailVO;
 import in.hocg.mybatis.basic.condition.GetCondition;
@@ -39,7 +40,7 @@ public interface RoleService extends IService<Role> {
      * @param condition
      * @return
      */
-    IPage<Role> page(PostCondition condition);
+    IPage<Role> page(PostCondition<RolePageQuery, Role> condition);
     
     /**
      * 删除角色
