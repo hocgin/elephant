@@ -5,7 +5,6 @@ import in.hocg.scaffold.support.http.Result;
 import in.hocg.scaffold.support.http.wrapper.RequestWrapper;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -25,15 +24,8 @@ import java.util.Map;
  */
 @RestController
 @AllArgsConstructor
-public class MainController extends BaseController {
+public class IndexController extends BaseController {
     private final RequestMappingHandlerMapping handlerMapping;
-    
-    
-    @GetMapping("/user/resources")
-    @ResponseBody
-    public ResponseEntity resource() {
-        return ResponseEntity.ok("");
-    }
     
     @ResponseBody
     @RequestMapping("/urls")

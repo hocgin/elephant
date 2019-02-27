@@ -9,11 +9,7 @@ import lombok.experimental.Accessors;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 
-import java.util.*;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
-
-import static java.util.Comparator.comparingInt;
+import java.util.Collection;
 
 /**
  * @author hocgin
@@ -34,46 +30,5 @@ public class RoleDetailVO extends Role
     public Object fill(Object object) {
         BeanUtils.copyProperties(object, this);
         return this;
-    }
-    
-    public static void main(String[] args) {
-        /**
-         *          [1, 12]
-         *    [2, 5]       [6, 11]
-         *    [3, 4]    [7, 8][9, 10]
-         */
-        int[][] arr = {
-                {2, 5},
-                {1, 12},
-                {6, 11},
-                {3, 4},
-                {7, 8},
-                {9, 10}
-        };
-        jj(arr);
-    }
-    
-    public static void jj(int[][] args) {
-        List<int[]> sorted = Stream.of(args)
-                .sorted(comparingInt(a -> a[0]))
-                .collect(Collectors.toList());
-        
-        ArrayList<int[]> reverse = new ArrayList<>(sorted);
-        Collections.reverse(reverse);
-    
-        for (int[] ints1 : reverse) {
-            int lft = ints1[0];
-            int rgt = ints1[1];
-            for (int[] ints : reverse) {
-                if (lft > ints[0] && rgt < ints[1]) {
-                    log.debug("{}选择{}为父节点", Arrays.toString(ints1), Arrays.toString(ints));
-                    break;
-                }
-            }
-        }
-        
-        System.out.println(sorted);
-    
-        return;
     }
 }

@@ -13,9 +13,8 @@ import lombok.experimental.Accessors;
  * @author hocgin
  * @since 2018-12-23
  */
-@Getter
 @ToString
-@Builder
+@Data
 @EqualsAndHashCode(callSuper = true)
 @Accessors(chain = true)
 public class AccessLog extends DefaultModel<AccessLog> {

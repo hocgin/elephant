@@ -58,8 +58,7 @@ public interface Bean extends Serializable {
      * @return
      */
     default Object fill(Object object) {
-        throw new UnsupportedOperationException("请实现它");
+        BeanUtils.copyProperties(object, this);
+        return this;
     }
-    
-    
 }

@@ -53,18 +53,17 @@ public class LogRepositoryImpl implements LogRepository {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String username = ((String) authentication.getPrincipal());
         Optional<Staff> staff = staffService.findByUsername(username);
-        AccessLog log = AccessLog.builder()
-                .ip(ip)
-                .level(level.name())
-                .uri(request.getRequestURI())
-                .usageTime(timeMillis)
-                .method(request.getMethod())
-                .parameters(objectMapper.writeValueAsString(request.getParameterMap()))
-                .visitor(staff.map(Staff::getId).orElse("Unknown"))
-                .mapping(mapping)
-                .response(objectMapper.writeValueAsString(result))
-                .message(message)
-                .build();
+        AccessLog log = new AccessLog()
+                .setIp(ip)
+                .setLevel(level.name())
+                .setUri(request.getRequestURI())
+                .setUsageTime(timeMillis)
+                .setMethod(request.getMethod())
+                .setParameters(objectMapper.writeValueAsString(request.getParameterMap()))
+                .setVisitor(staff.map(Staff::getId).orElse("Unknown"))
+                .setMapping(mapping)
+                .setResponse(objectMapper.writeValueAsString(result))
+                .setMessage(message);
         accessLogService.save(log);
     }
 }

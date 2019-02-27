@@ -18,7 +18,7 @@ VALUE ('id0admin', 'admin', 'admin', '{noop}admin', NOW());
  */
 -- @formatter:off
 INSERT INTO `resource` (`id`, `lft`, `rgt`, `name`, `description`, `type`, `method`, `path`, `icon`, `enabled`)
-VALUE ('root', 1, 18, '根', '描述信息', 0, 'GET', '/', 'warning', 1),
+VALUE ('root', 1, 22, '根', '描述信息', 0, 'GET', '/', 'warning', 1),
         ('resource2', 2, 7, '访问控制', '描述信息', 0, 'GET', '/access', 'warning', 1),
           ('resource3', 3, 4, '资源管理', '描述信息', 1, 'GET', '/access/resource', 'warning', 1),
           ('resource4', 5, 6, '角色管理', '描述信息', 1, 'GET', '/access/role', 'warning', 1),
@@ -26,7 +26,9 @@ VALUE ('root', 1, 18, '根', '描述信息', 0, 'GET', '/', 'warning', 1),
           ('resource6', 9, 10, '数据字典', '描述信息', 1, 'GET', '/system/dictionary', 'warning', 1),
         ('resource7', 12, 17, '账号管理', '描述信息', 0, 'GET', '/account', 'warning', 1),
           ('resource8', 13, 14, '员工管理', '描述信息', 1, 'GET', '/account/staff', 'warning', 1),
-          ('resource9', 15, 16, '用户管理', '描述信息', 1, 'GET', '/account/user', 'warning', 1)
+          ('resource9', 15, 16, '用户管理', '描述信息', 1, 'GET', '/account/user', 'warning', 1),
+        ('resource10', 18, 21, '日志监控', '描述信息', 0, 'GET', '/log', 'warning', 1),
+          ('resource11', 19, 20, '访问日志', '描述信息', 1, 'GET', '/log/access-log', 'warning', 1)
 ;
 -- @formatter:on
 
@@ -42,7 +44,9 @@ VALUE ('role_resource1', 'role1', 'root'),
       ('role_resource6', 'role1', 'resource6'),
       ('role_resource7', 'role1', 'resource7'),
       ('role_resource8', 'role1', 'resource8'),
-      ('role_resource9', 'role1', 'resource9')
+      ('role_resource9', 'role1', 'resource9'),
+      ('role_resource10', 'role1', 'resource10'),
+      ('role_resource11', 'role1', 'resource11')
 ;
 
 INSERT INTO `role_staff` (`id`, `role_id`, `staff_id`)
