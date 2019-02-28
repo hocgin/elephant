@@ -72,6 +72,8 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                 .antMatchers(HttpMethod.GET, "/error").permitAll()
                 .antMatchers(HttpMethod.POST, "/api/v1/account/login").permitAll()
+                .antMatchers(HttpMethod.GET, "/api/v1/account/menus").permitAll()
+                .antMatchers(HttpMethod.GET, "/api/v1/account").permitAll()
                 .antMatchers(HttpMethod.GET, "/api/v1/files/image/**").permitAll()
                 .antMatchers(HttpMethod.GET, "/api/v1/files/download/**").permitAll()
                 .anyRequest().access("@rbacService.hasPermission(request, authentication)")

@@ -33,7 +33,7 @@ public class Resource extends NodeModel<Resource> {
     @TableField(DESCRIPTION)
     private String description;
     /**
-     * 菜单类型(0:菜单;1:按钮)
+     * 菜单类型(0:菜单;1:链接)
      */
     @TableField(TYPE)
     private Integer type;

@@ -2,19 +2,17 @@ package in.hocg.manager.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import in.hocg.manager.model.po.StaffInsert;
-import in.hocg.manager.model.po.StaffBody;
 import in.hocg.manager.model.po.CurrentAccountUpdate;
+import in.hocg.manager.model.po.StaffBody;
+import in.hocg.manager.model.po.StaffInsert;
 import in.hocg.manager.model.po.StaffUpdate;
 import in.hocg.manager.model.vo.StaffDetailVO;
 import in.hocg.manager.service.AccountService;
 import in.hocg.manager.service.RoleStaffService;
 import in.hocg.manager.service.StaffService;
 import in.hocg.mybatis.basic.BaseService;
-import in.hocg.mybatis.basic.condition.GetCondition;
 import in.hocg.mybatis.basic.condition.PostCondition;
 import in.hocg.mybatis.module.ModelConstant;
 import in.hocg.mybatis.module.system.entity.Role;
@@ -25,11 +23,15 @@ import in.hocg.scaffold.lang.exception.NotRollbackException;
 import in.hocg.scaffold.lang.exception.ResponseException;
 import in.hocg.scaffold.support.basis.parameter.IDs;
 import lombok.AllArgsConstructor;
+import org.mapstruct.ap.internal.util.Collections;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.io.Serializable;
-import java.util.*;
+import java.util.Collection;
+import java.util.Objects;
+import java.util.Optional;
+import java.util.Set;
 
 /**
  * <p>
@@ -45,6 +47,7 @@ public class StaffServiceImpl extends BaseService<StaffMapper, Staff>
         implements StaffService {
     private final AccountService accountService;
     private final RoleStaffService roleStaffService;
+    private final PasswordEncoder passwordEncoder;
     
     @Override
     public Optional<Staff> findByUsername(String username) {
@@ -52,13 +55,6 @@ public class StaffServiceImpl extends BaseService<StaffMapper, Staff>
                 .eq(Staff::getUsername, username);
         Staff userStaff = baseMapper.selectOne(queryWrapper);
         return Optional.ofNullable(userStaff);
-    }
-    
-    @Override
-    public IPage<Staff> paging(GetCondition condition) {
-        Page<Staff> page = condition.page();
-        QueryWrapper<Staff> wrapper = condition.wrapper();
-        return baseMapper.selectPage(page, wrapper);
     }
     
     @Override
@@ -118,6 +114,7 @@ public class StaffServiceImpl extends BaseService<StaffMapper, Staff>
         account.setType(ModelConstant.ACCOUNT_TYPE_STAFF);
         accountService.save(account);
         Staff staff = parameter.copyTo(Staff.class);
+        staff.setPassword(passwordEncoder.encode(staff.getPassword()));
         staff.setId(account.getId());
         int change = baseMapper.insert(staff);
         return change > 0;
@@ -125,7 +122,7 @@ public class StaffServiceImpl extends BaseService<StaffMapper, Staff>
     
     @Override
     public boolean delete(IDs parameter) {
-        List<Serializable> ids = Arrays.asList(parameter.getId());
+        Set<String> ids = Collections.asSet(parameter.getId());
         // 删除账号表信息
         accountService.removeByIds(ids);
         // 删除员工表信息

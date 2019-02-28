@@ -2,12 +2,11 @@ package in.hocg.manager.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
-import in.hocg.manager.model.po.StaffInsert;
-import in.hocg.manager.model.po.StaffBody;
 import in.hocg.manager.model.po.CurrentAccountUpdate;
+import in.hocg.manager.model.po.StaffBody;
+import in.hocg.manager.model.po.StaffInsert;
 import in.hocg.manager.model.po.StaffUpdate;
 import in.hocg.manager.model.vo.StaffDetailVO;
-import in.hocg.mybatis.basic.condition.GetCondition;
 import in.hocg.mybatis.basic.condition.PostCondition;
 import in.hocg.mybatis.module.user.entity.Staff;
 import in.hocg.scaffold.lang.exception.NotRollbackException;
@@ -33,13 +32,6 @@ public interface StaffService extends IService<Staff> {
      */
     Optional<Staff> findByUsername(String username);
     
-    /**
-     * GET 方式分页查询所有员工
-     *
-     * @param condition
-     * @return
-     */
-    IPage<Staff> paging(GetCondition condition);
     
     /**
      * POST 方式分页查询所有员工

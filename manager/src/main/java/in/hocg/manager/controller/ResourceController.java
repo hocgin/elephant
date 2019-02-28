@@ -33,7 +33,7 @@ public class ResourceController extends BaseController {
     private final ResourceService resourceService;
     
     /**
-     * GET /resource
+     * GET /resources
      * 查找所有菜单列表
      *
      * @return
@@ -46,7 +46,7 @@ public class ResourceController extends BaseController {
     }
     
     /**
-     * GET /resource/:id
+     * GET /resources/:id
      * 查询详细信息
      *
      * @return
@@ -59,7 +59,7 @@ public class ResourceController extends BaseController {
     }
     
     /**
-     * POST /resource
+     * POST /resources
      * 新增
      * > 1: 添加兄弟节点
      * > 0 or 其他: 添加子节点
@@ -82,7 +82,7 @@ public class ResourceController extends BaseController {
     
     
     /**
-     * DELETE /resource
+     * DELETE /resources
      * 批量删除
      * > 1: 删除指定节点, 并移动其子节点到该节点所在层级
      * > 0 or 其他: 删除选中节点及其子节点
@@ -104,7 +104,7 @@ public class ResourceController extends BaseController {
     }
     
     /**
-     * PUT /resource
+     * PUT /resources
      * 更新资源
      *
      * @param id        唯一

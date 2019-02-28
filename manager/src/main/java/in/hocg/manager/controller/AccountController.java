@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.*;
 import java.security.Principal;
 import java.util.Collection;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 /**
  * Created by hocgin on 2018/12/30.
@@ -84,9 +85,10 @@ public class AccountController extends BaseController {
      */
     @ILog("获取菜单列表")
     @GetMapping("/menus")
-    public ResponseEntity getMenus(Principal principal) throws NotRollbackException {
+    public ResponseEntity getMenus(Principal principal) {
         String username = principal.getName();
-        Collection<Resource> tree = resourceService.selectMultiByUsername(username);
+        Collection<Resource> tree = resourceService.selectMultiByUsername(username).stream()
+                .filter((r)->r.getType() == 0).collect(Collectors.toList());
         return Result.success(tree)
                 .asResponseEntity();
     }
