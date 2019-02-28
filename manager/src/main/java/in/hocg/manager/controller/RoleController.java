@@ -42,14 +42,18 @@ public class RoleController extends BaseController {
      */
     @PostMapping("/_paging")
     public ResponseEntity paging(@RequestBody PostCondition<RolePageQuery, Role> condition) {
-        IPage<Role> all = roleService.page(condition);
+        IPage<Role> all = roleService.paging(condition);
         return Result.success(all)
                 .asResponseEntity();
     }
     
+    /**
+     * 查找所有
+     * @return
+     */
     @GetMapping
-    public ResponseEntity findAll() {
-        Collection<Role> all = roleService.findAll();
+    public ResponseEntity selectAll() {
+        Collection<Role> all = roleService.selectAll();
         return Result.success(all)
                 .asResponseEntity();
     }
@@ -64,7 +68,7 @@ public class RoleController extends BaseController {
      */
     @DeleteMapping
     public ResponseEntity delete(@Validated @RequestBody IDs parameter) throws RollbackException {
-        boolean result = roleService.removeMultiByIds(Collections.asSet(parameter.getId()));
+        boolean result = roleService.deletes(Collections.asSet(parameter.getId()));
         return Result.success(result)
                 .asResponseEntity();
     }
@@ -78,7 +82,7 @@ public class RoleController extends BaseController {
      */
     @PostMapping
     public ResponseEntity insert(@Validated @RequestBody AddRole parameter) throws NotRollbackException {
-        boolean result = roleService.insertOneRole(parameter);
+        boolean result = roleService.insert(parameter);
         return Result.success(result)
                 .asResponseEntity();
     }
@@ -92,7 +96,7 @@ public class RoleController extends BaseController {
      */
     @GetMapping("/{id}")
     public ResponseEntity detail(@PathVariable("id") String id) {
-        RoleDetailVO result = roleService.selectOneById(id);
+        RoleDetailVO result = roleService.detail(id);
         return Result.success(result)
                 .asResponseEntity();
     }
@@ -107,7 +111,7 @@ public class RoleController extends BaseController {
     @PutMapping("/{id}")
     public ResponseEntity update(@PathVariable("id") String id,
                                  @Validated @RequestBody UpdateRole parameter) throws NotRollbackException {
-        boolean result = roleService.updateOneById(id, parameter);
+        boolean result = roleService.update(id, parameter);
         return Result.success(result)
                 .asResponseEntity();
     }

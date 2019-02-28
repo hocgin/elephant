@@ -4,22 +4,21 @@ import in.hocg.scaffold.support.basis.parameter.BaseParameter;
 import lombok.Data;
 import lombok.ToString;
 
-import javax.validation.constraints.NotBlank;
-
 /**
- * Created by hocgin on 2019/1/1.
+ * Created by hocgin on 2019/1/15.
  * email: hocgin@gmail.com
  *
  * @author hocgin
  */
 @Data
 @ToString
-public class IResource implements BaseParameter {
+public class ResourceUpdate implements BaseParameter {
+    
     /**
-     * 关联节点
+     * 父节点ID
      */
-    @NotBlank(message = "请选择关联节点")
-    private String refNode;
+    private String parent;
+    
     /**
      * 菜单名称
      */
@@ -29,7 +28,7 @@ public class IResource implements BaseParameter {
      */
     private String description;
     /**
-     * 菜单类型[目录,按钮,链接]
+     * 菜单类型(0:菜单;1:按钮)
      */
     private Integer type;
     /**
@@ -47,6 +46,5 @@ public class IResource implements BaseParameter {
     /**
      * 是否开启显示(0:未启用; 1:启用)
      */
-    private boolean enabled = true;
-    
+    private Boolean enabled;
 }

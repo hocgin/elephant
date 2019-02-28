@@ -2,18 +2,16 @@ package in.hocg.manager.model.po;
 
 import in.hocg.scaffold.support.basis.parameter.BaseParameter;
 import lombok.Data;
-import lombok.ToString;
 
 /**
- * Created by hocgin on 2018/12/19.
+ * Created by hocgin on 2019/2/23.
  * email: hocgin@gmail.com
  *
  * @author hocgin
  */
 @Data
-@ToString
-public class QueryStaff implements BaseParameter {
-    private String username;
+public class CurrentAccountUpdate implements BaseParameter {
+    private String avatar;
     private String nickname;
     private Integer gender;
 }

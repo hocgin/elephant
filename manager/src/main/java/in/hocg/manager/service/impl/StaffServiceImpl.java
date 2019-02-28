@@ -5,10 +5,10 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import in.hocg.manager.model.po.AddStaff;
-import in.hocg.manager.model.po.QueryStaff;
-import in.hocg.manager.model.po.UpdateCurrentAccountBody;
-import in.hocg.manager.model.po.UpdateStaff;
+import in.hocg.manager.model.po.StaffInsert;
+import in.hocg.manager.model.po.StaffBody;
+import in.hocg.manager.model.po.CurrentAccountUpdate;
+import in.hocg.manager.model.po.StaffUpdate;
 import in.hocg.manager.model.vo.StaffDetailVO;
 import in.hocg.manager.service.AccountService;
 import in.hocg.manager.service.RoleStaffService;
@@ -55,16 +55,16 @@ public class StaffServiceImpl extends BaseService<StaffMapper, Staff>
     }
     
     @Override
-    public IPage<Staff> page(GetCondition condition) {
+    public IPage<Staff> paging(GetCondition condition) {
         Page<Staff> page = condition.page();
         QueryWrapper<Staff> wrapper = condition.wrapper();
         return baseMapper.selectPage(page, wrapper);
     }
     
     @Override
-    public IPage<Staff> page(PostCondition<QueryStaff, Staff> condition) {
+    public IPage<Staff> paging(PostCondition<StaffBody, Staff> condition) {
         Page<Staff> page = condition.page();
-        QueryStaff values = condition.getCondition();
+        StaffBody values = condition.getCondition();
         LambdaQueryWrapper<Staff> queryWrapper = condition.wrapper().lambda();
         if (Objects.nonNull(values)) {
             Optional<String> username = Optional.ofNullable(values.getUsername());
@@ -86,7 +86,7 @@ public class StaffServiceImpl extends BaseService<StaffMapper, Staff>
     
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public boolean updateOneById(String id, UpdateStaff parameter) throws NotRollbackException {
+    public boolean update(String id, StaffUpdate parameter) throws NotRollbackException {
         Staff staff = baseMapper.selectById(id);
         if (Objects.isNull(staff)) {
             throw ResponseException.wrap(NotRollbackException.class, "员工不存在");
@@ -106,7 +106,7 @@ public class StaffServiceImpl extends BaseService<StaffMapper, Staff>
     
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public boolean insert(AddStaff parameter) throws NotRollbackException {
+    public boolean insert(StaffInsert parameter) throws NotRollbackException {
         String username = parameter.getUsername();
         LambdaQueryWrapper<Staff> wrapper = new LambdaQueryWrapper<Staff>()
                 .eq(Staff::getUsername, username);
@@ -124,7 +124,7 @@ public class StaffServiceImpl extends BaseService<StaffMapper, Staff>
     }
     
     @Override
-    public boolean deletes(IDs parameter) {
+    public boolean delete(IDs parameter) {
         List<Serializable> ids = Arrays.asList(parameter.getId());
         // 删除账号表信息
         accountService.removeByIds(ids);
@@ -133,7 +133,7 @@ public class StaffServiceImpl extends BaseService<StaffMapper, Staff>
     }
     
     @Override
-    public StaffDetailVO selectById(String id) {
+    public StaffDetailVO detail(String id) {
         Staff result = baseMapper.selectById(id);
         result.setPassword(null);
         Collection<Role> roles = roleStaffService.findByAllRoleUseStaffId(id);
@@ -145,7 +145,7 @@ public class StaffServiceImpl extends BaseService<StaffMapper, Staff>
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void updateCurrentAccount(String username,
-                                     UpdateCurrentAccountBody body) throws NotRollbackException {
+                                     CurrentAccountUpdate body) throws NotRollbackException {
         Optional<Staff> staff = findByUsername(username);
         if (!staff.isPresent()) {
             throw ResponseException.wrap(NotRollbackException.class, "账号不存在");

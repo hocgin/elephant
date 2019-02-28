@@ -12,7 +12,7 @@ import lombok.ToString;
  */
 @Data
 @ToString
-public class AddStaff implements BaseParameter {
+public class StaffInsert implements BaseParameter {
     private String nickname;
     private String username;
     private String password;

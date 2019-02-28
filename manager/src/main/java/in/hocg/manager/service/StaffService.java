@@ -2,10 +2,10 @@ package in.hocg.manager.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
-import in.hocg.manager.model.po.AddStaff;
-import in.hocg.manager.model.po.QueryStaff;
-import in.hocg.manager.model.po.UpdateCurrentAccountBody;
-import in.hocg.manager.model.po.UpdateStaff;
+import in.hocg.manager.model.po.StaffInsert;
+import in.hocg.manager.model.po.StaffBody;
+import in.hocg.manager.model.po.CurrentAccountUpdate;
+import in.hocg.manager.model.po.StaffUpdate;
 import in.hocg.manager.model.vo.StaffDetailVO;
 import in.hocg.mybatis.basic.condition.GetCondition;
 import in.hocg.mybatis.basic.condition.PostCondition;
@@ -39,7 +39,7 @@ public interface StaffService extends IService<Staff> {
      * @param condition
      * @return
      */
-    IPage<Staff> page(GetCondition condition);
+    IPage<Staff> paging(GetCondition condition);
     
     /**
      * POST 方式分页查询所有员工
@@ -47,7 +47,7 @@ public interface StaffService extends IService<Staff> {
      * @param condition
      * @return
      */
-    IPage<Staff> page(PostCondition<QueryStaff, Staff> condition);
+    IPage<Staff> paging(PostCondition<StaffBody, Staff> condition);
     
     /**
      * 返回员工的账号ID
@@ -66,33 +66,33 @@ public interface StaffService extends IService<Staff> {
      * @param parameter
      * @return
      */
-    boolean updateOneById(String id, UpdateStaff parameter) throws NotRollbackException;
+    boolean update(String id, StaffUpdate parameter) throws NotRollbackException;
     
     /**
      * 新增
      * @param parameter
      * @return
      */
-    boolean insert(AddStaff parameter) throws NotRollbackException;
+    boolean insert(StaffInsert parameter) throws NotRollbackException;
     
     /**
      * 删除
      * @param parameter
      * @return
      */
-    boolean deletes(IDs parameter);
+    boolean delete(IDs parameter);
     
     /**
      * 查看详情
      * @param id
      * @return
      */
-    StaffDetailVO selectById(String id);
+    StaffDetailVO detail(String id);
     
     /**
      * 更新当前账号信息
      * @param name
      * @return
      */
-    void updateCurrentAccount(String name, UpdateCurrentAccountBody body) throws NotRollbackException;
+    void updateCurrentAccount(String name, CurrentAccountUpdate body) throws NotRollbackException;
 }

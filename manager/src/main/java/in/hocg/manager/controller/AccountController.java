@@ -1,7 +1,7 @@
 package in.hocg.manager.controller;
 
 import in.hocg.manager.model.po.Login;
-import in.hocg.manager.model.po.UpdateCurrentAccountBody;
+import in.hocg.manager.model.po.CurrentAccountUpdate;
 import in.hocg.manager.service.AccountService;
 import in.hocg.manager.service.ResourceService;
 import in.hocg.manager.service.StaffService;
@@ -52,7 +52,7 @@ public class AccountController extends BaseController {
     
     @ILog("更新个人信息")
     @PutMapping
-    public ResponseEntity updateCurrentAccount(@RequestBody UpdateCurrentAccountBody body,
+    public ResponseEntity updateCurrentAccount(@RequestBody CurrentAccountUpdate body,
                                                Principal principal) throws NotRollbackException {
         String name = principal.getName();
         staffService.updateCurrentAccount(name, body);
@@ -84,7 +84,7 @@ public class AccountController extends BaseController {
      */
     @ILog("获取菜单列表")
     @GetMapping("/menus")
-    public ResponseEntity getMenu(Principal principal) throws NotRollbackException {
+    public ResponseEntity getMenus(Principal principal) throws NotRollbackException {
         String username = principal.getName();
         Collection<Resource> tree = resourceService.selectMultiByUsername(username);
         return Result.success(tree)

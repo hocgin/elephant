@@ -1,10 +1,8 @@
 package in.hocg.manager.service.impl;
 
-import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import in.hocg.manager.model.po.AddRole;
 import in.hocg.manager.model.po.RolePageQuery;
 import in.hocg.manager.model.po.UpdateRole;
@@ -14,7 +12,6 @@ import in.hocg.manager.service.RoleResourceService;
 import in.hocg.manager.service.RoleService;
 import in.hocg.manager.service.RoleStaffService;
 import in.hocg.mybatis.basic.BaseService;
-import in.hocg.mybatis.basic.condition.GetCondition;
 import in.hocg.mybatis.basic.condition.PostCondition;
 import in.hocg.mybatis.module.system.entity.Resource;
 import in.hocg.mybatis.module.system.entity.Role;
@@ -29,7 +26,6 @@ import org.apache.logging.log4j.util.Strings;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.validation.Valid;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.List;
@@ -55,24 +51,19 @@ public class RoleServiceImpl extends BaseService<RoleMapper, Role>
     private final RoleStaffService roleStaffService;
     
     @Override
-    public IPage<Role> page(GetCondition condition) {
-        Page<Role> page = condition.page();
-        QueryWrapper<Role> wrapper = condition.wrapper();
-        return baseMapper.selectPage(page, wrapper);
-    }
-    
-    @Override
-    public IPage<Role> page(PostCondition<RolePageQuery, Role> condition) {
-        @Valid RolePageQuery conditions = condition.getCondition();
-        Wrapper<Role> wrapper = condition.wrapper().lambda()
-                .like(!Strings.isBlank(conditions.getName()), Role::getName, conditions.getName())
-                .eq(Objects.nonNull(conditions.getStatus()), Role::getEnabled, conditions.getStatus());
+    public IPage<Role> paging(PostCondition<RolePageQuery, Role> condition) {
+        RolePageQuery values = condition.getCondition();
+        LambdaQueryWrapper<Role> wrapper = condition.wrapper().lambda();
+        if (Objects.nonNull(values)) {
+            wrapper.like(Strings.isNotBlank(values.getName()), Role::getName, values.getName())
+                    .eq(Objects.nonNull(values.getStatus()), Role::getEnabled, values.getStatus());
+        }
         return baseMapper.selectPage(condition.page(), wrapper);
     }
     
     @Override
     @Transactional(rollbackFor = Exception.class, noRollbackFor = NotRollbackException.class)
-    public boolean removeMultiByIds(Set<Serializable> ids) throws RollbackException {
+    public boolean deletes(Set<Serializable> ids) throws RollbackException {
         for (Serializable id : ids) {
             LambdaQueryWrapper<RoleStaff> wrapper = new LambdaQueryWrapper<RoleStaff>().eq(RoleStaff::getRoleId, id);
             // 判断是否有用户分配到该角色
@@ -89,7 +80,7 @@ public class RoleServiceImpl extends BaseService<RoleMapper, Role>
     
     @Override
     @Transactional(rollbackFor = Exception.class, noRollbackFor = NotRollbackException.class)
-    public boolean insertOneRole(AddRole parameter) throws NotRollbackException {
+    public boolean insert(AddRole parameter) throws NotRollbackException {
         // 检查 名称 or 标识 是否存在
         Integer count = lambdaQuery().eq(Role::getMark, parameter.getMark())
                 .or().eq(Role::getName, parameter.getName()).count();
@@ -97,7 +88,7 @@ public class RoleServiceImpl extends BaseService<RoleMapper, Role>
             throw ResponseException.wrap(NotRollbackException.class, "该角色已经存在");
         }
         Role role = parameter.copyTo(new Role());
-    
+        
         baseMapper.insert(role);
         
         // 回溯路径
@@ -118,7 +109,7 @@ public class RoleServiceImpl extends BaseService<RoleMapper, Role>
     
     @Override
     @Transactional(rollbackFor = Exception.class, noRollbackFor = NotRollbackException.class)
-    public boolean updateOneById(Serializable id, UpdateRole parameter) throws NotRollbackException {
+    public boolean update(Serializable id, UpdateRole parameter) throws NotRollbackException {
         Role role = getById(id);
         if (role == null) {
             throw ResponseException.wrap(NotRollbackException.class, "角色不存在");
@@ -136,7 +127,7 @@ public class RoleServiceImpl extends BaseService<RoleMapper, Role>
                         .setResourceId(resourceId))
                 .collect(Collectors.toList());
         baseMapper.updateById(role);
-    
+        
         LambdaQueryWrapper<RoleResource> queryWrapper = new LambdaQueryWrapper<RoleResource>()
                 .eq(RoleResource::getRoleId, id);
         roleResourceService.remove(queryWrapper);
@@ -146,7 +137,7 @@ public class RoleServiceImpl extends BaseService<RoleMapper, Role>
     
     
     @Override
-    public RoleDetailVO selectOneById(Serializable id) {
+    public RoleDetailVO detail(Serializable id) {
         Role role = baseMapper.selectById(id);
         // 关联资源列表
         List<Resource> resources = roleResourceService.selectMultiResourceByRoleId(id);
@@ -157,7 +148,7 @@ public class RoleServiceImpl extends BaseService<RoleMapper, Role>
     }
     
     @Override
-    public Collection<Role> findAll() {
+    public Collection<Role> selectAll() {
         return baseMapper.selectList(new QueryWrapper<>());
     }
 }

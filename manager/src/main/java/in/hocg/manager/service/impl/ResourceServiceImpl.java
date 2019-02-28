@@ -1,8 +1,8 @@
 package in.hocg.manager.service.impl;
 
 import com.alibaba.druid.util.StringUtils;
-import in.hocg.manager.model.po.IResource;
-import in.hocg.manager.model.po.UResource;
+import in.hocg.manager.model.po.ResourceInsert;
+import in.hocg.manager.model.po.ResourceUpdate;
 import in.hocg.manager.service.ResourceService;
 import in.hocg.mybatis.basic.BaseService;
 import in.hocg.mybatis.basic.model.NodeModel;
@@ -13,7 +13,9 @@ import in.hocg.mybatis.module.system.mapper.ResourceMapper;
 import in.hocg.scaffold.lang.exception.NotRollbackException;
 import in.hocg.scaffold.lang.exception.ResponseException;
 import in.hocg.scaffold.lang.exception.RollbackException;
+import in.hocg.scaffold.support.basis.parameter.IDs;
 import in.hocg.util.LangKit;
+import org.mapstruct.ap.internal.util.Collections;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,6 +23,7 @@ import java.io.Serializable;
 import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 /**
  * <p>
@@ -56,7 +59,7 @@ public class ResourceServiceImpl extends BaseService<ResourceMapper, Resource>
     
     @Override
     @Transactional(rollbackFor = Exception.class, noRollbackFor = NotRollbackException.class)
-    public boolean deleteMultiNode(Collection<Serializable> ids) {
+    public boolean deleteMultiNode(Collection<String> ids) {
         for (Serializable id : ids) {
             baseMapper.deleteOneNode(id);
         }
@@ -65,7 +68,7 @@ public class ResourceServiceImpl extends BaseService<ResourceMapper, Resource>
     
     @Override
     @Transactional(rollbackFor = Exception.class, noRollbackFor = NotRollbackException.class)
-    public boolean deleteMultiNodes(Collection<Serializable> ids) {
+    public boolean deleteMultiNodes(Collection<String> ids) {
         for (Serializable id : ids) {
             baseMapper.deleteMultiNode(id);
         }
@@ -75,9 +78,9 @@ public class ResourceServiceImpl extends BaseService<ResourceMapper, Resource>
     
     @Override
     @Transactional(rollbackFor = Exception.class, noRollbackFor = NotRollbackException.class)
-    public boolean insertOneNode(IResource body,
-                                 int mode,
-                                 String refNode) throws NotRollbackException {
+    public boolean insert(ResourceInsert body,
+                          int mode) throws NotRollbackException {
+        String refNode = body.getRefNode();
         Resource entity = body.copyTo(Resource.class);
         boolean result;
         if (mode == 1) {
@@ -93,7 +96,8 @@ public class ResourceServiceImpl extends BaseService<ResourceMapper, Resource>
     
     @Override
     @Transactional(rollbackFor = Exception.class, noRollbackFor = NotRollbackException.class)
-    public boolean deleteMultiNode(int mode, List<Serializable> ids) throws NotRollbackException {
+    public boolean delete(int mode, IDs body) throws NotRollbackException {
+        Set<String> ids = Collections.asSet(body.getId());
         boolean result;
         if (mode == 1) {
             result = deleteMultiNode(ids);
@@ -103,6 +107,11 @@ public class ResourceServiceImpl extends BaseService<ResourceMapper, Resource>
             throw ResponseException.wrap(NotRollbackException.class, "参数 mode 错误");
         }
         return result;
+    }
+    
+    @Override
+    public Resource detail(String id) {
+        return baseMapper.selectById(id);
     }
     
     @Override
@@ -166,7 +175,7 @@ public class ResourceServiceImpl extends BaseService<ResourceMapper, Resource>
     
     @Override
     @Transactional(rollbackFor = Exception.class, noRollbackFor = NotRollbackException.class)
-    public boolean updateOneById(String id, UResource parameter) throws RollbackException {
+    public boolean update(String id, ResourceUpdate parameter) throws RollbackException {
         Resource resource = baseMapper.selectById(id);
         if (resource == null) {
             throw ResponseException.wrap(RollbackException.class, "未找到资源");

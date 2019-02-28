@@ -1,14 +1,14 @@
 package in.hocg.manager.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import in.hocg.manager.model.po.IResource;
-import in.hocg.manager.model.po.UResource;
+import in.hocg.manager.model.po.ResourceInsert;
+import in.hocg.manager.model.po.ResourceUpdate;
 import in.hocg.mybatis.module.system.entity.Resource;
 import in.hocg.scaffold.lang.exception.NotRollbackException;
 import in.hocg.scaffold.lang.exception.RollbackException;
+import in.hocg.scaffold.support.basis.parameter.IDs;
 import lombok.NonNull;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.io.Serializable;
 import java.util.Collection;
@@ -56,7 +56,7 @@ public interface ResourceService extends IService<Resource> {
      * @param ids
      * @return
      */
-    boolean deleteMultiNode(@NonNull Collection<Serializable> ids);
+    boolean deleteMultiNode(@NonNull Collection<String> ids);
     
     /**
      * 删除指定节点及其子节点
@@ -64,19 +64,19 @@ public interface ResourceService extends IService<Resource> {
      * @param ids
      * @return
      */
-    boolean deleteMultiNodes(@NonNull Collection<Serializable> ids);
+    boolean deleteMultiNodes(@NonNull Collection<String> ids);
     
     /**
      * 按指定模式添加一个节点
      *
      * @param body    节点
      * @param mode    模式[子节点, 兄弟节点]
-     * @param refNode
      * @return
      * @throws NotRollbackException
      */
-    boolean insertOneNode(@RequestBody IResource body, @RequestParam(value = "mode", required = false, defaultValue = "0") int mode, String refNode) throws NotRollbackException;
-    
+    @Transactional(rollbackFor = Exception.class, noRollbackFor = NotRollbackException.class)
+    boolean insert(ResourceInsert body,
+                   int mode) throws NotRollbackException;
     /**
      * 在指定节点下, 追加一个子节点
      *
@@ -112,7 +112,8 @@ public interface ResourceService extends IService<Resource> {
      * @param parameter
      * @return
      */
-    boolean updateOneById(String id, UResource parameter) throws NotRollbackException, RollbackException;
+    boolean update(String id, ResourceUpdate parameter) throws NotRollbackException, RollbackException;
+    
     
     /**
      * 根据模式删除节点
@@ -120,9 +121,17 @@ public interface ResourceService extends IService<Resource> {
      * @param mode 模式
      *             1. 删除指定节点, 并移动其子节点到该节点所在层级
      *             0. 删除指定节点及其子节点
-     * @param ids  节点 ID
+     * @param parameter  节点 ID
      * @return
      * @throws NotRollbackException
      */
-    boolean deleteMultiNode(int mode, List<Serializable> ids) throws NotRollbackException;
+    boolean delete(int mode, IDs parameter) throws NotRollbackException;
+    
+    /**
+     * 查看详情
+     * @param id
+     * @return
+     */
+    Resource detail(String id);
+    
 }

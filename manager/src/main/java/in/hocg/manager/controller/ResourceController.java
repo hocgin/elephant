@@ -1,7 +1,7 @@
 package in.hocg.manager.controller;
 
-import in.hocg.manager.model.po.IResource;
-import in.hocg.manager.model.po.UResource;
+import in.hocg.manager.model.po.ResourceInsert;
+import in.hocg.manager.model.po.ResourceUpdate;
 import in.hocg.manager.service.ResourceService;
 import in.hocg.mybatis.basic.constant.DatabaseConstant;
 import in.hocg.mybatis.module.system.entity.Resource;
@@ -52,8 +52,8 @@ public class ResourceController extends BaseController {
      * @return
      */
     @GetMapping("/{id}")
-    public ResponseEntity selectOne(@PathVariable("id") String id) {
-        Resource detail = resourceService.getById(id);
+    public ResponseEntity detail(@PathVariable("id") String id) {
+        Resource detail = resourceService.detail(id);
         return Result.success(detail)
                 .asResponseEntity();
     }
@@ -67,16 +67,15 @@ public class ResourceController extends BaseController {
      * @return
      */
     @PostMapping
-    public ResponseEntity insert(@RequestBody IResource body,
+    public ResponseEntity insert(@RequestBody ResourceInsert body,
                                  @RequestParam(value = "mode", required = false, defaultValue = "0") int mode) throws NotRollbackException {
         String refNode = body.getRefNode();
-        
         // 添加兄弟节点,关联节点不能为根节点
         if (mode == 1 && refNode.contains(DatabaseConstant.DEFAULT_ROOT_NODE_UUID)) {
             return Result.error("仅能有一个根节点")
                     .asResponseEntity();
         }
-        boolean result = resourceService.insertOneNode(body, mode, refNode);
+        boolean result = resourceService.insert(body, mode);
         return Result.result(result)
                 .asResponseEntity();
     }
@@ -99,7 +98,7 @@ public class ResourceController extends BaseController {
             return Result.error("根节点不能被删除")
                     .asResponseEntity();
         }
-        boolean result = resourceService.deleteMultiNode(mode, ids);
+        boolean result = resourceService.delete(mode, parameter);
         return Result.success(result)
                 .asResponseEntity();
     }
@@ -115,13 +114,13 @@ public class ResourceController extends BaseController {
      * @throws NotRollbackException
      */
     @PutMapping("/{id}")
-    public ResponseEntity updateOne(@PathVariable("id") String id,
-                                    @RequestBody UResource parameter) throws RollbackException, NotRollbackException {
+    public ResponseEntity update(@PathVariable("id") String id,
+                                 @RequestBody ResourceUpdate parameter) throws RollbackException, NotRollbackException {
         if (id.contains(DatabaseConstant.DEFAULT_ROOT_NODE_UUID)) {
             return Result.error("根节点不能被修改")
                     .asResponseEntity();
         }
-        boolean result = resourceService.updateOneById(id, parameter);
+        boolean result = resourceService.update(id, parameter);
         return Result.success(result)
                 .asResponseEntity();
     }

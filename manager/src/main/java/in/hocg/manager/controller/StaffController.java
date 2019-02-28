@@ -8,9 +8,9 @@ package in.hocg.manager.controller;
  */
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import in.hocg.manager.model.po.AddStaff;
-import in.hocg.manager.model.po.QueryStaff;
-import in.hocg.manager.model.po.UpdateStaff;
+import in.hocg.manager.model.po.StaffInsert;
+import in.hocg.manager.model.po.StaffBody;
+import in.hocg.manager.model.po.StaffUpdate;
 import in.hocg.manager.model.vo.StaffDetailVO;
 import in.hocg.manager.service.StaffService;
 import in.hocg.mybatis.basic.condition.PostCondition;
@@ -38,8 +38,8 @@ public class StaffController extends BaseController {
      * @return
      */
     @PostMapping("/_paging")
-    public ResponseEntity paging(@RequestBody PostCondition<QueryStaff, Staff> condition) {
-        IPage<Staff> all = staffService.page(condition);
+    public ResponseEntity paging(@RequestBody PostCondition<StaffBody, Staff> condition) {
+        IPage<Staff> all = staffService.paging(condition);
         return Result.success(all).asResponseEntity();
     }
     
@@ -52,7 +52,7 @@ public class StaffController extends BaseController {
      */
     @GetMapping("/{id}")
     public ResponseEntity detail(@PathVariable("id") String id) {
-        StaffDetailVO result = staffService.selectById(id);
+        StaffDetailVO result = staffService.detail(id);
         return Result.success(result).asResponseEntity();
     }
     
@@ -66,7 +66,7 @@ public class StaffController extends BaseController {
      */
     @DeleteMapping
     public ResponseEntity delete(@Validated @RequestBody IDs parameter) {
-        boolean result = staffService.deletes(parameter);
+        boolean result = staffService.delete(parameter);
         return Result.result(result).asResponseEntity();
     }
     
@@ -78,8 +78,8 @@ public class StaffController extends BaseController {
      */
     @PutMapping("/{id}")
     public ResponseEntity update(@PathVariable("id") String id,
-                                 @RequestBody UpdateStaff parameter) throws NotRollbackException {
-        boolean result = staffService.updateOneById(id, parameter);
+                                 @RequestBody StaffUpdate parameter) throws NotRollbackException {
+        boolean result = staffService.update(id, parameter);
         return Result.result(result).asResponseEntity();
     }
     
@@ -91,7 +91,7 @@ public class StaffController extends BaseController {
      * @return
      */
     @PostMapping
-    public ResponseEntity insert(@RequestBody AddStaff parameter) throws NotRollbackException {
+    public ResponseEntity insert(@RequestBody StaffInsert parameter) throws NotRollbackException {
         boolean result = staffService.insert(parameter);
         return Result.result(result).asResponseEntity();
     }
