@@ -1,6 +1,6 @@
 package in.hocg.manager.service.impl;
 
-import com.baomidou.mybatisplus.core.conditions.Wrapper;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import in.hocg.manager.model.po.AccessLogBody;
 import in.hocg.manager.model.po.AccessLogInsert;
@@ -19,6 +19,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.Objects;
+import java.util.Optional;
 
 /**
  * <p>
@@ -34,16 +35,20 @@ public class AccessLogServiceImpl extends BaseService<AccessLogMapper, AccessLog
     
     @Override
     public IPage<AccessLog> paging(PostCondition<AccessLogBody, AccessLog> condition) {
-        AccessLogBody conditions = condition.getCondition();
-        LocalDateTime[] createdAt = conditions.getCreatedAt();
-        String uri = conditions.getUri();
-        String visitor = conditions.getVisitor();
-        Level level = conditions.getLevel();
-        Wrapper<AccessLog> wrapper = condition.wrapper().lambda()
-                .like(Strings.isNotBlank(uri), AccessLog::getUri, uri)
-                .eq(Strings.isNotBlank(visitor), AccessLog::getVisitor, visitor)
-                .eq(Objects.nonNull(level), AccessLog::getLevel, level.name())
-                .between(Objects.nonNull(createdAt), DefaultModel::getCreatedAt, createdAt[0], createdAt[1]);
+        AccessLogBody values = condition.getCondition();
+        LambdaQueryWrapper<AccessLog> wrapper = condition.wrapper().lambda();
+        if (Objects.nonNull(values)) {
+            LocalDateTime[] createdAt = values.getCreatedAt();
+            String uri = values.getUri();
+            String visitor = values.getVisitor();
+            Optional<Level> level = Optional.ofNullable(values.getLevel());
+            wrapper.like(Strings.isNotBlank(uri), AccessLog::getUri, uri)
+                    .eq(Strings.isNotBlank(visitor), AccessLog::getVisitor, visitor)
+                    .eq(level.isPresent(), AccessLog::getLevel, level.orElse(Level.Unknown).name());
+            if (Objects.nonNull(createdAt)) {
+                wrapper.between(DefaultModel::getCreatedAt, createdAt[0], createdAt[1]);
+            }
+        }
         return baseMapper.selectPage(condition.page(), wrapper);
     }
     

@@ -8,5 +8,7 @@ package in.hocg.scaffold.support.aspect.log;
  */
 public enum Level {
     INFO,
-    ERROR
+    ERROR,
+    // 未知
+    Unknown,
 }
