@@ -9,10 +9,16 @@ import in.hocg.manager.model.vo.AccessLogDetailVO;
 import in.hocg.manager.service.AccessLogService;
 import in.hocg.mybatis.basic.BaseService;
 import in.hocg.mybatis.basic.condition.PostCondition;
+import in.hocg.mybatis.basic.model.DefaultModel;
 import in.hocg.mybatis.module.basic.entity.AccessLog;
 import in.hocg.mybatis.module.basic.mapper.AccessLogMapper;
+import in.hocg.scaffold.support.aspect.log.Level;
 import in.hocg.scaffold.support.basis.parameter.IDs;
+import org.apache.logging.log4j.util.Strings;
 import org.springframework.stereotype.Service;
+
+import java.time.LocalDateTime;
+import java.util.Objects;
 
 /**
  * <p>
@@ -29,7 +35,15 @@ public class AccessLogServiceImpl extends BaseService<AccessLogMapper, AccessLog
     @Override
     public IPage<AccessLog> paging(PostCondition<AccessLogBody, AccessLog> condition) {
         AccessLogBody conditions = condition.getCondition();
-        Wrapper<AccessLog> wrapper = condition.wrapper().lambda();
+        LocalDateTime[] createdAt = conditions.getCreatedAt();
+        String uri = conditions.getUri();
+        String visitor = conditions.getVisitor();
+        Level level = conditions.getLevel();
+        Wrapper<AccessLog> wrapper = condition.wrapper().lambda()
+                .like(Strings.isNotBlank(uri), AccessLog::getUri, uri)
+                .eq(Strings.isNotBlank(visitor), AccessLog::getVisitor, visitor)
+                .eq(Objects.nonNull(level), AccessLog::getLevel, level.name())
+                .between(Objects.nonNull(createdAt), DefaultModel::getCreatedAt, createdAt[0], createdAt[1]);
         return baseMapper.selectPage(condition.page(), wrapper);
     }
     

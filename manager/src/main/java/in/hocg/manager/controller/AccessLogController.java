@@ -33,7 +33,7 @@ public class AccessLogController extends BaseController {
     private final AccessLogService accessLogService;
     
     /**
-     * POST /access-log/_search
+     * POST /access-log/_paging
      * 查找所有员工列表
      *
      * @param condition
