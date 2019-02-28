@@ -88,7 +88,9 @@ public class AccountController extends BaseController {
     public ResponseEntity getMenus(Principal principal) {
         String username = principal.getName();
         Collection<Resource> tree = resourceService.selectMultiByUsername(username).stream()
-                .filter((r)->r.getType() == 0).collect(Collectors.toList());
+                .filter((r)->r.getType() == 0)
+                .filter(Resource::getEnabled)
+                .collect(Collectors.toList());
         return Result.success(tree)
                 .asResponseEntity();
     }
