@@ -34,17 +34,14 @@ public class RbacServiceImpl implements RbacService {
         }
         String requestURI = request.getRequestURI();
         String requestMethod = request.getMethod();
-        if ("admin".equals(username)) {
-            return true;
-        }
+        
         // todo: 后续需从缓存中读取
         return resourceService.selectMultiByUsername(username)
                 .parallelStream()
+                .filter(resource -> requestMethod.equalsIgnoreCase(resource.getMethod()))
                 .anyMatch(resource -> {
-                    String method = resource.getMethod();
                     String uri = resource.getPath();
-                    return method.equalsIgnoreCase(requestMethod)
-                            && antPathMatcher.match(uri, requestURI);
+                    return antPathMatcher.match(uri, requestURI);
                 });
     }
     

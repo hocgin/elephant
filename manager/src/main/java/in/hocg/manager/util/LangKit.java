@@ -31,4 +31,13 @@ public class LangKit {
                 .toArray(String[]::new);
     }
     
+    /**
+     * 草鸡管理员
+     * @param username
+     * @return
+     */
+    public static boolean isSupperMan(String username) {
+        return "admin".equals(username);
+    }
+    
 }

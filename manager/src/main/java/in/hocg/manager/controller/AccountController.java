@@ -1,7 +1,7 @@
 package in.hocg.manager.controller;
 
-import in.hocg.manager.model.po.Login;
 import in.hocg.manager.model.po.CurrentAccountUpdate;
+import in.hocg.manager.model.po.Login;
 import in.hocg.manager.service.AccountService;
 import in.hocg.manager.service.ResourceService;
 import in.hocg.manager.service.StaffService;
@@ -87,7 +87,9 @@ public class AccountController extends BaseController {
     @GetMapping("/menus")
     public ResponseEntity getMenus(Principal principal) {
         String username = principal.getName();
-        Collection<Resource> tree = resourceService.selectMultiByUsername(username).stream()
+        
+        Collection<Resource> tree = resourceService.selectMultiByUsername(username)
+                .stream()
                 .filter((r)->r.getType() == 0)
                 .filter(Resource::getEnabled)
                 .collect(Collectors.toList());

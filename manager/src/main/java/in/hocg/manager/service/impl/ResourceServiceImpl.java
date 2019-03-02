@@ -1,6 +1,7 @@
 package in.hocg.manager.service.impl;
 
 import com.alibaba.druid.util.StringUtils;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import in.hocg.manager.model.po.ResourceInsert;
 import in.hocg.manager.model.po.ResourceUpdate;
 import in.hocg.manager.service.ResourceService;
@@ -53,6 +54,9 @@ public class ResourceServiceImpl extends BaseService<ResourceMapper, Resource>
     
     @Override
     public List<Resource> selectMultiByUsername(String username) {
+        if (in.hocg.manager.util.LangKit.isSupperMan(username)) {
+            return baseMapper.selectList(new QueryWrapper<>());
+        }
         return baseMapper.selectMultiByUsername(username);
     }
     
