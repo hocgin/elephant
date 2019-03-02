@@ -258,10 +258,10 @@ CREATE TABLE `resource`
   `description` VARCHAR(10) NOT NULL DEFAULT ''
   COMMENT '菜单描述',
   `type`        INT(1)      NOT NULL
-  COMMENT '菜单类型 [目录,按钮,链接]',
+  COMMENT '菜单类型 [目录,链接]',
   `method`      VARCHAR(6)  NOT NULL
   COMMENT '请求类型 [GET,POST,DELETE,PUT]',
-  `path`        VARCHAR(20) NOT NULL
+  `path`        VARCHAR(100) NOT NULL
   COMMENT 'URI',
   `icon`        VARCHAR(20) NOT NULL
   COMMENT '图标',
