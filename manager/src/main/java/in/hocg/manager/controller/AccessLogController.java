@@ -40,7 +40,7 @@ public class AccessLogController extends BaseController {
      * @param condition
      * @return
      */
-    @ILog("查询日志")
+//    @ILog("查询日志")
     @PostMapping("/_paging")
     public ResponseEntity paging(@RequestBody PostCondition<AccessLogBody, AccessLog> condition) {
         IPage<AccessLog> all = accessLogService.paging(condition);
