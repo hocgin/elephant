@@ -44,7 +44,8 @@ public class AccountController extends BaseController {
         String username = principal.getName();
         Optional<Staff> staff = staffService.findByUsername(username);
         if (staff.isPresent()) {
-            return Result.success(staff.get().setPassword(null))
+            Staff user = staff.get();
+            return Result.success(user.setPassword(null))
                     .asResponseEntity();
         }
         return Result.error("未找到该用户")

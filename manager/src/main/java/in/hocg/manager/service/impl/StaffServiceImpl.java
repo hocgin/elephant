@@ -23,6 +23,7 @@ import in.hocg.scaffold.lang.exception.NotRollbackException;
 import in.hocg.scaffold.lang.exception.ResponseException;
 import in.hocg.scaffold.support.basis.parameter.IDs;
 import lombok.AllArgsConstructor;
+import org.apache.logging.log4j.util.Strings;
 import org.mapstruct.ap.internal.util.Collections;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -53,8 +54,16 @@ public class StaffServiceImpl extends BaseService<StaffMapper, Staff>
     public Optional<Staff> findByUsername(String username) {
         Wrapper<Staff> queryWrapper = new LambdaQueryWrapper<Staff>()
                 .eq(Staff::getUsername, username);
-        Staff userStaff = baseMapper.selectOne(queryWrapper);
-        return Optional.ofNullable(userStaff);
+        Optional<Staff> optionalStaff = Optional.ofNullable(baseMapper.selectOne(queryWrapper));
+        optionalStaff.ifPresent((staff)->{
+            String avatar = staff.getAvatar();
+            if (Strings.isNotBlank(
+                    avatar)) {
+                // todo 用文件服务器替换
+                staff.setAvatar(String.format("http://127.0.0.1:8080/images/%s", avatar));
+            }
+        });
+        return optionalStaff;
     }
     
     @Override
