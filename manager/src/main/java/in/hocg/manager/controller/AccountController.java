@@ -38,7 +38,7 @@ public class AccountController extends BaseController {
     private final AccountService accountService;
     private final ResourceService resourceService;
     
-    @ILog("获取当前账号信息")
+    @ILog("获取个人信息")
     @GetMapping
     public ResponseEntity getCurrentAccount(Principal principal) {
         String username = principal.getName();
@@ -83,14 +83,14 @@ public class AccountController extends BaseController {
      *
      * @return
      */
-    @ILog("获取菜单列表")
+    @ILog("获取个人菜单列表")
     @GetMapping("/menus")
     public ResponseEntity getMenus(Principal principal) {
         String username = principal.getName();
         
         Collection<Resource> tree = resourceService.selectMultiByUsername(username)
                 .stream()
-                .filter((r)->r.getType() == 0)
+                .filter((r) -> r.getType() == 0)
                 .filter(Resource::getEnabled)
                 .collect(Collectors.toList());
         return Result.success(tree)

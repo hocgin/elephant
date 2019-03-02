@@ -9,6 +9,7 @@ import in.hocg.manager.service.AccessLogService;
 import in.hocg.mybatis.basic.condition.PostCondition;
 import in.hocg.mybatis.module.basic.entity.AccessLog;
 import in.hocg.scaffold.lang.exception.NotRollbackException;
+import in.hocg.scaffold.support.aspect.log.ILog;
 import in.hocg.scaffold.support.basis.BaseController;
 import in.hocg.scaffold.support.basis.parameter.IDs;
 import in.hocg.scaffold.support.http.Result;
@@ -34,11 +35,12 @@ public class AccessLogController extends BaseController {
     
     /**
      * POST /access-log/_paging
-     * 查找所有员工列表
+     * 分页查询
      *
      * @param condition
      * @return
      */
+    @ILog("查询日志")
     @PostMapping("/_paging")
     public ResponseEntity paging(@RequestBody PostCondition<AccessLogBody, AccessLog> condition) {
         IPage<AccessLog> all = accessLogService.paging(condition);
@@ -47,11 +49,12 @@ public class AccessLogController extends BaseController {
     
     /**
      * GET /access-log/{id}
-     * 查找员工详情
+     * 查找详情
      *
      * @param id
      * @return
      */
+    @ILog("查询日志详情")
     @GetMapping("/{id}")
     public ResponseEntity detail(@PathVariable("id") String id) {
         AccessLogDetailVO result = accessLogService.detail(id);
@@ -66,6 +69,7 @@ public class AccessLogController extends BaseController {
      * @param parameter
      * @return
      */
+    @ILog("删除日志")
     @DeleteMapping
     public ResponseEntity delete(@Validated @RequestBody IDs parameter) {
         boolean result = accessLogService.delete(parameter);
@@ -78,6 +82,7 @@ public class AccessLogController extends BaseController {
      *
      * @return
      */
+    @ILog("修改日志")
     @PutMapping("/{id}")
     public ResponseEntity update(@PathVariable("id") String id,
                                  @RequestBody AccessLogUpdate parameter) throws NotRollbackException {
@@ -92,6 +97,7 @@ public class AccessLogController extends BaseController {
      *
      * @return
      */
+    @ILog("新增日志")
     @PostMapping
     public ResponseEntity insert(@RequestBody AccessLogInsert parameter) throws NotRollbackException {
         boolean result = accessLogService.insert(parameter);

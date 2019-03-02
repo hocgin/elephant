@@ -46,7 +46,7 @@ public class FileController extends BaseController {
      * @param principal 需要登陆
      * @return
      */
-    @ILog
+    @ILog("文件上传(uploads)")
     @PostMapping("/uploads")
     public ResponseEntity uploads(@RequestParam("file") MultipartFile[] files,
                                   Principal principal) throws Exception {
@@ -60,7 +60,7 @@ public class FileController extends BaseController {
                 .asResponseEntity();
     }
     
-    
+    @ILog("文件上传(upload)")
     @PostMapping("/upload")
     public ResponseEntity upload(@RequestParam("file") MultipartFile file,
                                  Principal principal) throws Exception {
@@ -70,14 +70,14 @@ public class FileController extends BaseController {
     }
     
     /**
-     * base 64 编码 上传文件
+     * Base64 编码 上传文件
      *
      * @param body      请求体
      * @param principal
      * @return
      * @throws Exception
      */
-    @ILog
+    @ILog("文件上传(Base64)")
     @PostMapping("/upload/base64")
     public ResponseEntity uploadBase64(@RequestBody UploadBase64Body body,
                                        Principal principal) throws Exception {
@@ -100,6 +100,7 @@ public class FileController extends BaseController {
      * @param principal 可选, 访问私有文件需要登陆
      * @return
      */
+    @ILog("下载文件")
     @GetMapping("/download/{id}")
     public ResponseEntity download(@PathVariable String id,
                                    @RequestParam(value = "rename", required = false) String rename,
@@ -133,6 +134,7 @@ public class FileController extends BaseController {
      * @param principal 可选, 访问私有图片需要登陆
      * @return
      */
+    @ILog("访问图片")
     @GetMapping("/image/{id}")
     public ResponseEntity image(@PathVariable String id,
                                 @RequestParam(value = "width", required = false) Integer width,

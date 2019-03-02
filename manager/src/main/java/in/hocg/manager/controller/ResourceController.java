@@ -7,6 +7,7 @@ import in.hocg.mybatis.basic.constant.DatabaseConstant;
 import in.hocg.mybatis.module.system.entity.Resource;
 import in.hocg.scaffold.lang.exception.NotRollbackException;
 import in.hocg.scaffold.lang.exception.RollbackException;
+import in.hocg.scaffold.support.aspect.log.ILog;
 import in.hocg.scaffold.support.basis.BaseController;
 import in.hocg.scaffold.support.basis.parameter.IDs;
 import in.hocg.scaffold.support.http.Result;
@@ -32,12 +33,7 @@ import java.util.List;
 public class ResourceController extends BaseController {
     private final ResourceService resourceService;
     
-    /**
-     * GET /resources
-     * 查找所有菜单列表
-     *
-     * @return
-     */
+    @ILog("查询所有资源")
     @GetMapping
     public ResponseEntity selectAll() throws NotRollbackException {
         Collection<Resource> all = resourceService.selectAll();
@@ -45,12 +41,7 @@ public class ResourceController extends BaseController {
                 .asResponseEntity();
     }
     
-    /**
-     * GET /resources/:id
-     * 查询详细信息
-     *
-     * @return
-     */
+    @ILog("查询资源详情")
     @GetMapping("/{id}")
     public ResponseEntity detail(@PathVariable("id") String id) {
         Resource detail = resourceService.detail(id);
@@ -66,6 +57,7 @@ public class ResourceController extends BaseController {
      *
      * @return
      */
+    @ILog("新增资源")
     @PostMapping
     public ResponseEntity insert(@RequestBody ResourceInsert body,
                                  @RequestParam(value = "mode", required = false, defaultValue = "0") int mode) throws NotRollbackException {
@@ -90,6 +82,7 @@ public class ResourceController extends BaseController {
      * @param parameter
      * @return
      */
+    @ILog("删除资源")
     @DeleteMapping
     public ResponseEntity delete(@Validated IDs parameter,
                                  @RequestParam(value = "mode", required = false, defaultValue = "0") int mode) throws NotRollbackException {
@@ -113,6 +106,7 @@ public class ResourceController extends BaseController {
      * @throws RollbackException
      * @throws NotRollbackException
      */
+    @ILog("更新资源")
     @PutMapping("/{id}")
     public ResponseEntity update(@PathVariable("id") String id,
                                  @RequestBody ResourceUpdate parameter) throws RollbackException, NotRollbackException {

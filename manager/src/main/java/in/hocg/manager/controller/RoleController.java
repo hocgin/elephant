@@ -10,6 +10,7 @@ import in.hocg.mybatis.basic.condition.PostCondition;
 import in.hocg.mybatis.module.system.entity.Role;
 import in.hocg.scaffold.lang.exception.NotRollbackException;
 import in.hocg.scaffold.lang.exception.RollbackException;
+import in.hocg.scaffold.support.aspect.log.ILog;
 import in.hocg.scaffold.support.basis.BaseController;
 import in.hocg.scaffold.support.basis.parameter.IDs;
 import in.hocg.scaffold.support.http.Result;
@@ -33,13 +34,7 @@ import java.util.Collection;
 public class RoleController extends BaseController {
     private final RoleService roleService;
     
-    /**
-     * POST /roles/_paging
-     * 查找所有角色列表
-     *
-     * @param condition
-     * @return
-     */
+    @ILog("分页查询角色")
     @PostMapping("/_paging")
     public ResponseEntity paging(@RequestBody PostCondition<RolePageQuery, Role> condition) {
         IPage<Role> all = roleService.paging(condition);
@@ -47,10 +42,7 @@ public class RoleController extends BaseController {
                 .asResponseEntity();
     }
     
-    /**
-     * 查找所有
-     * @return
-     */
+    @ILog("查询所有角色")
     @GetMapping
     public ResponseEntity selectAll() {
         Collection<Role> all = roleService.selectAll();
@@ -58,14 +50,7 @@ public class RoleController extends BaseController {
                 .asResponseEntity();
     }
     
-    
-    /**
-     * DELETE /roles
-     * 删除角色
-     *
-     * @param parameter
-     * @return
-     */
+    @ILog("删除角色")
     @DeleteMapping
     public ResponseEntity delete(@Validated @RequestBody IDs parameter) throws RollbackException {
         boolean result = roleService.deletes(Collections.asSet(parameter.getId()));
@@ -73,13 +58,7 @@ public class RoleController extends BaseController {
                 .asResponseEntity();
     }
     
-    /**
-     * POST /roles
-     * 新增角色
-     *
-     * @param parameter
-     * @return
-     */
+    @ILog("新增角色")
     @PostMapping
     public ResponseEntity insert(@Validated @RequestBody AddRole parameter) throws NotRollbackException {
         boolean result = roleService.insert(parameter);
@@ -87,13 +66,7 @@ public class RoleController extends BaseController {
                 .asResponseEntity();
     }
     
-    /**
-     * GET /roles/:id
-     * 查找角色
-     *
-     * @param id
-     * @return
-     */
+    @ILog("查询角色详情")
     @GetMapping("/{id}")
     public ResponseEntity detail(@PathVariable("id") String id) {
         RoleDetailVO result = roleService.detail(id);
@@ -101,13 +74,7 @@ public class RoleController extends BaseController {
                 .asResponseEntity();
     }
     
-    /**
-     * PUT /roles/:id
-     * 更新角色
-     *
-     * @param parameter
-     * @return
-     */
+    @ILog("更新角色")
     @PutMapping("/{id}")
     public ResponseEntity update(@PathVariable("id") String id,
                                  @Validated @RequestBody UpdateRole parameter) throws NotRollbackException {

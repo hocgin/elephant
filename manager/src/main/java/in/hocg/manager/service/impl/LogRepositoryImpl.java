@@ -55,6 +55,8 @@ public class LogRepositoryImpl implements LogRepository {
         Optional<Staff> staff = staffService.findByUsername(username);
         AccessLog log = new AccessLog()
                 .setIp(ip)
+                .setSource(source)
+                .setOperating(operating)
                 .setLevel(level.name())
                 .setUri(request.getRequestURI())
                 .setUsageTime(timeMillis)
