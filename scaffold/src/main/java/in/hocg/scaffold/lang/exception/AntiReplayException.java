@@ -8,7 +8,7 @@ package in.hocg.scaffold.lang.exception;
  *
  * @author hocgin
  */
-public final class AntiReplayException extends Exception {
+public final class AntiReplayException extends RuntimeException {
     
     private AntiReplayException(String message) {
         super(message);

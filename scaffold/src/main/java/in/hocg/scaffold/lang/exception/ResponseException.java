@@ -14,7 +14,7 @@ import java.lang.reflect.Constructor;
  */
 @EqualsAndHashCode(callSuper = true)
 @Data
-public class ResponseException extends Exception {
+public class ResponseException extends RuntimeException {
     private int code = 500;
     
     public ResponseException(String message, int code) {
