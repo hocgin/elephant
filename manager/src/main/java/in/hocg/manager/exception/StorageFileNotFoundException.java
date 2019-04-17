@@ -6,5 +6,5 @@ package in.hocg.manager.exception;
  *
  * @author hocgin
  */
-public class StorageFileNotFoundException extends Exception {
+public class StorageFileNotFoundException extends RuntimeException {
 }
