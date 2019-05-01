@@ -2,7 +2,7 @@ package in.hocg.manager.service;
 
 import in.hocg.manager.exception.StorageFileNotFoundException;
 import in.hocg.manager.model.vo.FileDownload;
-import in.hocg.scaffold.lang.exception.ResponseException;
+import in.hocg.scaffold.exception.ResponseException;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;

@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.google.common.collect.Sets;
 import in.hocg.manager.model.po.CurrentAccountUpdate;
 import in.hocg.manager.model.po.StaffBody;
 import in.hocg.manager.model.po.StaffInsert;
@@ -19,20 +20,16 @@ import in.hocg.mybatis.module.system.entity.Role;
 import in.hocg.mybatis.module.user.entity.Account;
 import in.hocg.mybatis.module.user.entity.Staff;
 import in.hocg.mybatis.module.user.mapper.StaffMapper;
-import in.hocg.scaffold.lang.exception.NotRollbackException;
-import in.hocg.scaffold.lang.exception.ResponseException;
+import in.hocg.scaffold.exception.NotRollbackException;
+import in.hocg.scaffold.exception.ResponseException;
 import in.hocg.scaffold.support.basis.parameter.IDs;
 import lombok.AllArgsConstructor;
 import org.apache.logging.log4j.util.Strings;
-import org.mapstruct.ap.internal.util.Collections;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Collection;
-import java.util.Objects;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 /**
  * <p>
@@ -131,7 +128,7 @@ public class StaffServiceImpl extends BaseService<StaffMapper, Staff>
     
     @Override
     public boolean delete(IDs parameter) {
-        Set<String> ids = Collections.asSet(parameter.getId());
+        Set<String> ids = Sets.newHashSet(parameter.getId());
         // 删除账号表信息
         accountService.removeByIds(ids);
         // 删除员工表信息

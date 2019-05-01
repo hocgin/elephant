@@ -15,7 +15,7 @@ import in.hocg.manager.model.vo.StaffDetailVO;
 import in.hocg.manager.service.StaffService;
 import in.hocg.mybatis.basic.condition.PostCondition;
 import in.hocg.mybatis.module.user.entity.Staff;
-import in.hocg.scaffold.lang.exception.NotRollbackException;
+import in.hocg.scaffold.exception.NotRollbackException;
 import in.hocg.scaffold.support.aspect.log.ILog;
 import in.hocg.scaffold.support.basis.BaseController;
 import in.hocg.scaffold.support.basis.parameter.IDs;

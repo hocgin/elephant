@@ -12,7 +12,7 @@ import in.hocg.mybatis.module.basic.entity.FileRecord;
 import in.hocg.scaffold.sdk.oss.OssService;
 import in.hocg.scaffold.sdk.oss.result.QueryResult;
 import in.hocg.scaffold.support.cache.CacheService;
-import in.hocg.util.LangKit;
+import in.hocg.scaffold.util.lang.LangKit;
 import lombok.AllArgsConstructor;
 import org.apache.logging.log4j.util.Strings;
 import org.springframework.stereotype.Service;

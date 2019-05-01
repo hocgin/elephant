@@ -1,4 +1,0 @@
-dependencies {
-    compile "com.baomidou:mybatis-plus-boot-starter:3.0.7.1"
-    implementation project(':scaffold')
-}

@@ -1,1 +1,1 @@
-SELECT 'worked';
+CREATE DATABASE `db_test`;

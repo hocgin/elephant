@@ -8,7 +8,7 @@ import in.hocg.manager.service.StaffService;
 import in.hocg.manager.support.security.body.JwtToken;
 import in.hocg.mybatis.module.system.entity.Resource;
 import in.hocg.mybatis.module.user.entity.Staff;
-import in.hocg.scaffold.lang.exception.NotRollbackException;
+import in.hocg.scaffold.exception.NotRollbackException;
 import in.hocg.scaffold.support.aspect.log.ILog;
 import in.hocg.scaffold.support.basis.BaseController;
 import in.hocg.scaffold.support.http.Result;

@@ -249,23 +249,23 @@ CREATE TABLE `resource`
   `id`          CHAR(32)
   COMMENT 'UUID',
   --
-  `lft`         INT         NOT NULL
+  `lft`         INT          NOT NULL
   COMMENT '左侧',
-  `rgt`         INT         NOT NULL
+  `rgt`         INT          NOT NULL
   COMMENT '右侧',
-  `name`        VARCHAR(10) NOT NULL
+  `name`        VARCHAR(10)  NOT NULL
   COMMENT '菜单名称',
-  `description` VARCHAR(10) NOT NULL DEFAULT ''
+  `description` VARCHAR(10)  NOT NULL DEFAULT ''
   COMMENT '菜单描述',
-  `type`        INT(1)      NOT NULL
+  `type`        INT(1)       NOT NULL
   COMMENT '菜单类型 [目录,链接]',
-  `method`      VARCHAR(6)  NOT NULL
+  `method`      VARCHAR(6)   NOT NULL
   COMMENT '请求类型 [GET,POST,DELETE,PUT]',
   `path`        VARCHAR(100) NOT NULL
   COMMENT 'URI',
-  `icon`        VARCHAR(20) NOT NULL
+  `icon`        VARCHAR(20)  NOT NULL
   COMMENT '图标',
-  `enabled`     TINYINT(1)  NOT NULL DEFAULT '0'
+  `enabled`     TINYINT(1)   NOT NULL DEFAULT '0'
   COMMENT '是否开启 [不开启,开启], 相当于不具备权限',
   --
 

@@ -1,6 +1,7 @@
 package in.hocg.manager.controller;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.google.common.collect.Sets;
 import in.hocg.manager.model.po.AddRole;
 import in.hocg.manager.model.po.RolePageQuery;
 import in.hocg.manager.model.po.UpdateRole;
@@ -8,14 +9,13 @@ import in.hocg.manager.model.vo.RoleDetailVO;
 import in.hocg.manager.service.RoleService;
 import in.hocg.mybatis.basic.condition.PostCondition;
 import in.hocg.mybatis.module.system.entity.Role;
-import in.hocg.scaffold.lang.exception.NotRollbackException;
-import in.hocg.scaffold.lang.exception.RollbackException;
+import in.hocg.scaffold.exception.NotRollbackException;
+import in.hocg.scaffold.exception.RollbackException;
 import in.hocg.scaffold.support.aspect.log.ILog;
 import in.hocg.scaffold.support.basis.BaseController;
 import in.hocg.scaffold.support.basis.parameter.IDs;
 import in.hocg.scaffold.support.http.Result;
 import lombok.AllArgsConstructor;
-import org.mapstruct.ap.internal.util.Collections;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -53,7 +53,7 @@ public class RoleController extends BaseController {
     @ILog("删除角色")
     @DeleteMapping
     public ResponseEntity delete(@Validated @RequestBody IDs parameter) throws RollbackException {
-        boolean result = roleService.deletes(Collections.asSet(parameter.getId()));
+        boolean result = roleService.deletes(Sets.newHashSet(parameter.getId()));
         return Result.success(result)
                 .asResponseEntity();
     }

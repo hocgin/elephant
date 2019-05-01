@@ -2,6 +2,7 @@ package in.hocg.manager.service.impl;
 
 import com.alibaba.druid.util.StringUtils;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.google.common.collect.Sets;
 import in.hocg.manager.model.po.ResourceInsert;
 import in.hocg.manager.model.po.ResourceUpdate;
 import in.hocg.manager.service.ResourceService;
@@ -11,12 +12,11 @@ import in.hocg.mybatis.basic.model.SuperModel;
 import in.hocg.mybatis.basic.model.TreeUtils;
 import in.hocg.mybatis.module.system.entity.Resource;
 import in.hocg.mybatis.module.system.mapper.ResourceMapper;
-import in.hocg.scaffold.lang.exception.NotRollbackException;
-import in.hocg.scaffold.lang.exception.ResponseException;
-import in.hocg.scaffold.lang.exception.RollbackException;
+import in.hocg.scaffold.exception.NotRollbackException;
+import in.hocg.scaffold.exception.ResponseException;
+import in.hocg.scaffold.exception.RollbackException;
 import in.hocg.scaffold.support.basis.parameter.IDs;
-import in.hocg.util.LangKit;
-import org.mapstruct.ap.internal.util.Collections;
+import in.hocg.scaffold.util.lang.LangKit;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -101,7 +101,7 @@ public class ResourceServiceImpl extends BaseService<ResourceMapper, Resource>
     @Override
     @Transactional(rollbackFor = Exception.class, noRollbackFor = NotRollbackException.class)
     public boolean delete(int mode, IDs body) throws NotRollbackException {
-        Set<String> ids = Collections.asSet(body.getId());
+        Set<String> ids = Sets.newHashSet(body.getId());
         boolean result;
         if (mode == 1) {
             result = deleteMultiNode(ids);

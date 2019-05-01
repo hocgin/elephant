@@ -1,7 +1,7 @@
 package in.hocg.scaffold.support.filter;
 
 
-import in.hocg.scaffold.lang.exception.AntiReplayException;
+import in.hocg.scaffold.exception.AntiReplayException;
 import in.hocg.scaffold.support.cache.CacheService;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;

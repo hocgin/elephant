@@ -8,7 +8,7 @@ import in.hocg.manager.model.vo.AccessLogDetailVO;
 import in.hocg.manager.service.AccessLogService;
 import in.hocg.mybatis.basic.condition.PostCondition;
 import in.hocg.mybatis.module.basic.entity.AccessLog;
-import in.hocg.scaffold.lang.exception.NotRollbackException;
+import in.hocg.scaffold.exception.NotRollbackException;
 import in.hocg.scaffold.support.aspect.log.ILog;
 import in.hocg.scaffold.support.basis.BaseController;
 import in.hocg.scaffold.support.basis.parameter.IDs;

@@ -7,7 +7,7 @@ import in.hocg.manager.manager.FileLinkOSSService;
 import in.hocg.manager.model.vo.FileDownload;
 import in.hocg.manager.service.StaffService;
 import in.hocg.manager.service.StorageService;
-import in.hocg.scaffold.lang.exception.ResponseException;
+import in.hocg.scaffold.exception.ResponseException;
 import lombok.AllArgsConstructor;
 import org.apache.logging.log4j.util.Strings;
 import org.springframework.stereotype.Service;

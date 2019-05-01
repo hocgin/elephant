@@ -8,8 +8,8 @@ import in.hocg.manager.model.po.UpdateRole;
 import in.hocg.manager.model.vo.RoleDetailVO;
 import in.hocg.mybatis.basic.condition.PostCondition;
 import in.hocg.mybatis.module.system.entity.Role;
-import in.hocg.scaffold.lang.exception.NotRollbackException;
-import in.hocg.scaffold.lang.exception.RollbackException;
+import in.hocg.scaffold.exception.NotRollbackException;
+import in.hocg.scaffold.exception.RollbackException;
 
 import java.io.Serializable;
 import java.util.Collection;

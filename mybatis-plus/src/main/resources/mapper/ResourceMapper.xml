@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="in.hocg.mybatis.module.system.mapper.ResourceMapper">
+    <update id="updateMultiEnableById">
+        UPDATE resource AS node
+        SET node.enabled = #{enabled}
+        <where>
+            node.id IN
+            <foreach collection="IDs" item="item" index="index"
+                     open="(" separator="," close=")">
+                #{item}
+            </foreach>
+        </where>
+    </update>
+
+    <select id="selectMultiByUsername"
+            resultType="in.hocg.mybatis.module.system.entity.Resource">
+        SELECT node.*, (COUNT(parent.id) - 1) AS depth
+        FROM resource node
+                 INNER JOIN resource AS parent
+                 LEFT JOIN role_resource rr ON rr.resource_id = node.id
+                 LEFT JOIN role r2 ON rr.role_id = r2.id
+                 LEFT JOIN role_staff rs ON rs.role_id = r2.id
+                 LEFT JOIN staff s ON rs.staff_id = s.id
+        WHERE s.username = #{username}
+          AND node.lft BETWEEN parent.lft AND parent.rgt
+        GROUP BY node.id
+        ORDER BY node.lft ASC
+    </select>
+</mapper>

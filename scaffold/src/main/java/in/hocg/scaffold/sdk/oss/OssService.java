@@ -3,7 +3,7 @@ package in.hocg.scaffold.sdk.oss;
 import com.google.common.hash.HashCode;
 import com.google.common.io.Files;
 import in.hocg.scaffold.sdk.oss.result.QueryResult;
-import in.hocg.util.LangKit;
+import in.hocg.scaffold.util.lang.LangKit;
 import lombok.SneakyThrows;
 
 import java.io.File;

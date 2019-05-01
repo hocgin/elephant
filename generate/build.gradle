@@ -1,7 +1,0 @@
-dependencies {
-    implementation project(':scaffold')
-    implementation project(':mybatis+')
-    implementation 'com.baomidou:mybatis-plus-generate:2.3.3'
-    testImplementation libs.spring.test
-    implementation libs.velocity
-}

@@ -2,7 +2,7 @@ package in.hocg.manager.service.impl;
 
 import in.hocg.manager.service.ResourceService;
 import in.hocg.mybatis.module.system.entity.Resource;
-import in.hocg.scaffold.lang.exception.NotRollbackException;
+import in.hocg.scaffold.exception.NotRollbackException;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 import org.junit.runner.RunWith;
