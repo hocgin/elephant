@@ -12,6 +12,15 @@ spring:
     initialization-mode: always
   redis:
     host: 127.0.0.1
+#    swagger
+  swagger:
+    enabled: true
+    group:
+      account:
+        title: 账号相关
+        description: 账号相关API
+        path-regex: /api/v1/account/.*
+        path-mapping: /
 logging:
   level:
     #    root: debug
@@ -42,3 +51,5 @@ scaffold:
     - /login
     enabled: false
 security.token.filter.secret: YourSecretNeedsToBeAtLeast256BitsLong
+
+

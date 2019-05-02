@@ -71,6 +71,11 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
                 // 针对 fetch 对跨域请求发送 OPTIONS 请求的处理
                 .antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                 .antMatchers(HttpMethod.GET, "/error").permitAll()
+//              // swagger
+                .antMatchers(HttpMethod.GET, "/swagger-ui.html").permitAll()
+                .antMatchers(HttpMethod.GET, "/webjars/springfox-swagger-ui/**").permitAll()
+                .antMatchers(HttpMethod.GET, "/swagger-resources/**").permitAll()
+                .antMatchers(HttpMethod.GET, "/v2/api-docs").permitAll()
                 // 个人账号相关权限
                 .antMatchers(HttpMethod.POST, "/api/v1/account/login").permitAll()
                 .antMatchers(HttpMethod.GET, "/api/v1/account/menus").permitAll()

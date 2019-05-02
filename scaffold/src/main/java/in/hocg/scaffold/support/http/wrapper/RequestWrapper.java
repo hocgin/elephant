@@ -1,6 +1,5 @@
 package in.hocg.scaffold.support.http.wrapper;
 
-import lombok.SneakyThrows;
 import org.springframework.web.util.HtmlUtils;
 
 import javax.servlet.http.HttpServletRequest;
@@ -18,7 +17,6 @@ public class RequestWrapper extends HttpServletRequestWrapper {
      */
     private byte[] body;
     
-    @SneakyThrows
     public RequestWrapper(HttpServletRequest request) {
         super(request);
     }

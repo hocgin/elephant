@@ -12,6 +12,7 @@ import in.hocg.scaffold.exception.NotRollbackException;
 import in.hocg.scaffold.support.aspect.log.ILog;
 import in.hocg.scaffold.support.basis.BaseController;
 import in.hocg.scaffold.support.http.Result;
+import io.swagger.annotations.Api;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -29,6 +30,7 @@ import java.util.stream.Collectors;
  *
  * @author hocgin
  */
+@Api(tags = "账号相关 API")
 @Slf4j
 @Controller
 @RequestMapping("/api/v1/account")
