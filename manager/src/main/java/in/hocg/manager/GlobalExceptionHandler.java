@@ -1,7 +1,6 @@
 package in.hocg.manager;
 
 import in.hocg.manager.exception.StorageFileNotFoundException;
-import in.hocg.scaffold.annotation.ProdAndTest;
 import in.hocg.scaffold.support.http.Result;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.Ordered;
@@ -24,7 +23,6 @@ import javax.servlet.http.HttpServletRequest;
  * email: hocgin@gmail.com
  * 全局异常处理
  */
-@ProdAndTest
 @Slf4j
 @ControllerAdvice
 @Order(Ordered.HIGHEST_PRECEDENCE)
@@ -33,6 +31,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(value = Exception.class)
     @ResponseBody
     public ResponseEntity handle(HttpServletRequest request, Exception e) throws Exception {
+        log.error("{}", e);
         if (AnnotationUtils.findAnnotation(e.getClass(), ResponseStatus.class) != null) {
             throw e;
         }
