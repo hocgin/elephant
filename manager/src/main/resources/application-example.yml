@@ -37,9 +37,9 @@ oss:
   enabled: true
   type: aliyun
   ali-yun:
-    endpoint: http://oss-cn-beijing.aliyuncs.com
-    secret-access: WTNAERBXO7DQOLXILIHjx8NZCzdRmw
-    access-key: LTAIMo7TgRT1ZohX
+    endpoint: endpoint
+    secret-access: secret-access
+    access-key: access-key
 
 ################
 # 自定义功能开关 #
